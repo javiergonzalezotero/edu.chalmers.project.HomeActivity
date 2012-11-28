@@ -92,11 +92,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Timetable:" />
-
+
             <SlidingDrawer
                 android:id="@+id/slidingDrawer1"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="76dp"
                 android:content="@+id/content"
                 android:handle="@+id/handle" >
 
@@ -105,11 +105,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Handle" />
-
+
                 <LinearLayout
                     android:id="@+id/content"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="38dp"
                     android:orientation="vertical" >
 
                     <TextView
@@ -127,6 +127,12 @@
                 </LinearLayout>
 
             </SlidingDrawer>
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
 
         </LinearLayout>
 
