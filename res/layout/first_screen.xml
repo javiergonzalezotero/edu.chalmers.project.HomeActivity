@@ -16,13 +16,15 @@
                 android:id="@+id/buttonNewAccount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Create New Account" />
+                android:text="Create New Account" 
+                android:onClick="createAccount"/>
 
             <Button
                 android:id="@+id/buttonLogin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Login" />
+                android:text="Login" 
+                android:onClick="login"/>
 
         </LinearLayout>
 

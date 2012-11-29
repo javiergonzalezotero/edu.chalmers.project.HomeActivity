@@ -1,16 +1,18 @@
 package edu.chalmers.project;
 
 
-import com.google.android.maps.MapActivity;
-
-import android.os.Bundle;
 import android.app.ActionBar;
+import android.app.ActionBar.Tab;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
-import android.app.ActionBar.Tab;
-import android.view.Menu;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+
+import com.google.android.maps.MapActivity;
 
 public class HomeActivity extends MapActivity {
 
@@ -48,25 +50,51 @@ public class HomeActivity extends MapActivity {
                 .setTabListener(new TabListener<SearchFragment>(
                         this, "search", SearchFragment.class));
         actionBar.addTab(tab);
+        
+       /* final TextView view = (TextView) findViewById(R.id.textViewMatchPlayed);
+        view.setOnClickListener(new View.OnClickListener() {
 
+          @Override
+          public void onClick(View v) {
+            Intent intent = new Intent (null, MatchActivity.class);
+            startActivity(intent);
+          }
+
+        });*/
     }
   
+	public void viewMatches(View view){
+		Intent intent = new Intent (this, MatchActivity.class);
+        startActivity(intent);
+	}
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
     	switch (item.getItemId()) {
     	case android.R.id.home:
 			onBackPressed();
 			return true;
+		
+    	case R.id.menu_add_new_event:
+    		Intent intent = new Intent(this,CreateEventActivity.class);
+    		startActivity(intent);
+    		return true;
     	default:
     		return super.onOptionsItemSelected(item);
     	}
     }
+    
+    
+    
     
     //Method need for the map
     @Override
     protected boolean isRouteDisplayed() {
         return false;
     }
+    
+    
+    
+    
 }
 
 	class TabListener<T extends Fragment> implements ActionBar.TabListener {
