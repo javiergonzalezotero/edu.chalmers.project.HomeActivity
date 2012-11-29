@@ -29,5 +29,7 @@
     <string name="host_team">Host Team</string>
     <string name="guest_team">Guest Team</string>
     <string name="popup_calendar_date_of_birth">Date of birth</string>
+    <string name="MVP">MVP: </string>
+    <string name="Incidents">Incidents: </string>
 
 </resources>
