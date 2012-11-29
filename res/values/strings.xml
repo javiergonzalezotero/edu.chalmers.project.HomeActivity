@@ -19,12 +19,14 @@
 
     <string name="menu_search">Search</string>
     <string name="menu_create">Create</string>
-    <string name="create_event_menu">Create even</string>
+    <string name="create_event_menu">Create event</string>
     <string name="title_activity_new_account">NewAccountActivity</string>
     <string name="title_activity_first_screen">FirstScreenActivity</string>
     <string-array name="MatchesList">
         <item >Match1</item>
         <item >match 2</item>
     </string-array>
+    <string name="host_team">Host Team</string>
+    <string name="guest_team">Guest Team</string>
 
 </resources>
