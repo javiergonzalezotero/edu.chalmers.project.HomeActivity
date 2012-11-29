@@ -94,14 +94,14 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Field Position" />
-
+
         <EditText
             android:id="@+id/editTextDateOfBirth"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Date of Birth"
-            android:onClick="showCalendar" />
+            android:onClick="showTimePickerDialog" />
 
         <RelativeLayout
             android:layout_width="match_parent"
