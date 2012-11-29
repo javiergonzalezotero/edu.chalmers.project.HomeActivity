@@ -11,44 +11,44 @@
     android:layout_height="fill_parent"
     android:orientation="vertical"
     android:padding="10dip" >
-
+
     <EditText
         android:id="@+id/editTextUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:text="Username" >
+        android:hint="Username" >
 
         <requestFocus />
     </EditText>
-
+
     <EditText
         android:id="@+id/editTextPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:text="Password" />
-
+        android:hint="Password" />
+
         <EditText
             android:id="@+id/editTextMail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:text="Mail" />
-
+            android:hint="Mail" />
+
         <EditText
             android:id="@+id/editTextFirstname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:text="Firstname" />
-
+            android:hint="Firstname" />
+
         <EditText
             android:id="@+id/editTextFamilyName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:text="Family Name" />
+            android:hint="Family Name" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -87,35 +87,25 @@
             </RadioGroup>
 
         </RelativeLayout>
-
-        <EditText
-            android:id="@+id/editTextDateOfBirth"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="date"
-            android:text="Date of birth" />
-
+
         <EditText
             android:id="@+id/editTextFieldPosition"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:text="Field Position" />
+            android:hint="Field Position" />
+
+        <EditText
+            android:id="@+id/editTextDateOfBirth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Date of Birth"
+            android:onClick="showCalendar" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
-
-            <Button
-                android:id="@+id/buttonCreateProfile"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="26dp"
-                android:text="Create" 
-                android:onClick="confirmAccount"/>
 
         </RelativeLayout>
 
