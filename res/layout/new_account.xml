@@ -1,6 +1,6 @@
 <ScrollView  
     xmlns:android="http://schemas.android.com/apk/res/android"  
-    android:id="@+id/ScrollViewAddBook"  
+    android:id="@+id/ScrollViewNewAccount"  
     android:layout_width="fill_parent"  
     android:layout_height="fill_parent"  
     android:scrollbars="vertical"> 
@@ -114,7 +114,8 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="26dp"
-                android:text="Create" />
+                android:text="Create" 
+                android:onClick="confirmAccount"/>
 
         </RelativeLayout>
 

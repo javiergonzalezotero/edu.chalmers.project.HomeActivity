@@ -1,6 +1,5 @@
 <resources>
 
-    
     <string name="app_name">project</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
@@ -12,12 +11,22 @@
     <string name="CreateEventButton">Create Event</string>
     <string name="HomeTitle">Upcoming Events</string>
     <string name="maps_api_key">0IQdaJYXKKRHJD96zKr9z2vvjwqveyHnr9tK3Iw</string>
+
     <string-array name="spinner_matches">
-        <item >Upcoming Events</item>
-        <item >My events</item>
+        <item>Upcoming Events</item>
+        <item>My events</item>
     </string-array>
+
     <string name="menu_search">Search</string>
     <string name="menu_create">Create</string>
-    <string name="create_event_menu">Create even</string>
+    <string name="create_event_menu">Create event</string>
+    <string name="title_activity_new_account">NewAccountActivity</string>
+    <string name="title_activity_first_screen">FirstScreenActivity</string>
+    <string-array name="MatchesList">
+        <item >Match1</item>
+        <item >match 2</item>
+    </string-array>
+    <string name="host_team">Host Team</string>
+    <string name="guest_team">Guest Team</string>
 
 </resources>
