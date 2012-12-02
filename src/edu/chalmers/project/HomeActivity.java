@@ -7,21 +7,30 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.maps.MapActivity;
 
-public class HomeActivity extends MapActivity {
+import edu.chalmers.project.data.DBAdapter;
+import edu.chalmers.project.data.PlayerDBAdapter;
 
+public class HomeActivity extends MapActivity {
+	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
         setContentView(R.layout.activity_home);        
         
+        PlayerDBAdapter playerAdapter = new PlayerDBAdapter(this);
+        playerAdapter.open();
+        Cursor cursor = playerAdapter.getPlayer(1);
+        Toast.makeText(this, cursor.getString(3), Toast.LENGTH_LONG).show();
         ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         actionBar.setDisplayHomeAsUpEnabled(true);
