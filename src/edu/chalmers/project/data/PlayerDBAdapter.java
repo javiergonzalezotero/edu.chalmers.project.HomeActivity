@@ -136,7 +136,7 @@ public class PlayerDBAdapter {
         return mCursor;
     }
     
-    public Cursor getPassword(String username)throws SQLException{
+    public Cursor getPlayer(String username)throws SQLException{
     	Cursor mCursor =
 
     	        this.mDb.query(true, DATABASE_TABLE, new String[] {PASSWORD}, 

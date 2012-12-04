@@ -33,13 +33,14 @@ public class LoginActivity extends Activity {
     	PlayerDBAdapter playerAdapter = new PlayerDBAdapter(this);
         playerAdapter.open();
         Cursor cursor;
-        cursor = playerAdapter.getPassword(usernameEditText.getText().toString());
+        cursor = playerAdapter.getPlayer(usernameEditText.getText().toString());
         if (cursor.getCount()==0){
         	Toast.makeText(this, "Username incorrect ", Toast.LENGTH_LONG).show();
         	return;
         }
         if (cursor.getString(0).equals(passworEditText.getText().toString())){
         	Intent intent = new Intent(this, HomeActivity.class);
+        	intent.putExtra("username", cursor.)
         	startActivity(intent);
         }
         else {
