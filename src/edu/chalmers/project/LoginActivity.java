@@ -4,6 +4,7 @@ import edu.chalmers.project.data.PlayerDBAdapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -31,14 +32,22 @@ public class LoginActivity extends Activity {
     public void confirmLogin(View view){
     	PlayerDBAdapter playerAdapter = new PlayerDBAdapter(this);
         playerAdapter.open();
-        Cursor cursor = playerAdapter.getPassword(usernameEditText.getText().toString());
+        Cursor cursor;
+        try{
+        	cursor = playerAdapter.getPassword(usernameEditText.getText().toString());
+        }
+        catch(SQLException exception){
+        	Toast.makeText(this, "User incorrect ", Toast.LENGTH_LONG).show();
+        	playerAdapter.close();
+        	return;
+        }
         if (cursor.getString(0).equals(passworEditText.getText().toString())){
-        	Toast.makeText(this, "Match", Toast.LENGTH_LONG).show();
+        	Intent intent = new Intent(this, HomeActivity.class);
+        	startActivity(intent);
         }
         else {
-			Toast.makeText(this, "NO MATCH ", Toast.LENGTH_LONG).show();
+			Toast.makeText(this, "Password incorrect ", Toast.LENGTH_LONG).show();
 		}
-    	Intent intent = new Intent(this, HomeActivity.class);
-    	startActivity(intent);
+        playerAdapter.close();
     }
 }

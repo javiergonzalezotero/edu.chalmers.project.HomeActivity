@@ -70,6 +70,7 @@ public class NewAccountActivity extends FragmentActivity {
     		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
     		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     		startActivity(intent);
+    		playerAdapter.close();
     		return true;    
     	default:
     		return super.onOptionsItemSelected(item);

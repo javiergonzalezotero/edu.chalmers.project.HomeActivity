@@ -78,7 +78,7 @@ public class PlayerDBAdapter {
 
     /**
      * Create a new player. If the player is successfully created return the new
-     * rowId for that car, otherwise return a -1 to indicate failure.
+     * rowId for that player, otherwise return a -1 to indicate failure.
      * 
      * @param username
      * @param password
@@ -96,13 +96,13 @@ public class PlayerDBAdapter {
         ContentValues initialValues = new ContentValues();
         initialValues.put(USERNAME, username);
         initialValues.put(PASSWORD, password);
-        //initialValues.put(FIRSTNAME, firstName);
-        //initialValues.put(FAMILYNAME, familyName);
-       /* initialValues.put(MAIL, mail);
+        initialValues.put(FIRSTNAME, firstName);
+        initialValues.put(FAMILYNAME, familyName);
+        initialValues.put(MAIL, mail);
         initialValues.put(RELIABILITY, reliability);
         initialValues.put(POSITION, position);
         initialValues.put(CITY, city);
-        initialValues.put(BIRTHDATE, birthdate);*/
+        initialValues.put(BIRTHDATE, birthdate);
         return this.mDb.insert(DATABASE_TABLE, null, initialValues);
     }
 
@@ -122,7 +122,7 @@ public class PlayerDBAdapter {
      * Return a Cursor positioned at the player that matches the given rowId
      * @param rowId
      * @return Cursor positioned to matching car, if found
-     * @throws SQLException if car could not be found/retrieved
+     * @throws SQLException if player could not be found/retrieved
      */
     public Cursor getPlayer(long rowId) throws SQLException {
 
