@@ -28,20 +28,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Place" />
-
+
+            <EditText
+                android:id="@+id/editTextField"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Field" >
+
+                <requestFocus />
+            </EditText>
+
             <EditText
                 android:id="@+id/editTextDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Date"
-                android:inputType="date" />
-
+                android:onClick="showDatePickerDialog" />
+
             <EditText
                 android:id="@+id/editTextTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Time"
-                android:inputType="time" />
+                android:onClick="showTimePickerDialog" />
 
             <EditText
                 android:id="@+id/editTextCost"

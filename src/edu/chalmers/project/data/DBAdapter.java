@@ -24,6 +24,18 @@ public class DBAdapter {
 	
 	+ PlayerDBAdapter.BIRTHDATE+ " TEXT" + ");"; 
 	
+	private static final String CREATE_TABLE_MATCH =
+			   "create table if not exists  match(_id integer primary key autoincrement, " 
+			+ MatchDBAdapter.DATE+ " TEXT,"
+			+ MatchDBAdapter.TIME+ " TEXT,"
+			+ MatchDBAdapter.NAME+ " TEXT,"
+			+ MatchDBAdapter.FIELD+ " TEXT,"
+			+ MatchDBAdapter.LOCATION+ " TEXT,"
+			+ MatchDBAdapter.COST+ " INTEGER,"
+			+ MatchDBAdapter.NUMBER_PLAYERS+ " INTEGER," 
+			+ MatchDBAdapter.ID_ORGANIZER+ " INTEGER" + ");"; 
+	
+	
 	
 	private final Context context; 
 	private DatabaseHelper DBHelper;
@@ -46,6 +58,7 @@ public class DBAdapter {
 	    @Override
 	    public void onCreate(SQLiteDatabase db) {
 	        db.execSQL(CREATE_TABLE_PLAYERS);
+	        db.execSQL(CREATE_TABLE_MATCH);
 	    }
 	
 	    @Override

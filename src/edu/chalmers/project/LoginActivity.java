@@ -30,7 +30,7 @@ public class LoginActivity extends Activity {
     }
     
     public void confirmLogin(View view){
-    	PlayerDBAdapter playerAdapter = new PlayerDBAdapter(this);
+    	/*PlayerDBAdapter playerAdapter = new PlayerDBAdapter(this);
         playerAdapter.open();
         Cursor cursor;
         try{
@@ -42,12 +42,12 @@ public class LoginActivity extends Activity {
         	return;
         }
         if (cursor.getString(0).equals(passworEditText.getText().toString())){
-        	Intent intent = new Intent(this, HomeActivity.class);
-        	startActivity(intent);
+        	*/Intent intent = new Intent(this, HomeActivity.class);
+        	startActivity(intent);/*
         }
         else {
 			Toast.makeText(this, "Password incorrect ", Toast.LENGTH_LONG).show();
 		}
-        playerAdapter.close();
+        playerAdapter.close();*/
     }
 }

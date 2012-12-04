@@ -7,12 +7,19 @@ import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.text.format.DateFormat;
+import android.widget.EditText;
 import android.widget.TimePicker;
 
 
 
 public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
 
+	public EditText activity_edittext;
+	
+	public TimePickerFragment(EditText edit_text) {
+	    activity_edittext = edit_text;
+	}
+	
 @Override
 public Dialog onCreateDialog(Bundle savedInstanceState) {
 // Use the current time as the default values for the picker
@@ -26,6 +33,6 @@ DateFormat.is24HourFormat(getActivity()));
 }
 
 public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-// Do something with the time chosen by the user
+	activity_edittext.setText(String.valueOf(hourOfDay) + ":" + String.valueOf(minute));
 }
 }
