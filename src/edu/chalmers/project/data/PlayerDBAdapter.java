@@ -141,7 +141,7 @@ public class PlayerDBAdapter {
 
     	        this.mDb.query(true, DATABASE_TABLE, new String[] {PASSWORD}, 
     	        		USERNAME + "= '" + username+ "'", null, null, null, null, null);
-    	        if (mCursor != null) {
+    	        if (mCursor != null ) {
     	            mCursor.moveToFirst();
     	        }
     	        return mCursor;

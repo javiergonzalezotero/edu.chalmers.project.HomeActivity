@@ -26,6 +26,7 @@ public class NewAccountActivity extends FragmentActivity {
 	private EditText editTextFamilyName;
 	private EditText editTextFieldPosition;
 	private EditText editTextDateOfBirth;
+	private EditText editTextCity;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,7 @@ public class NewAccountActivity extends FragmentActivity {
         editTextFirstname = (EditText)findViewById(R.id.editTextFirstname);
         editTextFamilyName = (EditText)findViewById(R.id.editTextFamilyName);
         editTextFieldPosition = (EditText)findViewById(R.id.editTextFieldPosition);
+        editTextCity = (EditText)findViewById(R.id.editTextCity);
         dateOfBirth.setKeyListener(null);       
     }
     
@@ -59,22 +61,32 @@ public class NewAccountActivity extends FragmentActivity {
 			onBackPressed();
 			return true;
     	case R.id.menu_create:
-    		PlayerDBAdapter playerAdapter = new PlayerDBAdapter(this);
-            playerAdapter.open();
-            playerAdapter.createPlayer(editTextUsername.getText().toString(), 
-            		editTextPassword.getText().toString(),editTextFirstname.getText().toString(),
-            		editTextFamilyName.getText().toString(),"mail",50, editTextFieldPosition.getText().toString(), 
-            		"Goteborg", dateOfBirth.getText().toString());
-            Toast.makeText(this, playerAdapter.getPlayer(1).getString(3), Toast.LENGTH_LONG).show();
-    		Intent intent = new Intent(this, FirstScreenActivity.class);
-    		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
-    		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    		startActivity(intent);
-    		playerAdapter.close();
+    		if(checkMandatoryFields()){
+	    		PlayerDBAdapter playerAdapter = new PlayerDBAdapter(this);
+	            playerAdapter.open();
+	            playerAdapter.createPlayer(editTextUsername.getText().toString(), 
+	            		editTextPassword.getText().toString(),editTextFirstname.getText().toString(),
+	            		editTextFamilyName.getText().toString(),editTextMail.getText().toString(),
+	            		50, editTextFieldPosition.getText().toString(), 
+	            		editTextCity.getText().toString(), dateOfBirth.getText().toString());
+	    		Intent intent = new Intent(this, FirstScreenActivity.class);
+	    		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
+	    		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+	    		startActivity(intent);
+	    		playerAdapter.close();
+    		}
+    		else {
+    			Toast.makeText(this, "Fill mandatory fields ", Toast.LENGTH_LONG).show();
+			}
     		return true;    
     	default:
     		return super.onOptionsItemSelected(item);
     	}
+    }
+    
+    private boolean checkMandatoryFields(){
+    	return(editTextUsername.getText().toString()==null 
+    			|| editTextPassword.getText().toString()==null);
     }
 
     public void showCalendar(View view){

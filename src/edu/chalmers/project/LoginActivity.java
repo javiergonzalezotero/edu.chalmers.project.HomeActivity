@@ -1,6 +1,5 @@
 package edu.chalmers.project;
 
-import edu.chalmers.project.data.PlayerDBAdapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -10,6 +9,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+import edu.chalmers.project.data.PlayerDBAdapter;
 
 public class LoginActivity extends Activity {
 
@@ -33,12 +33,9 @@ public class LoginActivity extends Activity {
     	PlayerDBAdapter playerAdapter = new PlayerDBAdapter(this);
         playerAdapter.open();
         Cursor cursor;
-        try{
-        	cursor = playerAdapter.getPassword(usernameEditText.getText().toString());
-        }
-        catch(SQLException exception){
-        	Toast.makeText(this, "User incorrect ", Toast.LENGTH_LONG).show();
-        	playerAdapter.close();
+        cursor = playerAdapter.getPassword(usernameEditText.getText().toString());
+        if (cursor.getCount()==0){
+        	Toast.makeText(this, "Username incorrect ", Toast.LENGTH_LONG).show();
         	return;
         }
         if (cursor.getString(0).equals(passworEditText.getText().toString())){

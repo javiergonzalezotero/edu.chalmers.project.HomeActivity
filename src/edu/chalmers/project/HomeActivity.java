@@ -27,10 +27,6 @@ public class HomeActivity extends MapActivity {
         
         setContentView(R.layout.activity_home);        
         
-        PlayerDBAdapter playerAdapter = new PlayerDBAdapter(this);
-        playerAdapter.open();
-        Cursor cursor = playerAdapter.getPlayer(1);
-        Toast.makeText(this, cursor.getString(3), Toast.LENGTH_LONG).show();
         ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         actionBar.setDisplayHomeAsUpEnabled(true);
