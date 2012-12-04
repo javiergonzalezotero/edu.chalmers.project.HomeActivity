@@ -38,9 +38,9 @@ public class LoginActivity extends Activity {
         	Toast.makeText(this, "Username incorrect ", Toast.LENGTH_LONG).show();
         	return;
         }
-        if (cursor.getString(0).equals(passworEditText.getText().toString())){
+        if (cursor.getString(1).equals(passworEditText.getText().toString())){
         	Intent intent = new Intent(this, HomeActivity.class);
-        	intent.putExtra("username", cursor.)
+        	intent.putExtra("username", cursor.getString(0));
         	startActivity(intent);
         }
         else {

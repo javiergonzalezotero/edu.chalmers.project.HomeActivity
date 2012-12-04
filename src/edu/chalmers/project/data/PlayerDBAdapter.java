@@ -139,7 +139,8 @@ public class PlayerDBAdapter {
     public Cursor getPlayer(String username)throws SQLException{
     	Cursor mCursor =
 
-    	        this.mDb.query(true, DATABASE_TABLE, new String[] {PASSWORD}, 
+    	        this.mDb.query(true, DATABASE_TABLE, new String[] {USERNAME,PASSWORD,FIRSTNAME,FAMILYNAME,
+    	        		MAIL,RELIABILITY,POSITION,CITY,BIRTHDATE}, 
     	        		USERNAME + "= '" + username+ "'", null, null, null, null, null);
     	        if (mCursor != null ) {
     	            mCursor.moveToFirst();

@@ -64,6 +64,7 @@ public class NewAccountActivity extends FragmentActivity {
     		if(checkMandatoryFields()){
 	    		PlayerDBAdapter playerAdapter = new PlayerDBAdapter(this);
 	            playerAdapter.open();
+	            
 	            playerAdapter.createPlayer(editTextUsername.getText().toString(), 
 	            		editTextPassword.getText().toString(),editTextFirstname.getText().toString(),
 	            		editTextFamilyName.getText().toString(),editTextMail.getText().toString(),
@@ -85,8 +86,9 @@ public class NewAccountActivity extends FragmentActivity {
     }
     
     private boolean checkMandatoryFields(){
-    	return(editTextUsername.getText().toString()==null 
-    			|| editTextPassword.getText().toString()==null);
+    /*	return((editTextUsername.getText().toString().equals("Username*")) 
+    			|| (editTextPassword.getText().toString().equals("Password*")));*/
+    	return true;
     }
 
     public void showCalendar(View view){
