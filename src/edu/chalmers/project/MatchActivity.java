@@ -75,6 +75,12 @@ public class MatchActivity extends MapActivity {
     }
     
     public void joinGuest(View view){
-    	Toast.makeText(this, "join gueeest", Toast.LENGTH_LONG).show();
+    	MatchPlayedDBAdapter adapter = new MatchPlayedDBAdapter(this);
+    	adapter.open();
+    	Bundle bundle = this.getIntent().getExtras();
+    	String playerUsername = bundle.getString("username");
+    	int idMatch = bundle.getInt("position_id_match");
+    	adapter.joinMatch(playerUsername, idMatch, 2);
+    	adapter.close();
     }
 }

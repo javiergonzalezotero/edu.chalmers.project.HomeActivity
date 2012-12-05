@@ -70,7 +70,7 @@ public class CreateEventActivity extends FragmentActivity {
     		PlayerDBAdapter playerAdapter = new PlayerDBAdapter(this);
     		playerAdapter.open();
     		Cursor cursorPlayer = playerAdapter.getPlayer(this.username);
-    		
+    		playerAdapter.close();
     		
     		matchAdapter.createMatch(editTextDate.getText().toString(), editTextTime.getText().toString(), editTextNameEvent.getText().toString(), editTextField.getText().toString(),
     				editTextPlace.getText().toString(), Integer.parseInt(editTextCost.getText().toString()), 

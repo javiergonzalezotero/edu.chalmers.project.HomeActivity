@@ -90,6 +90,13 @@ public class Player {
 	public void setBirthdate(String birthdate) {
 		this.birthdate = birthdate;
 	}
+
+	@Override
+	public String toString() {
+		return this.getUsername();
+	}
+	
+	
 	
 	
 }

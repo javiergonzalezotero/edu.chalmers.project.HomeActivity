@@ -40,9 +40,11 @@ public class MatchInfoFragment extends Fragment {
         MatchDBAdapter matchAdapter = new MatchDBAdapter(container.getContext());
         matchAdapter.open();
         Cursor cursorMatch = matchAdapter.getMatch(position);
+        matchAdapter.close();
         
         int id_organizer = Integer.parseInt(cursorMatch.getString(8));
         Cursor cursorPlayer = playerAdapter.getPlayer(id_organizer);
+        playerAdapter.close();
         
         idOrganizer.setText(cursorPlayer.getString(2));
         nameMatch.setText(cursorMatch.getString(3));

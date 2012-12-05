@@ -35,6 +35,7 @@ public class HomeFragment extends Fragment {
 		matchAdapter.open();
 
 		this.matchList = matchAdapter.getMatchList();
+		matchAdapter.close();
 		ListView lvList = (ListView) view.findViewById(R.id.listViewHomeMatches);
 		lvList.setAdapter(new ArrayAdapter<Match>(container.getContext(), android.R.layout.simple_list_item_1, this.matchList));
 

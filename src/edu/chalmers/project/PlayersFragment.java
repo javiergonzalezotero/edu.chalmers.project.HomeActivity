@@ -10,8 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import edu.chalmers.project.data.Match;
-import edu.chalmers.project.data.MatchDBAdapter;
 import edu.chalmers.project.data.MatchPlayedDBAdapter;
 import edu.chalmers.project.data.Player;
 
@@ -36,7 +34,8 @@ public class PlayersFragment extends Fragment {
         matchPlayedAdapter.open();
    
         this.hostTeam = matchPlayedAdapter.getTeam(HOST, idMatch);
-        this.guestTeam = matchPlayedAdapter.getTeam(HOST, idMatch);
+        this.guestTeam = matchPlayedAdapter.getTeam(GUEST, idMatch);
+        matchPlayedAdapter.close();
     	ListView lvListHost = (ListView) view.findViewById(R.id.listViewHostTeam);
     	ListView lvListGuest = (ListView) view.findViewById(R.id.listViewGuestTeam);
         lvListHost.setAdapter(new ArrayAdapter<Player>(container.getContext(), android.R.layout.simple_list_item_1, this.hostTeam));
@@ -52,9 +51,11 @@ public class PlayersFragment extends Fragment {
         		
         	}
         });*/
-        matchPlayedAdapter.close();
+        
         return view;
        
     }
+    
+  
     
 }
