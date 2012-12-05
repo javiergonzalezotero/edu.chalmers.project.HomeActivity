@@ -5,6 +5,8 @@ import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.maps.MapActivity;
 
@@ -57,5 +59,14 @@ public class MatchActivity extends MapActivity {
     @Override
     protected boolean isRouteDisplayed() {
         return false;
+    }
+    
+    
+    public void joinHost(View view){
+    	
+    }
+    
+    public void joinGuest(View view){
+    	Toast.makeText(this, "join gueeest", Toast.LENGTH_LONG).show();
     }
 }

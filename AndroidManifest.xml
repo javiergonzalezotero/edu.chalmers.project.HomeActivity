@@ -52,6 +52,14 @@
         </activity>
         
         <activity
+            android:name=".FriendsActivity"
+            android:label="@string/title_activity_new_account" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.chalmers.project.FirstScreenActivity" />
+        </activity>
+        
+        <activity
             android:name=".HomeActivity"
             android:label="@string/title_activity_new_account" 
             android:uiOptions="splitActionBarWhenNarrow" >

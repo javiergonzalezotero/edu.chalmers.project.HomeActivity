@@ -3,10 +3,9 @@ package edu.chalmers.project;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -96,4 +95,5 @@ public class ProfileFragment extends Fragment {
     	
     }
     
+   
 }

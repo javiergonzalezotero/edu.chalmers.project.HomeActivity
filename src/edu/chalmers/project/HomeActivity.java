@@ -73,6 +73,15 @@ public class HomeActivity extends MapActivity {
 		Intent intent = new Intent (this, MatchActivity.class);
         startActivity(intent);
 	}
+	
+	
+	 public void seeFriends(View view){
+	    	Intent intent = new Intent(this, FriendsActivity.class);
+	    	Bundle bundle = this.getIntent().getExtras();
+	    	intent.putExtras(bundle);
+	    	startActivity(intent);
+	 }
+	
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
     	switch (item.getItemId()) {

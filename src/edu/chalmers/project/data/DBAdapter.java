@@ -20,8 +20,7 @@ public class DBAdapter {
 	+ PlayerDBAdapter.MAIL+ " TEXT,"
 	+ PlayerDBAdapter.RELIABILITY+ " INTEGER,"
 	+ PlayerDBAdapter.POSITION+ " TEXT,"
-	+ PlayerDBAdapter.CITY+ " TEXT,"
-	
+	+ PlayerDBAdapter.CITY+ " TEXT,"	
 	+ PlayerDBAdapter.BIRTHDATE+ " TEXT" + ");"; 
 	
 	private static final String CREATE_TABLE_MATCH =
@@ -35,6 +34,23 @@ public class DBAdapter {
 			+ MatchDBAdapter.NUMBER_PLAYERS+ " INTEGER," 
 			+ MatchDBAdapter.ID_ORGANIZER+ " INTEGER" + ");"; 
 	
+	private static final String CREATE_TABLE_FRIEND =
+			   "create table if not exists  friend(_id integer primary key autoincrement, " 
+			+ FriendDBAdapter.PLAYERUSERNAME+ " TEXT,"
+			+ FriendDBAdapter.FRIENDUSERNAME+ " TEXT" + ");"; 
+	
+	private static final String CREATE_TABLE_MATCH_PLAYED =
+			   "create table if not exists  match_played(_id integer primary key autoincrement, " 
+			+ MatchPlayedDBAdapter.PLAYERUSERNAME+ " TEXT,"
+			+ MatchPlayedDBAdapter.ID_MATCH+ " INTEGER, "
+			+ MatchPlayedDBAdapter.TEAM+ " INTEGER, "
+			+ MatchPlayedDBAdapter.PRESENT + "INTEGER"+ ");"; 
+	
+	private static final String CREATE_TABLE_GOAL =
+			   "create table if not exists  goal(_id integer primary key autoincrement, " 
+			+ GoalDBAdapter.PLAYERUSERNAME+ " TEXT,"
+			+ GoalDBAdapter.ID_MATCH+ " INTEGER, "
+			+ GoalDBAdapter.MINUTE+ " INTEGER "+ ");"; 
 	
 	
 	private final Context context; 
@@ -59,6 +75,9 @@ public class DBAdapter {
 	    public void onCreate(SQLiteDatabase db) {
 	        db.execSQL(CREATE_TABLE_PLAYERS);
 	        db.execSQL(CREATE_TABLE_MATCH);
+	        db.execSQL(CREATE_TABLE_FRIEND);
+	        db.execSQL(CREATE_TABLE_MATCH_PLAYED);
+	        db.execSQL(CREATE_TABLE_GOAL);
 	    }
 	
 	    @Override
