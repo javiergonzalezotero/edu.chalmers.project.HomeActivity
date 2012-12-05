@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 import edu.chalmers.project.data.MatchDBAdapter;
 import edu.chalmers.project.data.PlayerDBAdapter;
 
@@ -71,7 +72,6 @@ public class CreateEventActivity extends FragmentActivity {
     		playerAdapter.open();
     		Cursor cursorPlayer = playerAdapter.getPlayer(this.username);
     		
-    		
     		matchAdapter.createMatch(editTextDate.getText().toString(), editTextTime.getText().toString(), editTextNameEvent.getText().toString(), editTextField.getText().toString(),
     				editTextPlace.getText().toString(), Integer.parseInt(editTextCost.getText().toString()), 
     				Integer.parseInt(editTextPlayersLimit.getText().toString()),
@@ -81,6 +81,7 @@ public class CreateEventActivity extends FragmentActivity {
     		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     		startActivity(intent);
     		matchAdapter.close();
+
     		return true;    
     	default:
     		return super.onOptionsItemSelected(item);
