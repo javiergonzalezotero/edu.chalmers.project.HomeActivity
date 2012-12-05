@@ -1,0 +1,83 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="edu.chalmers.project"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="15"
+        android:targetSdkVersion="15" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+	<uses_permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <application
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <uses-library android:name="com.google.android.maps" /> 
+
+        <activity
+            android:name=".FirstScreenActivity"
+            android:label="@string/title_activity_home">          
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/title_activity_login" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.chalmers.project.FirstScreenActivity" />
+        </activity>
+        
+        <activity
+            android:name=".NewAccountActivity"
+            android:label="@string/title_activity_new_account" 
+            android:uiOptions="splitActionBarWhenNarrow" >       
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.chalmers.project.FirstScreenActivity" />
+        </activity>
+        
+        <activity
+            android:name=".CreateEventActivity"
+            android:label="@string/title_activity_new_account" 
+            android:uiOptions="splitActionBarWhenNarrow" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.chalmers.project.FirstScreenActivity" />
+        </activity>
+        
+        <activity
+            android:name=".HomeActivity"
+            android:label="@string/title_activity_new_account" 
+            android:uiOptions="splitActionBarWhenNarrow" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.chalmers.project.FirstScreenActivity" />
+        </activity>
+  
+        <activity
+            android:name=".MatchActivity"
+            android:label="@string/title_activity_new_account" 
+            android:uiOptions="splitActionBarWhenNarrow" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.chalmers.project.FirstScreenActivity" />
+        </activity>
+        
+        <activity
+            android:name=".PopupCalendarActivity"
+            android:label="@string/popup_calendar_date_of_birth"
+            android:theme="@android:style/Theme.Dialog" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.chalmers.project.FirstScreenActivity" />
+        </activity>
+
+    </application>
+
+</manifest>
