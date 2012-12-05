@@ -7,9 +7,10 @@
         android:id="@+id/spinner1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:entries="@array/spinner_matches" />
-
-    <ListView
+		android:entries="@array/spinner_matches" />
+
+
+    	<ListView
         android:id="@+id/listViewHomeMatches"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

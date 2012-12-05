@@ -149,22 +149,31 @@ public class PlayerDBAdapter {
     }
 
     /**
-     * Update the car.
+     * Update the player.
      * 
-     * @param rowId
-     * @param name
-     * @param model
-     * @param year
+     * @param username
+     * @param password
+     * @param firstname
+     * @param familyname
+     * @param mail
+     * @param position
+     * @param city
+     * @param birthdate
      * @return true if the note was successfully updated, false otherwise
      */
-   /* public boolean updateCar(long rowId, String name, String model,
-            String year){
+    public boolean updatePlayer( String username, String password, String firstname, String familyname,
+            String mail, String position, String city, String birthdate){
         ContentValues args = new ContentValues();
-        args.put(NAME, name);
-        args.put(MODEL, model);
-        args.put(YEAR, year);
+        args.put(USERNAME, username);
+        args.put(PASSWORD, password);
+        args.put(FIRSTNAME, firstname);
+        args.put(FAMILYNAME, familyname);
+        args.put(MAIL, mail);
+        args.put(POSITION, position);
+        args.put(CITY, city);
+        args.put(BIRTHDATE, birthdate);
 
-        return this.mDb.update(DATABASE_TABLE, args, ROW_ID + "=" + rowId, null) >0; 
+        return this.mDb.update(DATABASE_TABLE, args, USERNAME + "=" + "'" + username + "'", null) >0; 
     }
-    */
+    
 }
