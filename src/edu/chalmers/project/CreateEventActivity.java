@@ -63,8 +63,6 @@ public class CreateEventActivity extends FragmentActivity {
     				editTextPlace.getText().toString(), Integer.parseInt(editTextCost.getText().toString()), 
     				Integer.parseInt(editTextPlayersLimit.getText().toString()),
     				11);
-            Toast.makeText(this, matchAdapter.getMatch(2).getString(0) + matchAdapter.getMatch(2).getString(1) +
-            		matchAdapter.getMatch(2).getString(2) + matchAdapter.getMatch(2).getString(3), Toast.LENGTH_LONG).show();
     		Intent intent = new Intent(this, HomeActivity.class);
     		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
     		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
