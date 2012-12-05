@@ -23,14 +23,14 @@ import edu.chalmers.project.data.MatchDBAdapter;
 public class HomeFragment extends Fragment {
 
 	private ArrayList<Match> matchList = new ArrayList();
-
+	Bundle bundle;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
 		View view = inflater.inflate(R.layout.home_fragment, container, false);
 		view.setClickable(true);
 		this.setHasOptionsMenu(true);
-
+		bundle = getActivity().getIntent().getExtras();
 		MatchDBAdapter matchAdapter = new MatchDBAdapter(container.getContext());
 		matchAdapter.open();
 
@@ -45,7 +45,9 @@ public class HomeFragment extends Fragment {
 				
 				int idMatch = matchList.get(position).getId();
 
+		    	String username = bundle.getString("username");
 				Intent intent = new Intent(getActivity(), MatchActivity.class);
+				intent.putExtra("username", username);
 				intent.putExtra("position_id_match", idMatch);
 				startActivity(intent);
 

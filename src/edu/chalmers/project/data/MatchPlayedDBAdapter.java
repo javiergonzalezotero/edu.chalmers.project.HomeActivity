@@ -89,6 +89,21 @@ public class MatchPlayedDBAdapter {
     }
     
     
+    public ArrayList<Player> getTeam(int team, long idMatch){
+    	ArrayList<Player> teamList = new ArrayList<Player>();
+    	Cursor mCursor = this.mDb.query(true, DATABASE_TABLE, new String[] {PLAYERUSERNAME},
+    			ID_MATCH + "="  + idMatch + "&"+ TEAM +"=" + team, null,null,null,null,null);
+    	if (mCursor != null) {
+            mCursor.moveToFirst();
+        }
+    	while(!(mCursor.isAfterLast())){
+    		Player newPlayer = new Player(mCursor.getString(0), null);
+    		teamList.add(newPlayer);
+    		mCursor.moveToNext();
+    	}
+    	return teamList;
+    }
+    
     /**
      * Return a Cursor positioned at the match that matches the given rowId
      * @param rowId

@@ -9,6 +9,8 @@ import android.widget.Toast;
 
 import com.google.android.maps.MapActivity;
 
+import edu.chalmers.project.data.MatchPlayedDBAdapter;
+
 public class MatchActivity extends MapActivity {
 
 	@Override
@@ -17,8 +19,6 @@ public class MatchActivity extends MapActivity {
         
         setContentView(R.layout.activity_match);   
         
-        Bundle b = getIntent().getExtras();
-        int position = b.getInt("postion_match");
         
          ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -65,7 +65,13 @@ public class MatchActivity extends MapActivity {
     
     
     public void joinHost(View view){
-    	
+    	MatchPlayedDBAdapter adapter = new MatchPlayedDBAdapter(this);
+    	adapter.open();
+    	Bundle bundle = this.getIntent().getExtras();
+    	String playerUsername = bundle.getString("username");
+    	int idMatch = bundle.getInt("position_id_match");
+    	adapter.joinMatch(playerUsername, idMatch, 1);
+    	adapter.close();
     }
     
     public void joinGuest(View view){
