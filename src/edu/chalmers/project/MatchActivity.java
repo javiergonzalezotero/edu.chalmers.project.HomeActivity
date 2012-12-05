@@ -2,7 +2,6 @@ package edu.chalmers.project;
 
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -14,7 +13,10 @@ public class MatchActivity extends MapActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        setContentView(R.layout.activity_match);        
+        setContentView(R.layout.activity_match);   
+        
+        Bundle b = getIntent().getExtras();
+        int position = b.getInt("postion_match");
         
          ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);

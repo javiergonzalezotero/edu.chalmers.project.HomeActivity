@@ -81,7 +81,9 @@ public class HomeActivity extends MapActivity {
 			return true;
 		
     	case R.id.menu_add_new_event: //Add event in home fragment
+    		Bundle b2 = this.getIntent().getExtras();
     		Intent intent = new Intent(this,CreateEventActivity.class);
+    		intent.putExtras(b2);
     		startActivity(intent);
     		return true;
     	case R.id.menu_edit_profile: //Edit profile in profile fragment

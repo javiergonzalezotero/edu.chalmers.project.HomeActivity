@@ -4,13 +4,15 @@ package edu.chalmers.project;
 import java.util.ArrayList;
 
 import android.app.Fragment;
-import android.database.Cursor;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -35,6 +37,16 @@ public class HomeFragment extends Fragment {
         this.matchList = matchAdapter.getMatchList();
     	ListView lvList = (ListView) view.findViewById(R.id.listViewHomeMatches);
         lvList.setAdapter(new ArrayAdapter<Match>(container.getContext(), android.R.layout.simple_list_item_1, this.matchList));
+        
+        lvList.setOnItemClickListener(new OnItemClickListener(){
+        	@Override
+        	public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+        			Intent intent = new Intent(getActivity(), MatchActivity.class);
+        			intent.putExtra("position_match", position);
+        			startActivity(intent);
+        		
+        	}
+        });
         
         return view;
        
