@@ -31,5 +31,13 @@
     <string name="popup_calendar_date_of_birth">Date of birth</string>
     <string name="MVP">MVP: </string>
     <string name="Incidents">Incidents: </string>
+    <string name="edit_profile_menu">Edit Profile</string>
+    <string-array name="positions">
+        <item /><item >Goalkeeper</item>
+        <item >Defender</item>
+        <item >Midfielder</item>
+        <item >Forward</item>
+        
+    </string-array>
 
 </resources>

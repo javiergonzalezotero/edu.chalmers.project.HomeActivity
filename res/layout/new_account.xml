@@ -1,117 +1,0 @@
-<ScrollView  
-    xmlns:android="http://schemas.android.com/apk/res/android"  
-    android:id="@+id/ScrollViewNewAccount"  
-    android:layout_width="fill_parent"  
-    android:layout_height="fill_parent"  
-    android:scrollbars="vertical"> 
-
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:padding="10dip" >
-
-    <EditText
-        android:id="@+id/editTextUsername"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Username" >
-
-        <requestFocus />
-    </EditText>
-
-    <EditText
-        android:id="@+id/editTextPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Password" />
-
-        <EditText
-            android:id="@+id/editTextMail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Mail" />
-
-        <EditText
-            android:id="@+id/editTextFirstname"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Firstname" />
-
-        <EditText
-            android:id="@+id/editTextFamilyName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Family Name" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="14dp"
-                android:text="Sex :"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <RadioGroup
-                android:id="@+id/radioGroupSex"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:orientation="vertical" >
-
-                <RadioButton
-                    android:id="@+id/radioM"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:text="Male" />
-
-                <RadioButton
-                    android:id="@+id/radioF"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Female" />
-            </RadioGroup>
-
-        </RelativeLayout>
-
-        <EditText
-            android:id="@+id/editTextFieldPosition"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Field Position" />
-
-        <EditText
-            android:id="@+id/editTextDateOfBirth"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Date of Birth"
-            android:onClick="showTimePickerDialog" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-
-        </RelativeLayout>
-
-    </LinearLayout>
-    
-
-</ScrollView>  
-    
-

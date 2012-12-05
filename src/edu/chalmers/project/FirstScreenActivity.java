@@ -34,6 +34,7 @@ public class FirstScreenActivity extends Activity {
      */
     public void createAccount(View view){
     	Intent intent = new Intent(this, NewAccountActivity.class);
+    	intent.putExtra("username", "");
     	startActivity(intent);
     }
 
