@@ -2,6 +2,7 @@ package edu.chalmers.project.data;
 
 public class Match {
 	
+	private int id;
 	private String name;
 	private String date;
 	private String time;
@@ -11,7 +12,8 @@ public class Match {
 	private int numberPlayers;
 	private int id_organizer;
 	
-	public Match(String name, String date, String time, String location, String field, int cost, int numberPlayers, int id_organizer){
+	public Match(int id, String name, String date, String time, String location, String field, int cost, int numberPlayers, int id_organizer){
+		this.id = id;
 		this.name=name;
 		this.date=date;
 		this.time=time;
@@ -20,6 +22,22 @@ public class Match {
 		this.cost=cost;
 		this.numberPlayers=numberPlayers;
 		this.id_organizer=id_organizer;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public int getId_organizer() {
+		return id_organizer;
+	}
+
+	public void setId_organizer(int id_organizer) {
+		this.id_organizer = id_organizer;
 	}
 
 	public String getName() {

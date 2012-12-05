@@ -138,7 +138,7 @@ public class MatchDBAdapter {
     	
     	
     	while(cursor.getCount() != 0){
-    		Match m = new Match(cursor.getString(3),cursor.getString(1),cursor.getString(2),cursor.getString(5),cursor.getString(4),
+    		Match m = new Match(rowId, cursor.getString(3),cursor.getString(1),cursor.getString(2),cursor.getString(5),cursor.getString(4),
     				Integer.parseInt(cursor.getString(6)),Integer.parseInt(cursor.getString(7)), Integer.parseInt(cursor.getString(8)));
 	    	this.matchList.add(m);
 	    	rowId = rowId + 1;
