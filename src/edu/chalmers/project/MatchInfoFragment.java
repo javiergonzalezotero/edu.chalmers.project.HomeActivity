@@ -22,7 +22,7 @@ public class MatchInfoFragment extends Fragment {
     	view.setClickable(true);
             
     	Bundle b = getActivity().getIntent().getExtras();
-        int position = b.getInt("position_match") + 1;        
+        int position = b.getInt("position_id_match");        
         
         TextView idOrganizer = (TextView)view.findViewById(R.id.textViewIdOrganizerMatch);
         TextView nameMatch = (TextView)view.findViewById(R.id.textViewNameOfMatch);
