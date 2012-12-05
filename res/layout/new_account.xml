@@ -1,0 +1,152 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ScrollViewNewAccount"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:scrollbars="vertical" >
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:padding="10dip" >
+
+        <TextView
+            android:id="@+id/textViewUsername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Username:" />
+
+        <EditText
+            android:id="@+id/editTextUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10" >
+
+            <requestFocus />
+        </EditText>
+
+        <TextView
+            android:id="@+id/textViewPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Password" />
+
+        <EditText
+            android:id="@+id/editTextPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10" />
+
+        <TextView
+            android:id="@+id/textViewMail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="E-mail:" />
+
+        <EditText
+            android:id="@+id/editTextMail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10" />
+
+        <TextView
+            android:id="@+id/textViewFirstname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="First Name:" />
+
+        <EditText
+            android:id="@+id/editTextFirstname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10" />
+
+        <TextView
+            android:id="@+id/textViewFamilyName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Family Name:" />
+
+        <EditText
+            android:id="@+id/editTextFamilyName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="14dp"
+                android:text="Sex :"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <RadioGroup
+                android:id="@+id/radioGroupSex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:orientation="vertical" >
+
+                <RadioButton
+                    android:id="@+id/radioM"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="Male" />
+
+                <RadioButton
+                    android:id="@+id/radioF"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Female" />
+            </RadioGroup>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/textViewFieldPosition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Field Position:" />
+
+        <Spinner
+            android:id="@+id/spinnerFieldPosition"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/positions" />
+
+        <TextView
+            android:id="@+id/textViewDateOfBirth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DateOfBirth:" />
+
+        <EditText
+            android:id="@+id/editTextDateOfBirth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:onClick="showTimePickerDialog" />
+
+        <TextView
+            android:id="@+id/textViewCity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="City:" />
+
+        <EditText
+            android:id="@+id/editTextCity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10" />
+    </LinearLayout>
+
+</ScrollView>
