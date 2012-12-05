@@ -119,7 +119,7 @@ public class MatchDBAdapter {
 
         Cursor mCursor =
 
-        this.mDb.query(true, DATABASE_TABLE, new String[] { ROW_ID, DATE,
+        this.mDb.query(true, DATABASE_TABLE, new String[] { ROW_ID, DATE, TIME,
         		NAME, FIELD, LOCATION, COST, NUMBER_PLAYERS, ID_ORGANIZER}, ROW_ID + "=" + rowId, null, null, null, null, null);
         if (mCursor != null) {
             mCursor.moveToFirst();
@@ -138,7 +138,8 @@ public class MatchDBAdapter {
     	
     	
     	while(cursor.getCount() != 0){
-    		Match m = new Match(cursor.getString(2), "ok","ok","ok","ok",1,1);
+    		Match m = new Match(cursor.getString(3),cursor.getString(1),cursor.getString(2),cursor.getString(5),cursor.getString(4),
+    				Integer.parseInt(cursor.getString(6)),Integer.parseInt(cursor.getString(7)), Integer.parseInt(cursor.getString(8)));
 	    	this.matchList.add(m);
 	    	rowId = rowId + 1;
 	    	cursor = this.getMatch(rowId);    	

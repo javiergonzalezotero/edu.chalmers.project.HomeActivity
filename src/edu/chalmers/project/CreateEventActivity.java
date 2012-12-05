@@ -3,6 +3,7 @@ package edu.chalmers.project;
 
 import android.app.ActionBar;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -11,8 +12,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 import edu.chalmers.project.data.MatchDBAdapter;
+import edu.chalmers.project.data.PlayerDBAdapter;
 
 public class CreateEventActivity extends FragmentActivity {
 	
@@ -24,11 +25,17 @@ public class CreateEventActivity extends FragmentActivity {
 	private EditText editTextOrganizer;
 	private EditText editTextTime;
 	private EditText editTextDate;
+	private Bundle b;
+	private String username;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_event);
+        
+        this.b = getIntent().getExtras();
+        this.username = this.b.getString("username");
+        
         editTextNameEvent = (EditText)findViewById(R.id.editTextNameEvent);
         editTextPlace = (EditText)findViewById(R.id.editTextPlace);
         editTextField = (EditText)findViewById(R.id.editTextField);
@@ -57,12 +64,18 @@ public class CreateEventActivity extends FragmentActivity {
 			onBackPressed();
 			return true;
     	case R.id.menu_create:
+    		
     		MatchDBAdapter matchAdapter = new MatchDBAdapter(this);
     		matchAdapter.open();
+    		PlayerDBAdapter playerAdapter = new PlayerDBAdapter(this);
+    		playerAdapter.open();
+    		Cursor cursorPlayer = playerAdapter.getPlayer(this.username);
+    		
+    		
     		matchAdapter.createMatch(editTextDate.getText().toString(), editTextTime.getText().toString(), editTextNameEvent.getText().toString(), editTextField.getText().toString(),
     				editTextPlace.getText().toString(), Integer.parseInt(editTextCost.getText().toString()), 
     				Integer.parseInt(editTextPlayersLimit.getText().toString()),
-    				11);
+    				Integer.parseInt(cursorPlayer.getString(9)));
     		Intent intent = new Intent(this, HomeActivity.class);
     		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
     		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

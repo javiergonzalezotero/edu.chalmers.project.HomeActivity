@@ -9,14 +9,17 @@ public class Match {
 	private String field;
 	private int cost;
 	private int numberPlayers;
+	private int id_organizer;
 	
-	public Match(String name, String date, String time, String location, String field, int cost, int numberPlayers){
+	public Match(String name, String date, String time, String location, String field, int cost, int numberPlayers, int id_organizer){
 		this.name=name;
 		this.date=date;
+		this.time=time;
 		this.location=location;
 		this.field=field;
 		this.cost=cost;
 		this.numberPlayers=numberPlayers;
+		this.id_organizer=id_organizer;
 	}
 
 	public String getName() {
