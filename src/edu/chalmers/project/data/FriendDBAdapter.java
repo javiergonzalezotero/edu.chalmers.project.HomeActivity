@@ -84,6 +84,11 @@ public class FriendDBAdapter {
         return this.mDb.insert(DATABASE_TABLE, null, initialValues);
     }
     
+    public boolean deleteFriendship(String playerUsername, String friendUsername){
+    	return this.mDb.delete(DATABASE_TABLE, 
+    			PLAYERUSERNAME + "= '" + playerUsername + "' AND " + 
+    			FRIENDUSERNAME +" = '" + friendUsername +"'", null) > 0;
+    }
     
     /**
      * Return a Cursor positioned at the match that matches the given rowId
@@ -120,25 +125,14 @@ public class FriendDBAdapter {
     	return friendList;
     }
     
-    /**
-     * @return Return the list of all the matches
-     */
- /*   public ArrayList<Match> getMatchList() {
-    	
-    	int rowId = 1;
-    	Cursor cursor;
-    	cursor = this.getMatch(rowId);
-    	
-    	
-    	while(cursor.getCount() != 0){
-    		Match m = new Match(cursor.getString(2), "ok","ok","ok","ok",1,1);
-	    	this.matchList.add(m);
-	    	rowId = rowId + 1;
-	    	cursor = this.getMatch(rowId);    	
-    	}
-    	
-    	
-    	return this.matchList;
-    }
-*/
+   public boolean isFriend(String username, String otherUsername){
+	   Cursor mCursor = this.mDb.query(true, DATABASE_TABLE, new String[] {FRIENDUSERNAME},
+   			PLAYERUSERNAME + "=" + "'" + username + "'" + " AND " +
+   		    FRIENDUSERNAME + "=" + "'" + otherUsername + "'", null,null,null,null,null);
+	   boolean b = false;
+	   if (mCursor != null) {
+		   b= mCursor.moveToFirst();
+       }
+	   return b; 
+   }
 }

@@ -1,33 +1,44 @@
 package edu.chalmers.project;
 
 
+import java.util.ArrayList;
+
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.ListView;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.google.android.maps.MapActivity;
 
-import edu.chalmers.project.data.DBAdapter;
+import edu.chalmers.project.data.FriendDBAdapter;
+import edu.chalmers.project.data.Match;
+import edu.chalmers.project.data.Player;
 import edu.chalmers.project.data.PlayerDBAdapter;
 
 public class HomeActivity extends MapActivity {
 	
+	private AutoCompleteTextView acTextView;
+	private ArrayList<Player> searchList;
+	Bundle bundle;
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         
-       
-
+        bundle = this.getIntent().getExtras();
+        int tabPosition = bundle.getInt("tab_position");
+        
         ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -57,6 +68,8 @@ public class HomeActivity extends MapActivity {
                         this, "search", SearchFragment.class));
         actionBar.addTab(tab);
         
+        actionBar.setSelectedNavigationItem(tabPosition);
+        
        /* final TextView view = (TextView) findViewById(R.id.textViewMatchPlayed);
         view.setOnClickListener(new View.OnClickListener() {
 
@@ -81,12 +94,45 @@ public class HomeActivity extends MapActivity {
 	    	intent.putExtras(bundle);
 	    	startActivity(intent);
 	 }
+	 
+	 public void searchPlayer(View view){
+		 acTextView = (AutoCompleteTextView)findViewById(R.id.autoCompleteTextViewSearch);
+		 String searchText = acTextView.getText().toString();
+		 this.searchList = new ArrayList<Player>();
+		 PlayerDBAdapter adapter = new PlayerDBAdapter(this);
+		 adapter.open();
+		 searchList = adapter.searchPlayer(searchText);
+		 adapter.close();
+		 ListView lvList = (ListView) findViewById(R.id.listViewSearchResult);
+		 lvList.setAdapter(new ArrayAdapter<Player>(this, android.R.layout.simple_list_item_1, searchList));
+		 lvList.setOnItemClickListener(new OnItemClickListener(){
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+					
+					
+					String otherUsername = searchList.get(position).getUsername();
+			    	String username = bundle.getString("username");
+					Intent intent = new Intent(view.getContext(), HomeActivity.class);
+					intent.putExtra("username", username);
+					intent.putExtra("other_username", otherUsername);
+					intent.putExtra("tab_position", 2);
+					startActivity(intent);
+
+				}
+			});
+		 
+	 }
 	
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
     	switch (item.getItemId()) {
     	case android.R.id.home:
-			onBackPressed();
+    		bundle = this.getIntent().getExtras();
+    		Intent i = new Intent(this,HomeActivity.class);
+    		i.putExtras(bundle);
+    		i.putExtra("tab_position", 0);
+    		i.putExtra("other_username", (String)null);
+    		startActivity(i);
 			return true;
 		
     	case R.id.menu_add_new_event: //Add event in home fragment
@@ -100,6 +146,26 @@ public class HomeActivity extends MapActivity {
     		Intent intent2 = new Intent(this,NewAccountActivity.class);
     		intent2.putExtras(b);
     		startActivity(intent2);
+    		return true;
+    	case R.id.menu_add_friend:
+    		bundle = this.getIntent().getExtras();
+    		String username = bundle.getString("username");
+    		String friend = bundle.getString("other_username");
+    		FriendDBAdapter adapter = new FriendDBAdapter(this);
+    		adapter.open();
+    		adapter.createFriendship(username, friend);
+    		adapter.close();
+    		Toast.makeText(this, "Friend added", Toast.LENGTH_LONG).show();
+    		return true;
+    	case R.id.menu_remove_friend:
+    		bundle = this.getIntent().getExtras();
+    		String username2 = bundle.getString("username");
+    		String friend2 = bundle.getString("other_username");
+    		FriendDBAdapter adapter2 = new FriendDBAdapter(this);
+    		adapter2.open();
+    		adapter2.deleteFriendship(username2, friend2);
+    		adapter2.close();
+    		Toast.makeText(this, "Friend removed", Toast.LENGTH_LONG).show();
     		return true;
     	default:
     		return super.onOptionsItemSelected(item);

@@ -90,6 +90,7 @@ public class CreateEventActivity extends FragmentActivity {
     		playerAdapter.close();
     		
     		Intent intent = new Intent(this, HomeActivity.class);
+    		intent.putExtra("tab_position", 0);
     		intent.putExtras(b);
     		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
     		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

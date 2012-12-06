@@ -82,6 +82,7 @@ public class NewAccountActivity extends FragmentActivity {
 	            	updatePlayer(playerAdapter);
 	            	intent = new Intent(this, HomeActivity.class);
 	            	intent.putExtras(b);
+	            	intent.putExtra("tab_position", 2);
 	            }
 	            else{
 	            playerAdapter.createPlayer(editTextUsername.getText().toString(), 
