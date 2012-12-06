@@ -5,6 +5,7 @@ import android.app.ActionBar.Tab;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.maps.MapActivity;
@@ -81,6 +82,16 @@ public class MatchActivity extends MapActivity {
     	String playerUsername = bundle.getString("username");
     	int idMatch = bundle.getInt("position_id_match");
     	adapter.joinMatch(playerUsername, idMatch, 2);
+    	adapter.close();
+    }
+    
+    public void quitMatch(View view){
+    	MatchPlayedDBAdapter adapter = new MatchPlayedDBAdapter(this);
+    	adapter.open();
+    	Bundle bundle = this.getIntent().getExtras();
+    	String playerUsername = bundle.getString("username");
+    	int idMatch = bundle.getInt("position_id_match");
+    	adapter.quitMatch(playerUsername, idMatch);
     	adapter.close();
     }
 }

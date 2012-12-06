@@ -12,7 +12,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 import edu.chalmers.project.data.MatchDBAdapter;
+import edu.chalmers.project.data.MatchPlayedDBAdapter;
 import edu.chalmers.project.data.PlayerDBAdapter;
 
 public class CreateEventActivity extends FragmentActivity {
@@ -67,18 +69,26 @@ public class CreateEventActivity extends FragmentActivity {
     		
     		MatchDBAdapter matchAdapter = new MatchDBAdapter(this);
     		matchAdapter.open();
+    		MatchPlayedDBAdapter adapter = new MatchPlayedDBAdapter(this);
+        	adapter.open();
     		PlayerDBAdapter playerAdapter = new PlayerDBAdapter(this);
     		playerAdapter.open();
     		Cursor cursorPlayer = playerAdapter.getPlayer(this.username);
     		
     		
-    		matchAdapter.createMatch(editTextDate.getText().toString(), editTextTime.getText().toString(), editTextNameEvent.getText().toString(), editTextField.getText().toString(),
-    				editTextPlace.getText().toString(), Integer.parseInt(editTextCost.getText().toString()), 
+    		long rowId = matchAdapter.createMatch(editTextDate.getText().toString(), 
+    				editTextTime.getText().toString(), editTextNameEvent.getText().toString(), 
+    				editTextField.getText().toString(),editTextPlace.getText().toString(), 
+    				Integer.parseInt(editTextCost.getText().toString()), 
     				Integer.parseInt(editTextPlayersLimit.getText().toString()),
     				Integer.parseInt(cursorPlayer.getString(9)));
+    		adapter.joinMatch(b.getString("username"), rowId, 1);//Join host team automatically
+    		
+        	adapter.close();
     		matchAdapter.close();
     		cursorPlayer.close();
     		playerAdapter.close();
+    		
     		Intent intent = new Intent(this, HomeActivity.class);
     		intent.putExtras(b);
     		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 

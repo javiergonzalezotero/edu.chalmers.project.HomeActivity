@@ -89,6 +89,11 @@ public class MatchPlayedDBAdapter {
     }
     
     
+    public boolean quitMatch(String playerUsername, long idMatch){
+    	return this.mDb.delete(DATABASE_TABLE, 
+    			PLAYERUSERNAME + "= '" + playerUsername + "' AND " + ID_MATCH +" = "+idMatch, null) > 0; 
+    }
+    
     public ArrayList<Player> getTeam(int team, long idMatch){
     	ArrayList<Player> teamList = new ArrayList<Player>();
     	Cursor mCursor = this.mDb.query(true, DATABASE_TABLE, new String[] {PLAYERUSERNAME},
