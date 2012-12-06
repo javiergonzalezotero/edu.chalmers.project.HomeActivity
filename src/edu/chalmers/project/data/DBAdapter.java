@@ -44,7 +44,7 @@ public class DBAdapter {
 			+ MatchPlayedDBAdapter.PLAYERUSERNAME+ " TEXT,"
 			+ MatchPlayedDBAdapter.ID_MATCH+ " INTEGER, "
 			+ MatchPlayedDBAdapter.TEAM+ " INTEGER, "
-			+ MatchPlayedDBAdapter.PRESENT + "INTEGER"+ ");"; 
+			+ MatchPlayedDBAdapter.PRESENT + " INTEGER "+ ");"; 
 	
 	private static final String CREATE_TABLE_GOAL =
 			   "create table if not exists  goal(_id integer primary key autoincrement, " 

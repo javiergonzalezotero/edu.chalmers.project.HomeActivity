@@ -84,7 +84,7 @@ public class MatchPlayedDBAdapter {
         initialValues.put(PLAYERUSERNAME, playerUsername);
         initialValues.put(ID_MATCH, idMatch);
         initialValues.put(TEAM, team);
-        initialValues.put(PRESENT, true);
+        initialValues.put(PRESENT, 1);
         return this.mDb.insert(DATABASE_TABLE, null, initialValues);
     }
     
@@ -110,39 +110,4 @@ public class MatchPlayedDBAdapter {
      * @return Cursor positioned to matching car, if found
      * @throws SQLException if player could not be found/retrieved
      */
-  /*  public Cursor getMatch(long rowId) throws SQLException {
-
-        Cursor mCursor =
-
-        this.mDb.query(true, DATABASE_TABLE, new String[] { ROW_ID, DATE,
-        		NAME, FIELD, LOCATION, COST, NUMBER_PLAYERS, ID_ORGANIZER}, ROW_ID + "=" + rowId, null, null, null, null, null);
-        if (mCursor != null) {
-            mCursor.moveToFirst();
-        }
-        return mCursor;
-    }
-    */
-   
-    
-    /**
-     * @return Return the list of all the matches
-     */
- /*   public ArrayList<Match> getMatchList() {
-    	
-    	int rowId = 1;
-    	Cursor cursor;
-    	cursor = this.getMatch(rowId);
-    	
-    	
-    	while(cursor.getCount() != 0){
-    		Match m = new Match(cursor.getString(2), "ok","ok","ok","ok",1,1);
-	    	this.matchList.add(m);
-	    	rowId = rowId + 1;
-	    	cursor = this.getMatch(rowId);    	
-    	}
-    	
-    	
-    	return this.matchList;
-    }
-*/
 }
