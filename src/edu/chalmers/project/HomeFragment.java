@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 import edu.chalmers.project.data.Match;
 import edu.chalmers.project.data.MatchDBAdapter;
 
@@ -45,8 +46,11 @@ public class HomeFragment extends Fragment {
 				
 				
 				int idMatch = matchList.get(position).getId();
-
-		    	String username = bundle.getString("username");
+				if(bundle==null){
+					Toast.makeText(getActivity(), "EEEErrrorrrr", Toast.LENGTH_LONG).show();
+					return ;
+				}
+		    	String username = bundle.getString("username");//Error
 				Intent intent = new Intent(getActivity(), MatchActivity.class);
 				intent.putExtra("username", username);
 				intent.putExtra("position_id_match", idMatch);

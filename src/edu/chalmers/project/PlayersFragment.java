@@ -18,11 +18,13 @@ public class PlayersFragment extends Fragment {
 
 	public static final int HOST = 1;
 	public static final int GUEST = 2;
-	private ArrayList<Player> hostTeam = new ArrayList<Player>();
-	private ArrayList<Player> guestTeam = new ArrayList<Player>();
+	
 	
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    	
+    	ArrayList<Player> hostTeam = new ArrayList<Player>();
+    	ArrayList<Player> guestTeam = new ArrayList<Player>();
         // Inflate the layout for this fragment
     	View view = inflater.inflate(R.layout.players_fragment, container, false);
     	view.setClickable(true);
@@ -33,13 +35,13 @@ public class PlayersFragment extends Fragment {
     	MatchPlayedDBAdapter matchPlayedAdapter = new MatchPlayedDBAdapter(container.getContext());
         matchPlayedAdapter.open();
    
-        this.hostTeam = matchPlayedAdapter.getTeam(HOST, idMatch);
-        this.guestTeam = matchPlayedAdapter.getTeam(GUEST, idMatch);
+        hostTeam = matchPlayedAdapter.getTeam(HOST, idMatch);
+        guestTeam = matchPlayedAdapter.getTeam(GUEST, idMatch);
         matchPlayedAdapter.close();
     	ListView lvListHost = (ListView) view.findViewById(R.id.listViewHostTeam);
     	ListView lvListGuest = (ListView) view.findViewById(R.id.listViewGuestTeam);
-        lvListHost.setAdapter(new ArrayAdapter<Player>(container.getContext(), android.R.layout.simple_list_item_1, this.hostTeam));
-        lvListGuest.setAdapter(new ArrayAdapter<Player>(container.getContext(), android.R.layout.simple_list_item_1, this.guestTeam));
+        lvListHost.setAdapter(new ArrayAdapter<Player>(container.getContext(), android.R.layout.simple_list_item_1, hostTeam));
+        lvListGuest.setAdapter(new ArrayAdapter<Player>(container.getContext(), android.R.layout.simple_list_item_1,guestTeam));
 
         
       /*  lvList.setOnItemClickListener(new OnItemClickListener(){

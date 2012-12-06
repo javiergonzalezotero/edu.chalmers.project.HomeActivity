@@ -70,17 +70,21 @@ public class CreateEventActivity extends FragmentActivity {
     		PlayerDBAdapter playerAdapter = new PlayerDBAdapter(this);
     		playerAdapter.open();
     		Cursor cursorPlayer = playerAdapter.getPlayer(this.username);
-    		playerAdapter.close();
+    		
     		
     		matchAdapter.createMatch(editTextDate.getText().toString(), editTextTime.getText().toString(), editTextNameEvent.getText().toString(), editTextField.getText().toString(),
     				editTextPlace.getText().toString(), Integer.parseInt(editTextCost.getText().toString()), 
     				Integer.parseInt(editTextPlayersLimit.getText().toString()),
     				Integer.parseInt(cursorPlayer.getString(9)));
+    		matchAdapter.close();
+    		cursorPlayer.close();
+    		playerAdapter.close();
     		Intent intent = new Intent(this, HomeActivity.class);
+    		intent.putExtras(b);
     		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
     		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     		startActivity(intent);
-    		matchAdapter.close();
+    		
     		return true;    
     	default:
     		return super.onOptionsItemSelected(item);

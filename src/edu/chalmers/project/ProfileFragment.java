@@ -66,6 +66,7 @@ public class ProfileFragment extends Fragment {
         ageTextView.setText(calculateAge(cursor.getString(8)));
         reliabilityLevelTextView.setText(cursor.getString(5));
         positionTextView.setText(cursor.getString(6));
+        cursor.close();
         adapter.close();
     }
     /*

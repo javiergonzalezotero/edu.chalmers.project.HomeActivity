@@ -46,6 +46,7 @@ public class LoginActivity extends Activity {
         else {
 			Toast.makeText(this, "Password incorrect ", Toast.LENGTH_LONG).show();
 		}
+        cursor.close();
         playerAdapter.close();
     }
 

@@ -92,7 +92,7 @@ public class MatchPlayedDBAdapter {
     public ArrayList<Player> getTeam(int team, long idMatch){
     	ArrayList<Player> teamList = new ArrayList<Player>();
     	Cursor mCursor = this.mDb.query(true, DATABASE_TABLE, new String[] {PLAYERUSERNAME},
-    			ID_MATCH + "="  + idMatch + "&"+ TEAM +"=" + team, null,null,null,null,null);
+    			ID_MATCH + " = "  + idMatch + " AND "+ TEAM +" = " + team, null,null,null,null,null);
     	if (mCursor != null) {
             mCursor.moveToFirst();
         }
@@ -101,6 +101,7 @@ public class MatchPlayedDBAdapter {
     		teamList.add(newPlayer);
     		mCursor.moveToNext();
     	}
+    	mCursor.close();
     	return teamList;
     }
     
