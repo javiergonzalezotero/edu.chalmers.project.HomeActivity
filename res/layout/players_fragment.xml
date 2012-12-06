@@ -58,6 +58,13 @@
 
 			</ListView>
 
+			<Button
+			    android:id="@+id/buttonQuitHost"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:text="Quit" 
+			    android:onClick="quitMatch"
+			    android:visibility="invisible"/>
 
 			<Button android:id="@+id/buttonJoinHost"
 				android:layout_width="wrap_content"
@@ -109,6 +116,13 @@
 
 			</ListView>
 
+			<Button
+			    android:id="@+id/buttonQuitGuest"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:onClick="quitMatch"
+			    android:text="Quit" 
+			    android:visibility="invisible"/>
 
 			<Button android:id="@+id/buttonJoinGuest"
 				android:layout_width="wrap_content"

@@ -46,11 +46,7 @@ public class HomeFragment extends Fragment {
 				
 				
 				int idMatch = matchList.get(position).getId();
-				if(bundle==null){
-					Toast.makeText(getActivity(), "EEEErrrorrrr", Toast.LENGTH_LONG).show();
-					return ;
-				}
-		    	String username = bundle.getString("username");//Error
+		    	String username = bundle.getString("username");
 				Intent intent = new Intent(getActivity(), MatchActivity.class);
 				intent.putExtra("username", username);
 				intent.putExtra("position_id_match", idMatch);

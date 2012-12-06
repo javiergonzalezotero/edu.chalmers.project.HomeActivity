@@ -14,6 +14,8 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import edu.chalmers.project.data.FriendDBAdapter;
+import edu.chalmers.project.data.MatchPlayedDBAdapter;
 import edu.chalmers.project.data.PlayerDBAdapter;
 
 
@@ -48,7 +50,12 @@ public class ProfileFragment extends Fragment {
     	
     	Bundle b = getActivity().getIntent().getExtras();
         String username = b.getString("username");
-        inflatePlayer(username);
+        String otherUsername = b.getString("other_username");
+        if (otherUsername==null)
+        	inflatePlayer(username);
+        else {
+			inflatePlayer(otherUsername);
+		}
         return view;
        
     }
@@ -92,9 +99,26 @@ public class ProfileFragment extends Fragment {
     
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
-    	inflater.inflate(R.menu.profile_fragment, menu);
+    	Bundle b = getActivity().getIntent().getExtras();
+        String otherUsername = b.getString("other_username");
+        String username = b.getString("username");
+        if (otherUsername==null)
+        	inflater.inflate(R.menu.profile_fragment, menu);
+        else if (isMyFriend(username, otherUsername)){
+			inflater.inflate(R.menu.friend_profile, menu);
+		} 	
+        else{
+        	inflater.inflate(R.menu.other_profile_fragment, menu);
+        }
     	
     }
     
+    public boolean isMyFriend(String username, String otherUsername){
+    	FriendDBAdapter adapter = new FriendDBAdapter(this.getActivity());
+    	adapter.open();
+    	Boolean b = adapter.isFriend(username, otherUsername);
+    	adapter.close();
+    	return b;
+    }
    
 }

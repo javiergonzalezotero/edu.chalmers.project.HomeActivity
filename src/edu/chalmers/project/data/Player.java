@@ -95,6 +95,14 @@ public class Player {
 	public String toString() {
 		return this.getUsername();
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		Player player = (Player) o;
+		return this.getUsername().equals(player.getUsername());
+	}
+	
+	
 	
 	
 	

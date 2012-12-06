@@ -1,5 +1,7 @@
 package edu.chalmers.project.data;
 
+import java.util.ArrayList;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -173,6 +175,45 @@ public class PlayerDBAdapter {
         args.put(BIRTHDATE, birthdate);
 
         return this.mDb.update(DATABASE_TABLE, args, USERNAME + "=" + "'" + username + "'", null) >0; 
+    }
+    
+    /**
+     * @return Return the list of all the players
+     */
+    public ArrayList<Player> getPlayerList() {
+    	
+    	int rowId = 1;
+    	Cursor cursor;
+    	cursor = this.getPlayer(rowId);
+    	ArrayList<Player> playerList = new ArrayList<Player>();
+    	
+    	while(cursor.getCount() != 0){
+    		Player p = new Player(cursor.getString(2),null);
+	    	playerList.add(p);
+	    	rowId = rowId + 1;
+	    	cursor = this.getPlayer(rowId);    	
+    	}
+    	cursor.close();
+    	
+    	return playerList;
+    }
+    
+    public ArrayList<Player> searchPlayer(String search){
+    	int rowId = 1;
+    	Cursor cursor;
+    	cursor = this.getPlayer(rowId);
+    	ArrayList<Player> playerList = new ArrayList<Player>();
+    	while(cursor.getCount() != 0){
+    		if (cursor.getString(2).startsWith(search)) {
+	    		Player p = new Player(cursor.getString(2),null);
+		    	playerList.add(p);
+    		}
+		   	rowId = rowId + 1;
+	    	cursor = this.getPlayer(rowId);    	
+    	}
+    	cursor.close();
+    	
+    	return playerList;
     }
     
 }
