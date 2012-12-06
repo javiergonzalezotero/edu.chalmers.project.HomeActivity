@@ -116,6 +116,7 @@ public class FriendDBAdapter {
     		friendList.add(friendPlayer);
     		mCursor.moveToNext();
     	}
+    	mCursor.close();
     	return friendList;
     }
     

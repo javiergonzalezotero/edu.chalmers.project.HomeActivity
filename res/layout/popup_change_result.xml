@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayoutPopup"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp" >
+
+    <TextView
+        android:id="@+id/textViewPresent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Present"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/buttonPresentYes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="isPresent"
+            android:text="YES" />
+
+        <Button
+            android:id="@+id/buttonPresentNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="isNotPresent"
+            android:text="NO" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textViewEnterGoal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Goals"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <EditText
+            android:id="@+id/editTextMinuteGoal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="number" >
+
+            <requestFocus />
+        </EditText>
+
+        <Button
+            android:id="@+id/buttonNextGoal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:onClick="addGoal"
+            android:text="Next Goal"
+            android:typeface="normal" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/buttonExcit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/buttonFinish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="finishPopup"
+            android:text="Finish" />
+
+    </LinearLayout>
+
+</LinearLayout>

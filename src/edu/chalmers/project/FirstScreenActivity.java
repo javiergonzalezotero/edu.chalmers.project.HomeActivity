@@ -16,6 +16,7 @@ public class FirstScreenActivity extends Activity {
         setContentView(R.layout.first_screen);
         dbAdapter = new DBAdapter(this);
         dbAdapter.open();
+        dbAdapter.close();
     }
 
     

@@ -29,6 +29,7 @@ public class NewAccountActivity extends FragmentActivity {
 	private EditText editTextFamilyName;
 	private Spinner spinnerFieldPosition;
 	private EditText editTextCity;
+	private Bundle b;
 
 	
     @Override
@@ -36,7 +37,7 @@ public class NewAccountActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_account);
         
-        Bundle b = getIntent().getExtras();
+        b = getIntent().getExtras();
         username = b.getString("username");
         
         editTextdateOfBirth = (EditText)findViewById(R.id.editTextDateOfBirth);
@@ -80,6 +81,7 @@ public class NewAccountActivity extends FragmentActivity {
 	            if (!username.equals("")){
 	            	updatePlayer(playerAdapter);
 	            	intent = new Intent(this, HomeActivity.class);
+	            	intent.putExtras(b);
 	            }
 	            else{
 	            playerAdapter.createPlayer(editTextUsername.getText().toString(), 
@@ -126,6 +128,7 @@ public class NewAccountActivity extends FragmentActivity {
     	spinnerFieldPosition.setSelection(spinnerPosition(cursor.getString(6)));
     	editTextCity.setText(cursor.getString(7));
     	editTextdateOfBirth.setText(cursor.getString(8));
+    	cursor.close();
     	adapter.close();
     }
     
@@ -153,7 +156,7 @@ public class NewAccountActivity extends FragmentActivity {
     }
 
     public void showCalendar(View view){
-    	Intent intent = new Intent(this, PopupCalendarActivity.class);
+    	Intent intent = new Intent(this, PopupChangeResultActivity.class);
     	startActivity(intent);
     }
     

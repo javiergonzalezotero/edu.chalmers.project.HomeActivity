@@ -144,6 +144,7 @@ public class MatchDBAdapter {
 	    	rowId = rowId + 1;
 	    	cursor = this.getMatch(rowId);    	
     	}
+    	cursor.close();
     	
     	return this.matchList;
     }

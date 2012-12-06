@@ -2,6 +2,7 @@ package edu.chalmers.project;
 
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -83,4 +84,14 @@ public class MatchActivity extends MapActivity {
     	adapter.joinMatch(playerUsername, idMatch, 2);
     	adapter.close();
     }
+    
+    public void changeResult(View view){
+    	Bundle bundle = this.getIntent().getExtras();
+    	String playerUsername = bundle.getString("username");
+    	int idMatch = bundle.getInt("position_id_match");
+		Intent intent = new Intent(this, ChangeResultActivity.class);
+		intent.putExtra("position_id_match", idMatch);
+		intent.putExtra("username", playerUsername);
+		startActivity(intent);
+	}
 }

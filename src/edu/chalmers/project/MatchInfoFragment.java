@@ -40,11 +40,11 @@ public class MatchInfoFragment extends Fragment {
         MatchDBAdapter matchAdapter = new MatchDBAdapter(container.getContext());
         matchAdapter.open();
         Cursor cursorMatch = matchAdapter.getMatch(position);
-        matchAdapter.close();
+        
         
         int id_organizer = Integer.parseInt(cursorMatch.getString(8));
         Cursor cursorPlayer = playerAdapter.getPlayer(id_organizer);
-        playerAdapter.close();
+        
         
         idOrganizer.setText(cursorPlayer.getString(2));
         nameMatch.setText(cursorMatch.getString(3));
@@ -55,7 +55,10 @@ public class MatchInfoFragment extends Fragment {
         costMatch.setText(cursorMatch.getString(6));
         limitePlayersMatch.setText(cursorMatch.getString(7));
         
-        
+        cursorPlayer.close();
+        playerAdapter.close();
+        cursorMatch.close();
+        matchAdapter.close();      
         
         return view;
        

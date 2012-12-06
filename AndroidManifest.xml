@@ -1,3 +1,4 @@
+
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="edu.chalmers.project"
     android:versionCode="1"
@@ -79,14 +80,23 @@
         </activity>
         
         <activity
-            android:name=".PopupCalendarActivity"
-            android:label="@string/popup_calendar_date_of_birth"
+            android:name=".PopupChangeResultActivity"
+            
             android:theme="@android:style/Theme.Dialog" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.chalmers.project.FirstScreenActivity" />
         </activity>
-
+        
+        <activity
+            android:name="ChangeResultActivity"
+            android:label="@string/title_activity_new_account" 
+            android:uiOptions="splitActionBarWhenNarrow" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.chalmers.project.FirstScreenActivity" />
+        </activity>
+   
     </application>
 
 </manifest>

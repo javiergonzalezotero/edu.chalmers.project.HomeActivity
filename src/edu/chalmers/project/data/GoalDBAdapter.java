@@ -87,4 +87,52 @@ public class GoalDBAdapter {
         return this.mDb.insert(DATABASE_TABLE, null, initialValues);
     }
     
+    
+    
+    public ArrayList<Goal> getMatchListGoal(long idMatch) throws SQLException {
+
+    	ArrayList<Goal> goalList = new ArrayList<Goal>();
+        Cursor mCursor =
+
+        this.mDb.query(true, DATABASE_TABLE, new String[] { ROW_ID, PLAYERUSERNAME, ID_MATCH,
+        		MINUTE}, ID_MATCH + "=" + idMatch, null, null, null, null, null);
+        if (mCursor != null) {
+            mCursor.moveToFirst();
+        }
+    	while(!(mCursor.isAfterLast())){
+    		Goal newGoal = new Goal(Integer.parseInt(mCursor.getString(0)), mCursor.getString(1), Integer.parseInt(mCursor.getString(2)), 
+    				Integer.parseInt(mCursor.getString(3)));
+    		goalList.add(newGoal);
+    		mCursor.moveToNext();
+    	}
+    	mCursor.close();
+    	return goalList;
+    }
+    
+    public ArrayList<Goal> getGoalTeamHost(long idMatch) throws SQLException {
+
+    	ArrayList<Goal> goalList = new ArrayList<Goal>();
+    	
+    	String DATABASE_TABLE_JOIN = "match_played";
+    	String queryGoal = "SELECT " + DATABASE_TABLE + "." + ROW_ID + ", " + DATABASE_TABLE +"." + PLAYERUSERNAME + ", " + DATABASE_TABLE + "." + ID_MATCH + ", " + 
+    			DATABASE_TABLE + "." + MINUTE + ", " + DATABASE_TABLE_JOIN + "." + PLAYERUSERNAME + ", " +
+    			DATABASE_TABLE_JOIN + "." + MatchPlayedDBAdapter.TEAM + " FROM goal join match_played on " + DATABASE_TABLE + "." + PLAYERUSERNAME + "=" 
+    			+ DATABASE_TABLE_JOIN + "." + MatchPlayedDBAdapter.PLAYERUSERNAME +
+    			" where " + DATABASE_TABLE + "." + ID_MATCH + "=" + idMatch + " AND " + DATABASE_TABLE_JOIN + "." + MatchPlayedDBAdapter.TEAM + "= 1";
+				
+    	Cursor mCursor = this.mDb.rawQuery(queryGoal, null);
+       
+        if (mCursor != null) {
+            mCursor.moveToFirst();
+        }
+    	while(!(mCursor.isAfterLast())){
+    		Goal newGoal = new Goal(Integer.parseInt(mCursor.getString(0)), mCursor.getString(1), Integer.parseInt(mCursor.getString(2)), 
+    				Integer.parseInt(mCursor.getString(3)));
+    		goalList.add(newGoal);
+    		mCursor.moveToNext();
+    	}
+    	mCursor.close();
+    	return goalList;
+    }
+    
 }
