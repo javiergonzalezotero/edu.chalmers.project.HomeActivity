@@ -110,6 +110,20 @@ public class MatchPlayedDBAdapter {
     	return teamList;
     }
     
+    public String getMatchesPlayed(String username){
+    	String query = "SELECT "+ "count(*) FROM " + "match join "+ DATABASE_TABLE + 
+    			" ON match."+MatchDBAdapter.ROW_ID + " = " + DATABASE_TABLE+"."+MatchPlayedDBAdapter.ID_MATCH
+    			+ " WHERE " + MatchPlayedDBAdapter.PLAYERUSERNAME + " = '"+ username+"'" /*+"' AND " + 			 
+    			"datetime('now') < datetime('match."+MatchDBAdapter.DATE + "')"*/; 
+    	Cursor mCursor = this.mDb.rawQuery(query, null);
+    	if (mCursor != null) {
+            mCursor.moveToFirst();
+        }
+    	Integer res = mCursor.getInt(0);
+    	mCursor.close();
+    	return res.toString();    	
+    }
+    
     /**
      * Return a Cursor positioned at the match that matches the given rowId
      * @param rowId

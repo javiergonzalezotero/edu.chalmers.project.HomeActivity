@@ -82,7 +82,7 @@ public class CreateEventActivity extends FragmentActivity {
 					&& (editTextPlace.getText().toString().compareTo("")!=0) && (editTextCost.getText().toString().compareTo("")!=0)
 					&& (editTextPlayersLimit.getText().toString().compareTo("")!=0)){
 				if((Integer.parseInt(editTextPlayersLimit.getText().toString()) % 2) == 0){
-				matchAdapter.createMatch(editTextDate.getText().toString(), editTextTime.getText().toString(), editTextNameEvent.getText().toString(), editTextField.getText().toString(),
+				long rowId= matchAdapter.createMatch(editTextDate.getText().toString(), editTextTime.getText().toString(), editTextNameEvent.getText().toString(), editTextField.getText().toString(),
 						editTextPlace.getText().toString(), Integer.parseInt(editTextCost.getText().toString()), 
 						Integer.parseInt(editTextPlayersLimit.getText().toString()),
 						Integer.parseInt(cursorPlayer.getString(9)));

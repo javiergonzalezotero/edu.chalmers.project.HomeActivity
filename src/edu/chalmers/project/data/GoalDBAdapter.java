@@ -135,4 +135,17 @@ public class GoalDBAdapter {
     	return goalList;
     }
     
+    public String getGoalsScored(String username) throws SQLException {
+        String query = "SELECT COUNT(*) FROM "+ DATABASE_TABLE + 
+        		" WHERE "+ PLAYERUSERNAME+ " = '"+ username + "'";
+        Cursor mCursor = this.mDb.rawQuery(query, null);
+        if (mCursor != null) {
+            mCursor.moveToFirst();
+        }
+        Integer res = mCursor.getInt(0);
+    	mCursor.close();
+    	return res.toString();
+    }
+    
+    
 }
