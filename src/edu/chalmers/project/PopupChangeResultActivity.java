@@ -52,7 +52,7 @@ public class PopupChangeResultActivity extends Activity {
 		matchAdapter.open();
 		Cursor cursorPresent = matchAdapter.getPresent(playerUsernameSelected, idMatch);
 
-
+		
 		if(this.nextGoalOk == 0){
 
 			enterGoal.setVisibility(View.INVISIBLE);
@@ -90,11 +90,12 @@ public class PopupChangeResultActivity extends Activity {
 
 					goalAdapter.insertGoal(playerUsernameSelected, idMatch, Integer.parseInt(editTextMinuteGoal.getText().toString()));
 					goalAdapter.close();
-					Toast.makeText(this, "Goal correctly added " + idMatch + playerUsernameSelected, Toast.LENGTH_SHORT).show();	
+					Toast.makeText(this, "Goal correctly added ", Toast.LENGTH_SHORT).show();	
 					Intent intent = new Intent(this, PopupChangeResultActivity.class);
 					intent.putExtra("nextGoal", 1);	
 					intent.putExtra("playerUsernameSelected", playerUsernameSelected);
 					intent.putExtra("currentUsernameLogin", currentUsernameLogin);
+					intent.putExtra("idMatch", idMatch);
 					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					startActivity(intent);
@@ -158,7 +159,7 @@ public class PopupChangeResultActivity extends Activity {
 
 					goalAdapter.insertGoal(playerUsernameSelected, idMatch, Integer.parseInt(editTextMinuteGoal.getText().toString()));
 					goalAdapter.close();
-					Toast.makeText(this, "Goal correctly added " + idMatch + playerUsernameSelected, Toast.LENGTH_SHORT).show();	
+					Toast.makeText(this, "Goal correctly added ", Toast.LENGTH_SHORT).show();	
 				}
 			}
 			else{

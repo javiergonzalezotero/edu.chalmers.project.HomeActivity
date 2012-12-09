@@ -22,6 +22,7 @@ public class MatchDBAdapter {
 	public static final String COST = "cost";
 	public static final String NUMBER_PLAYERS = "number_players";
 	public static final String ID_ORGANIZER = "id_organizer";
+	public static final String ID_MVP = "id_mvp";
 
 	private static final String DATABASE_TABLE = "match";
 
@@ -200,6 +201,17 @@ public class MatchDBAdapter {
 		}
 		cursor.close();  	
 		return this.matchList;
+	}
+	
+	public Cursor getIdOrganizer(long idMatch) throws SQLException {
+
+		Cursor mCursor =
+
+				this.mDb.query(true, DATABASE_TABLE, new String[] { ROW_ID, ID_ORGANIZER}, ROW_ID + "=" + idMatch, null, null, null, null, null);
+		if (mCursor != null) {
+			mCursor.moveToFirst();
+		}
+		return mCursor;
 	}
 
 

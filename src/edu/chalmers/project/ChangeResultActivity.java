@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 import edu.chalmers.project.data.MatchPlayedDBAdapter;
 import edu.chalmers.project.data.Player;
 
@@ -75,6 +76,7 @@ public class ChangeResultActivity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id){	
 				String playerUsernameSelected = hostTeam.get(position).getUsername();
+				//Toast.makeText(view.getContext(), "username " + playerUsernameSelected, Toast.LENGTH_SHORT).show();
 				Intent intent = new Intent(view.getContext(), PopupChangeResultActivity.class);
 				intent.putExtra("idMatch", idMatch);
 				intent.putExtra("playerUsernameSelected", playerUsernameSelected);
@@ -88,7 +90,8 @@ public class ChangeResultActivity extends Activity {
         lvListGuest.setOnItemClickListener(new OnItemClickListener(){
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id){	
-				String playerUsernameSelected = hostTeam.get(position).getUsername();
+				String playerUsernameSelected = guestTeam.get(position).getUsername();
+				//Toast.makeText(view.getContext(), "username " + playerUsernameSelected, Toast.LENGTH_SHORT).show();
 				Intent intent = new Intent(view.getContext(), PopupChangeResultActivity.class);
 				intent.putExtra("idMatch", idMatch);
 				intent.putExtra("playerUsernameSelected", playerUsernameSelected);

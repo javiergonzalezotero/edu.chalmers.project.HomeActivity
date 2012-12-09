@@ -114,10 +114,10 @@ public class GoalDBAdapter {
 		ArrayList<Goal> goalList = new ArrayList<Goal>();
 
 		String DATABASE_TABLE_JOIN = "match_played";
-		String queryGoal = "SELECT " + DATABASE_TABLE + "." + ROW_ID + ", " + DATABASE_TABLE +"." + PLAYERUSERNAME + ", " + 
-		DATABASE_TABLE + "." + ID_MATCH + ", " + DATABASE_TABLE + "." + MINUTE + ", " + DATABASE_TABLE_JOIN + "." + 
-				PLAYERUSERNAME + ", " +	DATABASE_TABLE_JOIN + "." + MatchPlayedDBAdapter.TEAM + " FROM goal join match_played on " + 
-		DATABASE_TABLE + "." + PLAYERUSERNAME + "=" + DATABASE_TABLE_JOIN + "." + MatchPlayedDBAdapter.PLAYERUSERNAME +
+		String queryGoal = "SELECT distinct " + DATABASE_TABLE + "." + ROW_ID + ", " + DATABASE_TABLE +"." + PLAYERUSERNAME + ", " + 
+		DATABASE_TABLE + "." + ID_MATCH + ", " + DATABASE_TABLE + "." + MINUTE + " FROM goal join match_played on " + 
+		DATABASE_TABLE + "." + ID_MATCH + "=" + DATABASE_TABLE_JOIN + "." + MatchPlayedDBAdapter.ID_MATCH + 
+		" AND " + DATABASE_TABLE + "." + PLAYERUSERNAME + "=" + DATABASE_TABLE_JOIN + "." + MatchPlayedDBAdapter.PLAYERUSERNAME +
 				" where " + DATABASE_TABLE + "." + ID_MATCH + "=" + idMatch + " AND " + DATABASE_TABLE_JOIN + "." + MatchPlayedDBAdapter.TEAM + "=" + numberTeam;
 
 		Cursor mCursor = this.mDb.rawQuery(queryGoal, null);

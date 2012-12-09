@@ -32,7 +32,8 @@ public class DBAdapter {
 			+ MatchDBAdapter.LOCATION+ " TEXT,"
 			+ MatchDBAdapter.COST+ " INTEGER,"
 			+ MatchDBAdapter.NUMBER_PLAYERS+ " INTEGER," 
-			+ MatchDBAdapter.ID_ORGANIZER+ " INTEGER" + ");"; 
+			+ MatchDBAdapter.ID_ORGANIZER+ " INTEGER,"
+			+ MatchDBAdapter.ID_MVP+ " INTEGER " + ");"; 
 	
 	private static final String CREATE_TABLE_FRIEND =
 			   "create table if not exists  friend(_id integer primary key autoincrement, " 
