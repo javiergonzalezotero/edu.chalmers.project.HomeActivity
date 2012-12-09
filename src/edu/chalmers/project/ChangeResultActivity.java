@@ -2,14 +2,20 @@ package edu.chalmers.project;
 
 import java.util.ArrayList;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import edu.chalmers.project.data.MatchDBAdapter;
 import edu.chalmers.project.data.MatchPlayedDBAdapter;
 import edu.chalmers.project.data.Player;
 
@@ -26,39 +32,20 @@ public class ChangeResultActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.change_result);
-		
-		/*
-		ActionBar actionBar = getActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowTitleEnabled(true);
-
-        Tab tab = actionBar.newTab()
-                .setText("INFO")
-                .setTabListener(new TabListener<MatchInfoFragment>(
-                        this, "home", MatchInfoFragment.class));
-        actionBar.addTab(tab);
-        
-        tab = actionBar.newTab()
-                .setText("PLAYERS")
-                .setTabListener(new TabListener<PlayersFragment>(
-                        this, "map", PlayersFragment.class));
-        actionBar.addTab(tab);
-        
-        tab = actionBar.newTab()
-                .setText("RESULT")
-                .setTabListener(new TabListener<ResultFragment>(
-                        this, "profile", ResultFragment.class));
-        actionBar.addTab(tab);
-		*/
+		setContentView(R.layout.change_result);		
 		
 		this.hostTeam = new ArrayList<Player>();
     	this.guestTeam = new ArrayList<Player>();
             
     	Bundle b = getIntent().getExtras();
-    	this.idMatch = b.getInt("position_id_match");
     	this.playerUsername = b.getString("username");
+    	this.idMatch = b.getInt("position_id_match");
+    	MatchDBAdapter adapter = new MatchDBAdapter(this);
+    	adapter.open();
+    	Cursor cursor = adapter.getMatch(this.idMatch);
+    	this.setTitle("Change result of " + cursor.getString(3));
+    	cursor.close();
+    	adapter.close();
  
     	MatchPlayedDBAdapter matchPlayedAdapter = new MatchPlayedDBAdapter(this);
         matchPlayedAdapter.open();
@@ -100,6 +87,29 @@ public class ChangeResultActivity extends Activity {
 		});
 		
 		
+	}
+	
+	
+	@Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+    		ActionBar actionBar = getActionBar();
+    		actionBar.setDisplayHomeAsUpEnabled(true);
+    		actionBar.setDisplayShowTitleEnabled(true);
+    	}
+        return true;
+    }
+	
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			onBackPressed();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 	
 	

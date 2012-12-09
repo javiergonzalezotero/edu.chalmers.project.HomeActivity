@@ -3,11 +3,11 @@
     <string name="app_name">project</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
-    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_login">Login</string>
     <string name="username ">Username</string>
     <string name="password">Password</string>
     <string name="login_button">Login</string>
-    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_home">App Name</string>
     <string name="CreateEventButton">Create Event</string>
     <string name="HomeTitle">Upcoming Events</string>
     <string name="maps_api_key">0IQdaJYXKKRHJD96zKr9z2vvjwqveyHnr9tK3Iw</string>
@@ -21,8 +21,8 @@
     <string name="menu_search">Search</string>
     <string name="menu_create">Create</string>
     <string name="create_event_menu">Create event</string>
-    <string name="title_activity_new_account">NewAccountActivity</string>
-    <string name="title_activity_first_screen">FirstScreenActivity</string>
+    <string name="title_activity_new_account">New Account</string>
+    <string name="title_activity_first_screen">App Name</string>
     <string-array name="MatchesList">
         <item >Match1</item>
         <item >match 2</item>
@@ -42,5 +42,7 @@
     </string-array>
     <string name="add_friend_menu">Add friend</string>
     <string name="remove_friend_menu">Remove Friend</string>
+    <string name="title_activity_create_event">New Event</string>
+    <string name="title_activity_friends">My friends</string>
 
 </resources>

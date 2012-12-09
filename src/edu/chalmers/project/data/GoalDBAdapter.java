@@ -117,7 +117,7 @@ public class GoalDBAdapter {
 		String queryGoal = "SELECT " + DATABASE_TABLE + "." + ROW_ID + ", " + DATABASE_TABLE +"." + PLAYERUSERNAME + ", " + 
 		DATABASE_TABLE + "." + ID_MATCH + ", " + DATABASE_TABLE + "." + MINUTE + ", " + DATABASE_TABLE_JOIN + "." + 
 				PLAYERUSERNAME + ", " +	DATABASE_TABLE_JOIN + "." + MatchPlayedDBAdapter.TEAM + " FROM goal join match_played on " + 
-		DATABASE_TABLE + "." + PLAYERUSERNAME + "=" + DATABASE_TABLE_JOIN + "." + MatchPlayedDBAdapter.PLAYERUSERNAME +
+		DATABASE_TABLE + "." + ID_MATCH + "=" + DATABASE_TABLE_JOIN + "." + MatchPlayedDBAdapter.ID_MATCH +
 				" where " + DATABASE_TABLE + "." + ID_MATCH + "=" + idMatch + " AND " + DATABASE_TABLE_JOIN + "." + MatchPlayedDBAdapter.TEAM + "=" + numberTeam;
 
 		Cursor mCursor = this.mDb.rawQuery(queryGoal, null);

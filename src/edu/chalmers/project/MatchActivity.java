@@ -3,6 +3,7 @@ package edu.chalmers.project;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 
 import com.google.android.maps.MapActivity;
 
+import edu.chalmers.project.data.MatchDBAdapter;
 import edu.chalmers.project.data.MatchPlayedDBAdapter;
 
 public class MatchActivity extends MapActivity {
@@ -26,7 +28,15 @@ public class MatchActivity extends MapActivity {
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowTitleEnabled(true);
-
+        
+        Bundle b = this.getIntent().getExtras();
+    	int idMatch = b.getInt("position_id_match");
+    	MatchDBAdapter adapter = new MatchDBAdapter(this);
+    	adapter.open();
+    	Cursor cursor = adapter.getMatch(idMatch);
+    	this.setTitle(cursor.getString(3));
+    	cursor.close();
+    	adapter.close();
         Tab tab = actionBar.newTab()
                 .setText("INFO")
                 .setTabListener(new TabListener<MatchInfoFragment>(

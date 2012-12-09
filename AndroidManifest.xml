@@ -46,7 +46,7 @@
         
         <activity
             android:name=".CreateEventActivity"
-            android:label="@string/title_activity_new_account" 
+            android:label="@string/title_activity_create_event" 
             android:uiOptions="splitActionBarWhenNarrow" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -55,7 +55,8 @@
         
         <activity
             android:name=".FriendsActivity"
-            android:label="@string/title_activity_new_account" >
+            android:label="@string/title_activity_friends" 
+            android:uiOptions="splitActionBarWhenNarrow" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.chalmers.project.FirstScreenActivity" />
@@ -63,7 +64,7 @@
         
         <activity
             android:name=".HomeActivity"
-            android:label="@string/title_activity_new_account" 
+            android:label="@string/title_activity_home" 
             android:uiOptions="splitActionBarWhenNarrow" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -72,7 +73,6 @@
   
         <activity
             android:name=".MatchActivity"
-            android:label="@string/title_activity_new_account" 
             android:uiOptions="splitActionBarWhenNarrow" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -80,8 +80,7 @@
         </activity>
         
         <activity
-            android:name=".PopupChangeResultActivity"
-            
+            android:name=".PopupChangeResultActivity"       
             android:theme="@android:style/Theme.Dialog" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -90,7 +89,6 @@
         
         <activity
             android:name="ChangeResultActivity"
-            android:label="@string/title_activity_new_account" 
             android:uiOptions="splitActionBarWhenNarrow" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

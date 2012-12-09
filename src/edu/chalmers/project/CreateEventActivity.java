@@ -45,7 +45,7 @@ public class CreateEventActivity extends FragmentActivity {
 		editTextPlayersLimit = (EditText)findViewById(R.id.editTextPlayersLimit);
 		editTextDate = (EditText)findViewById(R.id.editTextDate);
 		editTextTime = (EditText)findViewById(R.id.editTextTime);
-
+		editTextNameEvent.requestFocus();
 	}
 
 	@Override

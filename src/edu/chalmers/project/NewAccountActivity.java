@@ -52,6 +52,7 @@ public class NewAccountActivity extends FragmentActivity {
         
         if (!username.equals("")){//Edit profile
         	showProfile(username);
+        	this.setTitle("Edit profile");
         }
 
     }

@@ -1,14 +1,14 @@
-<ScrollView  
-    xmlns:android="http://schemas.android.com/apk/res/android"  
-    android:id="@+id/ScrollViewAddBook"  
-    android:layout_width="fill_parent"  
-    android:layout_height="fill_parent"  
-    android:scrollbars="vertical"> 
-    
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ScrollViewAddBook"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:scrollbars="vertical" >
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" >
-
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -16,59 +16,57 @@
             android:layout_centerVertical="true"
             android:orientation="vertical"
             android:padding="10dip" >
-
+
             <EditText
                 android:id="@+id/editTextNameEvent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:ems="10"
                 android:hint="Name of the event" />
-
+
             <EditText
                 android:id="@+id/editTextPlace"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Place" />
-
+
             <EditText
                 android:id="@+id/editTextField"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
                 android:hint="Field" >
 
                 <requestFocus />
             </EditText>
-
+
             <EditText
                 android:id="@+id/editTextDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Date"
                 android:onClick="showDatePickerDialog" />
-
+
             <EditText
                 android:id="@+id/editTextTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Time"
                 android:onClick="showTimePickerDialog" />
-
+
             <EditText
                 android:id="@+id/editTextCost"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Cost"
                 android:inputType="number" />
-
+
             <EditText
                 android:id="@+id/editTextPlayersLimit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="PlayersLimit"
                 android:inputType="number" />
-
         </LinearLayout>
-
     </RelativeLayout>
-    
-    </ScrollView> 
+
+</ScrollView>
