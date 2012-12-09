@@ -47,6 +47,8 @@ public class HomeFragment extends Fragment {
 		    	matchAdapter.open();
 		        if(i==0)
 		        	matchList = matchAdapter.getMatchList();
+		        else if(i==1)
+		        	matchList = matchAdapter.getUpcomingEvents(username);
 		        else if(i==2)
 		        	matchList = matchAdapter.getMyEvents(username);
 		        matchAdapter.close();
