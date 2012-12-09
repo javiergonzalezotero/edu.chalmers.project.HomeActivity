@@ -14,7 +14,9 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 import edu.chalmers.project.data.FriendDBAdapter;
+import edu.chalmers.project.data.GoalDBAdapter;
 import edu.chalmers.project.data.MatchPlayedDBAdapter;
 import edu.chalmers.project.data.PlayerDBAdapter;
 
@@ -64,17 +66,25 @@ public class ProfileFragment extends Fragment {
      * Loads the information of the player from the db
      */
     private void inflatePlayer(String username){
-    	PlayerDBAdapter adapter = new PlayerDBAdapter(this.getActivity());
+    	PlayerDBAdapter playerAdapter = new PlayerDBAdapter(this.getActivity());
+    	playerAdapter.open();
+    	MatchPlayedDBAdapter adapter = new MatchPlayedDBAdapter(this.getActivity());
     	adapter.open();
-        Cursor cursor = adapter.getPlayer(username);
+    	GoalDBAdapter goalAdapter = new GoalDBAdapter(this.getActivity());
+    	goalAdapter.open();
+        Cursor cursor = playerAdapter.getPlayer(username);
         usernameTextView.setText(cursor.getString(0));
         firstNameTextView.setText(cursor.getString(2));
         familyNameTextView.setText(cursor.getString(3));
+        matchPlayedTextView.setText(adapter.getMatchesPlayed(username));
+        goalsScoredTextView.setText(goalAdapter.getGoalsScored(username));
         ageTextView.setText(calculateAge(cursor.getString(8)));
         reliabilityLevelTextView.setText(cursor.getString(5));
         positionTextView.setText(cursor.getString(6));
         cursor.close();
+        playerAdapter.close();
         adapter.close();
+        goalAdapter.close();
     }
     /*
      * Calculate the age of the player from his birthdate

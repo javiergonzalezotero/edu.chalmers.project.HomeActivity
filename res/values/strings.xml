@@ -13,8 +13,9 @@
     <string name="maps_api_key">0IQdaJYXKKRHJD96zKr9z2vvjwqveyHnr9tK3Iw</string>
 
     <string-array name="spinner_matches">
-        <item>Upcoming Events</item>
-        <item>My events</item>
+        <item>All Events</item><item>Upcoming Events</item><item>My events</item>
+        
+        
     </string-array>
 
     <string name="menu_search">Search</string>

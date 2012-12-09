@@ -84,6 +84,20 @@ public class ChangeResultActivity extends Activity {
 
 			}
 		});
+        
+        lvListGuest.setOnItemClickListener(new OnItemClickListener(){
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id){	
+				String playerUsernameSelected = hostTeam.get(position).getUsername();
+				Intent intent = new Intent(view.getContext(), PopupChangeResultActivity.class);
+				intent.putExtra("idMatch", idMatch);
+				intent.putExtra("playerUsernameSelected", playerUsernameSelected);
+				intent.putExtra("currentUsernameLogin", playerUsername);
+				intent.putExtra("nextGoal", 0);
+				startActivity(intent);
+
+			}
+		});
 		
 		
 	}

@@ -148,6 +148,32 @@ public class MatchDBAdapter {
     	
     	return this.matchList;
     }
+    
+public ArrayList<Match> getMyEvents(String username) {   	
+		matchList = new ArrayList<Match>();
+    	String query = "SELECT "+ DATABASE_TABLE +"."+ ROW_ID + ", "+DATABASE_TABLE +"."+ DATE  
+    			+", "+DATABASE_TABLE +"."+ TIME + ", "+DATABASE_TABLE +"."+ NAME + ", "+
+    			DATABASE_TABLE +"."+ FIELD +", "+DATABASE_TABLE +"."+ LOCATION +", "+ 
+    			DATABASE_TABLE +"."+ COST +", "+DATABASE_TABLE +"."+ NUMBER_PLAYERS +", "+ 
+    			DATABASE_TABLE +"."+ ID_ORGANIZER +" FROM "+ DATABASE_TABLE +
+    			" join player on "+ "player."+ PlayerDBAdapter.ROW_ID+ " = "+ 
+    			DATABASE_TABLE+"."+ID_ORGANIZER + " WHERE "+ DATABASE_TABLE+"."+ID_ORGANIZER + 
+    			" = '"+ username +"'";
+    	Cursor cursor = this.mDb.rawQuery(query, null);
+    	if (cursor != null) {
+            cursor.moveToFirst();
+        }
+    	while(!cursor.isAfterLast()){
+    		Match m = new Match(cursor.getInt(0), cursor.getString(3),cursor.getString(1),
+    				cursor.getString(2),cursor.getString(5),cursor.getString(4),
+    				Integer.parseInt(cursor.getString(6)),Integer.parseInt(cursor.getString(7)), 
+    				Integer.parseInt(cursor.getString(8)));
+	    	this.matchList.add(m);
+	    	cursor.moveToNext();   	
+    	}
+    	cursor.close();  	
+    	return this.matchList;
+    }
 
     
 }
