@@ -38,6 +38,8 @@ public class PopupChangeResultActivity extends Activity {
 		this.playerUsernameSelected= b.getString("playerUsernameSelected");
 		this.currentUsernameLogin= b.getString("currentUsernameLogin");
 		this.nextGoalOk = b.getInt("nextGoal");
+		
+		this.setTitle(this.playerUsernameSelected);
 
 		editTextMinuteGoal = (EditText)findViewById(R.id.editTextMinuteGoal);
 		presentYes = (Button)findViewById(R.id.buttonPresentYes);

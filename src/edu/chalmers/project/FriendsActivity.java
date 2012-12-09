@@ -2,9 +2,13 @@ package edu.chalmers.project;
 
 import java.util.ArrayList;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -32,6 +36,7 @@ public class FriendsActivity extends Activity{
         	this.friendList = friendAdapter.getFriendList(username);
         else {
 			this.friendList = friendAdapter.getFriendList(otherUsername);
+			this.setTitle("Friends of " + otherUsername);
 		}
         friendAdapter.close();
         
@@ -52,5 +57,28 @@ public class FriendsActivity extends Activity{
 			}
         });
         
+	}
+	
+	
+	@Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+    		ActionBar actionBar = getActionBar();
+    		actionBar.setDisplayHomeAsUpEnabled(true);
+    		actionBar.setDisplayShowTitleEnabled(true);
+    	}
+        return true;
+    }
+	
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			onBackPressed();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 }
