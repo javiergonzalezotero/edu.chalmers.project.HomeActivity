@@ -15,11 +15,8 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
-import android.widget.Toast;
-
+import android.widget.Spinner;
 import edu.chalmers.project.data.MatchDBAdapter;
-
 import edu.chalmers.project.data.MatchPlayedDBAdapter;
 import edu.chalmers.project.data.Player;
 
@@ -32,6 +29,7 @@ public class ChangeResultActivity extends Activity {
 	private String playerUsername;
 	private ArrayList<Player> hostTeam = new ArrayList<Player>();
 	private ArrayList<Player> guestTeam = new ArrayList<Player>();
+	private ArrayList<Player> spinnerArray = new ArrayList<Player>();
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -56,13 +54,20 @@ public class ChangeResultActivity extends Activity {
    
         hostTeam = matchPlayedAdapter.getTeam(HOST, idMatch);
         guestTeam = matchPlayedAdapter.getTeam(GUEST, idMatch);
-        matchPlayedAdapter.close();
+       
     	ListView lvListHost = (ListView) findViewById(R.id.listViewHostTeamChangeResult);
     	ListView lvListGuest = (ListView) findViewById(R.id.listViewGuestTeamChangeResult);
         lvListHost.setAdapter(new ArrayAdapter<Player>(this, android.R.layout.simple_list_item_1, hostTeam));
         lvListGuest.setAdapter(new ArrayAdapter<Player>(this, android.R.layout.simple_list_item_1,guestTeam));
         
+        Spinner spinner = (Spinner)findViewById(R.id.spinnerMVP);
         
+        spinnerArray = matchPlayedAdapter.getTeam(HOST, idMatch);
+        spinnerArray.addAll(matchPlayedAdapter.getTeam(GUEST, idMatch));
+        matchPlayedAdapter.close();
+        ArrayAdapter<Player> spinnerArrayAdapter = new ArrayAdapter<Player>(this, android.R.layout.simple_spinner_dropdown_item, spinnerArray);
+        spinner.setAdapter(spinnerArrayAdapter);
+      
 
         lvListHost.setOnItemClickListener(new OnItemClickListener(){
 			@Override
