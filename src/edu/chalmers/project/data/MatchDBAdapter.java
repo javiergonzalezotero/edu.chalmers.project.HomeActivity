@@ -176,6 +176,20 @@ public class MatchDBAdapter {
 		cursor.close();  	
 		return this.matchList;
 	}
+	
+	
+	public String getNumberMVPs(long idPlayer){
+		String query = "SELECT COUNT(*)"+ " FROM "+ DATABASE_TABLE + " WHERE "+ 
+				DATABASE_TABLE + "." + ID_MVP + " = "+ idPlayer;
+		Cursor cursor = this.mDb.rawQuery(query, null);
+		if (cursor != null) {
+			cursor.moveToFirst();
+		}
+		Integer res = cursor.getInt(0);
+		cursor.close();
+		return res.toString();
+
+	}
 
 	public ArrayList<Match> getMyEvents(String username) {   	
 		matchList = new ArrayList<Match>();

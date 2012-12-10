@@ -105,6 +105,7 @@ public class ChangeResultActivity extends Activity {
 	
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.activity_change_result, menu);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
     		ActionBar actionBar = getActionBar();
     		actionBar.setDisplayHomeAsUpEnabled(true);
@@ -119,6 +120,9 @@ public class ChangeResultActivity extends Activity {
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			onBackPressed();
+			return true;
+		case R.id.menu_change:
+			//Confirm change results
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
