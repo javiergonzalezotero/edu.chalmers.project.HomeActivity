@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -26,7 +27,7 @@ import edu.chalmers.project.data.PlayerDBAdapter;
 public class NewAccountActivity extends FragmentActivity {
 
 	private static int RESULT_LOAD_IMAGE = 1;
-	private String selectedImagePath;
+	private String selectedImagePath="";
 	
 	private String username = "";
 	private EditText editTextdateOfBirth;
@@ -36,9 +37,8 @@ public class NewAccountActivity extends FragmentActivity {
 	private EditText editTextFirstname;
 	private EditText editTextFamilyName;
 	private Spinner spinnerFieldPosition;
-	private ImageView profilePhoto;
+	private ImageButton profilePhoto;
 	private EditText editTextCity;
-	private Button testButton;
 	private Bundle b;
 
 	
@@ -58,6 +58,7 @@ public class NewAccountActivity extends FragmentActivity {
         editTextFamilyName = (EditText)findViewById(R.id.editTextFamilyName);
         spinnerFieldPosition = (Spinner)findViewById(R.id.spinnerFieldPosition);
         editTextCity = (EditText)findViewById(R.id.editTextCity);
+        profilePhoto = (ImageButton) findViewById(R.id.imageButtonSelectPhoto);
         editTextdateOfBirth.setKeyListener(null);    
         
         if (!username.equals("")){//Edit profile
@@ -89,6 +90,8 @@ public class NewAccountActivity extends FragmentActivity {
 
     		int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
     		selectedImagePath = cursor.getString(columnIndex);
+    		profilePhoto.setImageBitmap(BitmapFactory.decodeFile(selectedImagePath));
+	        profilePhoto.setScaleType(ImageView.ScaleType.FIT_XY);
     		cursor.close();
     	}
     	
@@ -122,14 +125,14 @@ public class NewAccountActivity extends FragmentActivity {
 	            	intent = new Intent(this, HomeActivity.class);
 	            	intent.putExtras(b);
 	            	intent.putExtra("tab_position", 2);
-	            	intent.putExtra("imagePath", selectedImagePath);
 	            }
 	            else{
 	            playerAdapter.createPlayer(editTextUsername.getText().toString(), 
 		            		editTextPassword.getText().toString(),editTextFirstname.getText().toString(),
 		            		editTextFamilyName.getText().toString(),editTextMail.getText().toString(),
 		            		50, spinnerFieldPosition.getSelectedItem().toString(), 
-		            		editTextCity.getText().toString(), editTextdateOfBirth.getText().toString());
+		            		editTextCity.getText().toString(), editTextdateOfBirth.getText().toString(),
+		            		selectedImagePath);
 		    		intent = new Intent(this, FirstScreenActivity.class);
 		    		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
 		    		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);		
@@ -169,6 +172,10 @@ public class NewAccountActivity extends FragmentActivity {
     	spinnerFieldPosition.setSelection(spinnerPosition(cursor.getString(6)));
     	editTextCity.setText(cursor.getString(7));
     	editTextdateOfBirth.setText(cursor.getString(8));
+    	if(!cursor.getString(10).equals("")){
+    		profilePhoto.setImageBitmap(BitmapFactory.decodeFile(cursor.getString(10)));
+    		profilePhoto.setScaleType(ImageView.ScaleType.FIT_XY);
+    	}
     	cursor.close();
     	adapter.close();
     }
@@ -193,7 +200,7 @@ public class NewAccountActivity extends FragmentActivity {
     			editTextPassword.getText().toString(), editTextFirstname.getText().toString(),
     			editTextFamilyName.getText().toString(), editTextMail.getText().toString(), 
     			spinnerFieldPosition.getSelectedItem().toString(), editTextCity.getText().toString(),
-    			editTextdateOfBirth.getText().toString());
+    			editTextdateOfBirth.getText().toString(), selectedImagePath);
     }
 
     public void showCalendar(View view){

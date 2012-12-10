@@ -18,10 +18,11 @@
 
 			    <ImageView
 			        android:id="@+id/imageViewProfile"
-			        android:layout_width="64dp"
-			        android:layout_height="64dp"
+			        android:layout_width="106dp"
+			        android:layout_height="106dp"
 			        android:layout_margin="10dip"
-			        android:layout_weight="0.24" />
+			        android:layout_weight="0.24"
+			        android:src="@drawable/ic_launcher" />
 
 			    <ImageButton
 			        android:id="@+id/imageButtonFriends"

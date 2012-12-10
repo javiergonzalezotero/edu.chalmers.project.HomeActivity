@@ -111,13 +111,26 @@ public class FriendDBAdapter {
     
     public ArrayList<Player> getFriendList(String username){
     	ArrayList<Player> friendList = new ArrayList<Player>();
-    	Cursor mCursor = this.mDb.query(true, DATABASE_TABLE, new String[] {FRIENDUSERNAME},
-    			PLAYERUSERNAME + "=" + "'" + username + "'", null,null,null,null,null);
+    	String query = "Select DISTINCT "+ DATABASE_TABLE +"."+FRIENDUSERNAME + ", player." + 
+    			PlayerDBAdapter.PASSWORD + ", player." + PlayerDBAdapter.FIRSTNAME + 
+    			", player." + PlayerDBAdapter.FAMILYNAME + ", player." + 
+    	    	PlayerDBAdapter.MAIL + ", player." + PlayerDBAdapter.RELIABILITY + ", player." + 
+    	    	PlayerDBAdapter.POSITION +", player." + PlayerDBAdapter.CITY +", player." +
+    	    	PlayerDBAdapter.BIRTHDATE+", player." + 
+    			PlayerDBAdapter.IMGPATH +" from "+ DATABASE_TABLE +" join player " +
+    			" on player."+ PlayerDBAdapter.USERNAME +" = "+DATABASE_TABLE + "."+ FRIENDUSERNAME +
+    			" where "+DATABASE_TABLE + "." + PLAYERUSERNAME +" = '" + username + "'";
+//    	Cursor mCursor = this.mDb.query(true, DATABASE_TABLE, new String[] {FRIENDUSERNAME},
+//    			PLAYERUSERNAME + "=" + "'" + username + "'", null,null,null,null,null);
+    	Cursor mCursor = this.mDb.rawQuery(query, null);
     	if (mCursor != null) {
             mCursor.moveToFirst();
         }
-    	while(!(mCursor.isAfterLast())){
-    		Player friendPlayer = new Player(mCursor.getString(0), null);
+    	while(!mCursor.isAfterLast()){
+    		Player friendPlayer = new Player(mCursor.getString(0), mCursor.getString(1), 
+    				mCursor.getString(2), mCursor.getString(3), mCursor.getString(4), mCursor.getInt(5),
+    				mCursor.getString(6), mCursor.getString(7), mCursor.getString(8),
+    				mCursor.getString(9));
     		friendList.add(friendPlayer);
     		mCursor.moveToNext();
     	}

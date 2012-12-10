@@ -21,7 +21,8 @@ public class DBAdapter {
 	+ PlayerDBAdapter.RELIABILITY+ " INTEGER,"
 	+ PlayerDBAdapter.POSITION+ " TEXT,"
 	+ PlayerDBAdapter.CITY+ " TEXT,"	
-	+ PlayerDBAdapter.BIRTHDATE+ " TEXT" + ");"; 
+	+ PlayerDBAdapter.BIRTHDATE+ " TEXT," 
+	+ PlayerDBAdapter.IMGPATH + " TEXT"+ ");"; 
 	
 	private static final String CREATE_TABLE_MATCH =
 			   "create table if not exists  match(_id integer primary key autoincrement, " 

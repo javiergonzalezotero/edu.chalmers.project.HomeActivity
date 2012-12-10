@@ -61,7 +61,6 @@ public class ProfileFragment extends Fragment {
     	Bundle b = getActivity().getIntent().getExtras();
         String username = b.getString("username");
         String otherUsername = b.getString("other_username");
-        imagePath = b.getString("imagePath");
         if (otherUsername==null)
         	inflatePlayer(username);
         else {
@@ -93,9 +92,10 @@ public class ProfileFragment extends Fragment {
         ageTextView.setText(calculateAge(cursor.getString(8)));
         reliabilityLevelTextView.setText(cursor.getString(5));
         positionTextView.setText(cursor.getString(6));
-        
-        profilePhoto.setImageBitmap(BitmapFactory.decodeFile(imagePath));
-        profilePhoto.setScaleType(ImageView.ScaleType.FIT_XY);
+        if(!cursor.getString(10).equals("")){
+	        profilePhoto.setImageBitmap(BitmapFactory.decodeFile(cursor.getString(10)));
+	        profilePhoto.setScaleType(ImageView.ScaleType.FIT_XY);
+        }
         cursor.close();
         playerAdapter.close();
         adapter.close();

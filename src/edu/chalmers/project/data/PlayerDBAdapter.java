@@ -20,6 +20,7 @@ public class PlayerDBAdapter {
     public static final String POSITION = "position";
     public static final String CITY = "city";
     public static final String BIRTHDATE = "birthdate";
+    public static final String IMGPATH = "imgpath";
 
     private static final String DATABASE_TABLE = "player";
 
@@ -94,7 +95,7 @@ public class PlayerDBAdapter {
      * @return rowId or -1 if failed
      */
     public long createPlayer(String username, String password, String familyName, String firstName, 
-    		String mail,int reliability, String position, String city, String birthdate){
+    		String mail,int reliability, String position, String city, String birthdate, String imgPath){
         ContentValues initialValues = new ContentValues();
         initialValues.put(USERNAME, username);
         initialValues.put(PASSWORD, password);
@@ -105,6 +106,7 @@ public class PlayerDBAdapter {
         initialValues.put(POSITION, position);
         initialValues.put(CITY, city);
         initialValues.put(BIRTHDATE, birthdate);
+        initialValues.put(IMGPATH, imgPath);
         return this.mDb.insert(DATABASE_TABLE, null, initialValues);
     }
 
@@ -131,7 +133,7 @@ public class PlayerDBAdapter {
         Cursor mCursor =
 
         this.mDb.query(true, DATABASE_TABLE, new String[] { ROW_ID, FAMILYNAME,
-                USERNAME, PASSWORD}, ROW_ID + "=" + rowId, null, null, null, null, null);
+                USERNAME, PASSWORD, IMGPATH}, ROW_ID + "=" + rowId, null, null, null, null, null);
         if (mCursor != null) {
             mCursor.moveToFirst();
         }
@@ -141,7 +143,7 @@ public class PlayerDBAdapter {
     public Cursor getPlayer(String username)throws SQLException{
     	Cursor mCursor =
     	        this.mDb.query(true, DATABASE_TABLE, new String[] {USERNAME,PASSWORD,FIRSTNAME,FAMILYNAME,
-    	        		MAIL,RELIABILITY,POSITION,CITY,BIRTHDATE, ROW_ID}, 
+    	        		MAIL,RELIABILITY,POSITION,CITY,BIRTHDATE, ROW_ID, IMGPATH}, 
     	        		USERNAME + "= '" + username+ "'", null, null, null, null, null);
     	        if (mCursor != null ) {
     	            mCursor.moveToFirst();
@@ -163,7 +165,7 @@ public class PlayerDBAdapter {
      * @return true if the note was successfully updated, false otherwise
      */
     public boolean updatePlayer( String username, String password, String firstname, String familyname,
-            String mail, String position, String city, String birthdate){
+            String mail, String position, String city, String birthdate, String imgPath){
         ContentValues args = new ContentValues();
         args.put(USERNAME, username);
         args.put(PASSWORD, password);
@@ -173,6 +175,7 @@ public class PlayerDBAdapter {
         args.put(POSITION, position);
         args.put(CITY, city);
         args.put(BIRTHDATE, birthdate);
+        args.put(IMGPATH, imgPath);
 
         return this.mDb.update(DATABASE_TABLE, args, USERNAME + "=" + "'" + username + "'", null) >0; 
     }

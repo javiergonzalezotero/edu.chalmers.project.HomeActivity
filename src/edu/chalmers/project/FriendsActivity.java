@@ -4,16 +4,24 @@ import java.util.ArrayList;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Layout;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
 import edu.chalmers.project.data.FriendDBAdapter;
 import edu.chalmers.project.data.Player;
 
@@ -41,7 +49,7 @@ public class FriendsActivity extends Activity{
         friendAdapter.close();
         
     	ListView lvList = (ListView) findViewById(R.id.listViewFriendsList);
-        lvList.setAdapter(new ArrayAdapter<Player>(this, android.R.layout.simple_list_item_1, this.friendList));
+        lvList.setAdapter(new ListAdapter(this, this.friendList));
         lvList.setOnItemClickListener(new OnItemClickListener(){
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id){
@@ -79,6 +87,32 @@ public class FriendsActivity extends Activity{
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
+		}
+	}
+	
+	class ListAdapter extends ArrayAdapter<Player> {
+
+		ListAdapter(Context context, ArrayList<Player> friendList) {
+			super( context, R.layout.player_list_item, R.id.friendName, friendList);
+		}
+		
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			//View row= super.getView(position, convertView, parent);
+			View row = convertView;
+			if (row==null){
+				LayoutInflater inflater=getLayoutInflater();
+				row=inflater.inflate(R.layout.player_list_item, parent, false);
+				ImageView icon=(ImageView)row.findViewById(R.id.imagePlayerList);
+				TextView playerName = (TextView) row.findViewById(R.id.friendName);
+				playerName.setText(friendList.get(position).getUsername());
+				String imgPath = friendList.get(position).getImgPath();
+				if (!imgPath.equals("")){
+					icon.setImageBitmap(BitmapFactory.decodeFile(imgPath));
+					icon.setScaleType(ImageView.ScaleType.FIT_XY);
+				}
+			}
+			return(row);
 		}
 	}
 }

@@ -11,6 +11,7 @@ public class Player {
 	private String position;
 	private String city;
 	private String birthdate;
+	private String imgPath;
 	
 	
 	
@@ -19,6 +20,34 @@ public class Player {
 		this.password = password;
 	}
 	
+	
+
+	public Player(String username, String password, String firstName,
+			String familyName, String mail, int reliability, String position,
+			String city, String birthdate, String imgPath) {
+		this.username = username;
+		this.password = password;
+		this.firstName = firstName;
+		this.familyName = familyName;
+		this.mail = mail;
+		this.reliability = reliability;
+		this.position = position;
+		this.city = city;
+		this.birthdate = birthdate;
+		this.imgPath = imgPath;
+	}
+
+	
+	public String getImgPath() {
+		return imgPath;
+	}
+
+
+
+	public void setImgPath(String imgPath) {
+		this.imgPath = imgPath;
+	}
+
 	public String getUsername() {
 		return username;
 	}
