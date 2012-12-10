@@ -5,18 +5,22 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import android.app.Fragment;
-import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Gallery;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import edu.chalmers.project.data.FriendDBAdapter;
 import edu.chalmers.project.data.GoalDBAdapter;
+import edu.chalmers.project.data.MatchDBAdapter;
 import edu.chalmers.project.data.MatchPlayedDBAdapter;
 import edu.chalmers.project.data.PlayerDBAdapter;
 
@@ -32,6 +36,9 @@ public class ProfileFragment extends Fragment {
 	private TextView matchPlayedTextView;
 	private TextView goalsScoredTextView;
 	private TextView positionTextView;
+	private ImageView profilePhoto;
+	private Bitmap bmp;
+	String imagePath;
 	
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,10 +56,12 @@ public class ProfileFragment extends Fragment {
     	matchPlayedTextView = (TextView) view.findViewById(R.id.textViewMatches);
     	goalsScoredTextView = (TextView) view.findViewById(R.id.textViewGoals);
     	positionTextView = (TextView) view.findViewById(R.id.textViewPositionProfile);
+    	profilePhoto = (ImageView) view.findViewById(R.id.imageViewProfile);
     	
     	Bundle b = getActivity().getIntent().getExtras();
         String username = b.getString("username");
         String otherUsername = b.getString("other_username");
+        imagePath = b.getString("imagePath");
         if (otherUsername==null)
         	inflatePlayer(username);
         else {
@@ -70,6 +79,8 @@ public class ProfileFragment extends Fragment {
     	playerAdapter.open();
     	MatchPlayedDBAdapter adapter = new MatchPlayedDBAdapter(this.getActivity());
     	adapter.open();
+    	MatchDBAdapter matchAdapter = new MatchDBAdapter(this.getActivity());
+    	matchAdapter.open();
     	GoalDBAdapter goalAdapter = new GoalDBAdapter(this.getActivity());
     	goalAdapter.open();
         Cursor cursor = playerAdapter.getPlayer(username);
@@ -77,13 +88,18 @@ public class ProfileFragment extends Fragment {
         firstNameTextView.setText(cursor.getString(2));
         familyNameTextView.setText(cursor.getString(3));
         matchPlayedTextView.setText(adapter.getMatchesPlayed(username));
+        MVPNumberTextView.setText(matchAdapter.getNumberMVPs(cursor.getInt(9)));
         goalsScoredTextView.setText(goalAdapter.getGoalsScored(username));
         ageTextView.setText(calculateAge(cursor.getString(8)));
         reliabilityLevelTextView.setText(cursor.getString(5));
         positionTextView.setText(cursor.getString(6));
+        
+        profilePhoto.setImageBitmap(BitmapFactory.decodeFile(imagePath));
+        profilePhoto.setScaleType(ImageView.ScaleType.FIT_XY);
         cursor.close();
         playerAdapter.close();
         adapter.close();
+        matchAdapter.close();
         goalAdapter.close();
     }
     /*
