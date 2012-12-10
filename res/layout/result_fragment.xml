@@ -71,14 +71,12 @@
 				android:layout_height="wrap_content" android:padding="10dip"
 				android:text="@string/MVP"
 				android:textAppearance="?android:attr/textAppearanceMedium" />
-
-
-
-
-			<TextView android:id="@+id/textViewMVPName"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:text="Zinedine"
-				android:textAppearance="?android:attr/textAppearanceMedium" />
+
+			<TextView
+			    android:id="@+id/textViewMVPName"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:textAppearance="?android:attr/textAppearanceMedium" />
 
 		</LinearLayout>
 

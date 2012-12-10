@@ -31,6 +31,7 @@ public class MatchActivity extends MapActivity {
         
         Bundle b = this.getIntent().getExtras();
     	int idMatch = b.getInt("position_id_match");
+    	int tabPositionSelected = b.getInt("tab_position");
     	MatchDBAdapter adapter = new MatchDBAdapter(this);
     	adapter.open();
     	Cursor cursor = adapter.getMatch(idMatch);
@@ -54,6 +55,8 @@ public class MatchActivity extends MapActivity {
                 .setTabListener(new TabListener<ResultFragment>(
                         this, "profile", ResultFragment.class));
         actionBar.addTab(tab);
+        
+        actionBar.setSelectedNavigationItem(tabPositionSelected);
       
     }
 	
