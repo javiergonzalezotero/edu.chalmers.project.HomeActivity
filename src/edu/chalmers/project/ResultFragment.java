@@ -2,23 +2,25 @@ package edu.chalmers.project;
 
 
 import java.util.ArrayList;
+import java.util.ListIterator;
 
 import android.app.Fragment;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 import edu.chalmers.project.data.Goal;
 import edu.chalmers.project.data.GoalDBAdapter;
 import edu.chalmers.project.data.MatchDBAdapter;
+import edu.chalmers.project.data.MatchPlayedDBAdapter;
+import edu.chalmers.project.data.Player;
 import edu.chalmers.project.data.PlayerDBAdapter;
 
 
@@ -26,11 +28,16 @@ public class ResultFragment extends Fragment {
 
 	private ArrayList<Goal> listGoalTeamHost;
 	private ArrayList<Goal> listGoalTeamGuest;
+	private ArrayList<Player> listPlayersNotPresent;
+	private ArrayList<String> listPlayersNotPresentString;
 	private TextView textViewGoalHost;
 	private TextView textViewGoalGuest;
 	private TextView textViewMVPName;
 	private Button buttonChangeResult;
 	private TableLayout tableLayoutResult;
+	private ListView listViewGoalsHost;
+	private ListView listViewGoalsGuest;
+	private ListView listViewPlayersNotPresent;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,12 +53,17 @@ public class ResultFragment extends Fragment {
 
 
 		this.listGoalTeamHost = new ArrayList<Goal>();
+		this.listPlayersNotPresent = new ArrayList<Player>();
+		this.listPlayersNotPresentString = new ArrayList<String>();
 
 		this.textViewGoalHost = (TextView)view.findViewById(R.id.textViewGoalHost);
 		this.textViewGoalGuest = (TextView)view.findViewById(R.id.textViewGoalGuest);
 		this.buttonChangeResult = (Button)view.findViewById(R.id.buttonChangeResult);
 		this.tableLayoutResult = (TableLayout)view.findViewById(R.id.tableLayoutResult);
 		this.textViewMVPName = (TextView)view.findViewById(R.id.textViewMVPName);
+		this.listViewGoalsHost = (ListView)view.findViewById(R.id.listViewGoalsHost);
+		this.listViewGoalsGuest = (ListView)view.findViewById(R.id.listViewGoalsGuest);
+		this.listViewPlayersNotPresent = (ListView)view.findViewById(R.id.listViewPlayersNotPresent);
 
 		this.buttonChangeResult.setVisibility(View.INVISIBLE);
 
@@ -65,6 +77,11 @@ public class ResultFragment extends Fragment {
 		this.textViewGoalGuest.setText("" + this.listGoalTeamGuest.size());
 
 		goalAdapter.close();
+
+		listViewGoalsHost.setAdapter(new ArrayAdapter<Goal>(container.getContext(), android.R.layout.simple_list_item_1, this.listGoalTeamHost));
+		listViewGoalsGuest.setAdapter(new ArrayAdapter<Goal>(container.getContext(), android.R.layout.simple_list_item_1, this.listGoalTeamGuest));
+		listViewGoalsHost.setClickable(false);
+		listViewGoalsGuest.setClickable(false);
 
 		MatchDBAdapter matchAdapter = new MatchDBAdapter(container.getContext());
 		matchAdapter.open();
@@ -90,8 +107,6 @@ public class ResultFragment extends Fragment {
 			}
 		}
 
-
-
 		playerAdapter.close();
 
 		if(Integer.parseInt(cursorOrganizer.getString(1)) == Integer.parseInt(cursorPlayer.getString(9))){
@@ -99,26 +114,21 @@ public class ResultFragment extends Fragment {
 		}
 
 
-		/* Create a new row to be added. */
-		TableRow tr = new TableRow(container.getContext());
-		tr.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-		/* Create a Button to be the row-content. */
-		TextView newGoal = new TextView(container.getContext());
-		newGoal.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-		newGoal.setText("test");
-		newGoal.setGravity(Gravity.LEFT);
-		newGoal.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+		MatchPlayedDBAdapter matchPlayedAdapter = new MatchPlayedDBAdapter(container.getContext());
+		matchPlayedAdapter.open();
+		this.listPlayersNotPresent = matchPlayedAdapter.getPlayersNotPresent(idMatch);
+		matchPlayedAdapter.close();
 
-		TextView newGoal2 = new TextView(container.getContext());
-		newGoal2.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-		newGoal2.setText("test 2");
-		newGoal2.setGravity(Gravity.RIGHT);
-		newGoal2.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-		/* Add Button to row. */
-		tr.addView(newGoal);
-		tr.addView(newGoal2);
-		/* Add row to TableLayout. */
-		this.tableLayoutResult.addView(tr);
+		ListIterator it = this.listPlayersNotPresent.listIterator();
+		
+		while(it.hasNext()){
+			this.listPlayersNotPresentString.add(it.next() + " was not present");
+		}
+		
+		listViewPlayersNotPresent.setAdapter(new ArrayAdapter<String>(container.getContext(), android.R.layout.simple_list_item_1, this.listPlayersNotPresentString));
+		
+		
+
 
 
 		return view;

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import edu.chalmers.project.data.GoalDBAdapter;
 import edu.chalmers.project.data.MatchPlayedDBAdapter;
+import edu.chalmers.project.data.PlayerDBAdapter;
 
 public class PopupChangeResultActivity extends Activity {
 
@@ -53,7 +54,6 @@ public class PopupChangeResultActivity extends Activity {
 		MatchPlayedDBAdapter matchAdapter = new MatchPlayedDBAdapter(this);
 		matchAdapter.open();
 		Cursor cursorPresent = matchAdapter.getPresent(playerUsernameSelected, idMatch);
-
 		
 		if(this.nextGoalOk == 0){
 
@@ -74,6 +74,26 @@ public class PopupChangeResultActivity extends Activity {
 
 			finishButton.setVisibility(View.VISIBLE);	
 
+		}
+		
+		//Toast.makeText(this, "present " + cursorPresent.getString(1), Toast.LENGTH_SHORT).show();
+		if(Integer.parseInt(cursorPresent.getString(1)) == 0){
+			presentYes.setVisibility(View.INVISIBLE);
+			presentNo.setClickable(false);
+			enterGoal.setVisibility(View.INVISIBLE);
+			editTextMinuteGoal.setVisibility(View.INVISIBLE);
+			nextGoal.setVisibility(View.INVISIBLE);
+
+			finishButton.setVisibility(View.VISIBLE);
+		}
+		if(Integer.parseInt(cursorPresent.getString(1)) == 1){
+			presentNo.setVisibility(View.INVISIBLE);
+			presentYes.setClickable(false);
+			enterGoal.setVisibility(View.VISIBLE);
+			editTextMinuteGoal.setVisibility(View.VISIBLE);
+			nextGoal.setVisibility(View.VISIBLE);
+
+			finishButton.setVisibility(View.VISIBLE);
 		}
 		matchAdapter.close();
 
@@ -134,6 +154,11 @@ public class PopupChangeResultActivity extends Activity {
 		matchAdapter.updatePresent(playerUsernameSelected, idMatch, 1);
 		Toast.makeText(this, "Present correctly updated", Toast.LENGTH_SHORT).show();
 		matchAdapter.close();
+		
+		PlayerDBAdapter playerAdapter = new PlayerDBAdapter(this);
+		playerAdapter.open();
+		playerAdapter.updateReliability(playerUsernameSelected, 1);
+		playerAdapter.close();
 	}
 
 	public void isNotPresent(View view){
@@ -147,6 +172,11 @@ public class PopupChangeResultActivity extends Activity {
 		matchAdapter.updatePresent(playerUsernameSelected, idMatch, 0);
 		Toast.makeText(this, "Present correctly updated", Toast.LENGTH_SHORT).show();
 		matchAdapter.close();
+		
+		PlayerDBAdapter playerAdapter = new PlayerDBAdapter(this);
+		playerAdapter.open();
+		playerAdapter.updateReliability(playerUsernameSelected, 0);
+		playerAdapter.close();
 	}
 
 	public void finishPopup(View view){
