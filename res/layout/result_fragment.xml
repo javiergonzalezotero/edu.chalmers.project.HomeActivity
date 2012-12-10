@@ -4,13 +4,12 @@
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		android:layout_width="fill_parent" android:layout_height="fill_parent"
 		android:orientation="vertical">
-
+
 		<TableLayout
 		    android:id="@+id/tableLayoutResult"
 		    android:layout_width="match_parent"
-		    android:layout_height="150dp"
-		    android:layout_margin="10dip"
-		    android:layout_weight="0.12" >
+		    android:layout_height="wrap_content"
+		    android:layout_margin="10dip" >
 
 			<TableRow
 			    android:id="@+id/tableRow1"
@@ -56,52 +55,65 @@
 
 
 		</TableLayout>
+
+		<LinearLayout
+		    android:layout_width="match_parent"
+		    android:layout_height="171dp" >
+
+			<ListView
+			    android:id="@+id/listViewGoalsHost"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_weight="1" >
 
+			</ListView>
+
+			<ListView
+			    android:id="@+id/listViewGoalsGuest"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_weight="1" >
 
-		<LinearLayout android:layout_width="match_parent"
-			android:layout_height="wrap_content">
+			</ListView>
 
-
-
-
-
+		</LinearLayout>
+
+		<LinearLayout
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content" >
 
 			<TextView android:id="@+id/textViewMVP"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content" android:padding="10dip"
 				android:text="@string/MVP"
 				android:textAppearance="?android:attr/textAppearanceMedium" />
-
-
-
-
-			<TextView android:id="@+id/textViewMVPName"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:text="Zinedine"
-				android:textAppearance="?android:attr/textAppearanceMedium" />
+
+			<TextView
+			    android:id="@+id/textViewMVPName"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:textAppearance="?android:attr/textAppearanceMedium" />
 
 		</LinearLayout>
+
+		<LinearLayout
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content" >
+
+			<TextView
+			    android:id="@+id/textViewIncident"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:padding="10dip"
+			    android:text="@string/Incidents"
+			    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+			<ListView
+			    android:id="@+id/listViewPlayersNotPresent"
+			    android:layout_width="match_parent"
+			    android:layout_height="104dp" >
 
-		<LinearLayout android:layout_width="match_parent"
-			android:layout_height="wrap_content" android:layout_weight="0.12">
-
-
-
-
-
-
-			<TextView android:id="@+id/textViewIncidents"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:padding="10dip"
-				android:text="@string/Incidents"
-				android:textAppearance="?android:attr/textAppearanceMedium" />
-
-
-			<TextView android:id="@+id/textView6"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:text="Text for incidents"
-				android:textAppearance="?android:attr/textAppearanceMedium" />
+			</ListView>
 
 		</LinearLayout>
 

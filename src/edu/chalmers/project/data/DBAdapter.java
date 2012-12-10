@@ -54,6 +54,13 @@ public class DBAdapter {
 			+ GoalDBAdapter.ID_MATCH+ " INTEGER, "
 			+ GoalDBAdapter.MINUTE+ " INTEGER "+ ");"; 
 	
+	private static final String CREATE_TABLE_AVAILABILITY =
+			   "create table if not exists  availability(_id integer primary key autoincrement, " 
+			+ AvailabilityDBAdapter.USERNAME+ " TEXT,"
+			+ AvailabilityDBAdapter.DAY+ " INTEGER, "
+			+ AvailabilityDBAdapter.INTERVAL+ " INTEGER, "+ ");"; 
+	
+	
 	
 	private final Context context; 
 	private DatabaseHelper DBHelper;
@@ -80,6 +87,7 @@ public class DBAdapter {
 	        db.execSQL(CREATE_TABLE_FRIEND);
 	        db.execSQL(CREATE_TABLE_MATCH_PLAYED);
 	        db.execSQL(CREATE_TABLE_GOAL);
+	        db.execSQL(CREATE_TABLE_AVAILABILITY);
 	    }
 	
 	    @Override

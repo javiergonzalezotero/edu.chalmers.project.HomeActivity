@@ -143,6 +143,22 @@ public class MatchPlayedDBAdapter {
 		mCursor.close();
 		return res.toString();    	
 	}
+	
+	public ArrayList<Player> getPlayersNotPresent(long idMatch){
+		ArrayList<Player> playersNotPresentList = new ArrayList<Player>();
+		Cursor mCursor = this.mDb.query(true, DATABASE_TABLE, new String[] {PLAYERUSERNAME},
+				ID_MATCH + " = "  + idMatch + " AND "+ PRESENT +" = 0", null,null,null,null,null);
+		if (mCursor != null) {
+			mCursor.moveToFirst();
+		}
+		while(!(mCursor.isAfterLast())){
+			Player newPlayer = new Player(mCursor.getString(0), null);
+			playersNotPresentList.add(newPlayer);
+			mCursor.moveToNext();
+		}
+		mCursor.close();
+		return playersNotPresentList;
+	}
 
 	/**
 	 * Return a Cursor positioned at the match that matches the given rowId

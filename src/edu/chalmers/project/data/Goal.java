@@ -45,5 +45,10 @@ public class Goal {
 	public void setMinute(int minute) {
 		this.minute = minute;
 	}
+	
+	@Override
+	public String toString() {
+		return this.getMinute() + "'  " + this.getUsername();
+	}
 
 }

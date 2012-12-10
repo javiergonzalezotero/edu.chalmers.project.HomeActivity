@@ -108,6 +108,13 @@ public class MatchDBAdapter {
 		initialValues.put(ID_ORGANIZER, id_organizer);
 		return this.mDb.insert(DATABASE_TABLE, null, initialValues);
 	}
+	
+	public boolean updateMvp(long idMatch, int idMvp) 
+	{
+		ContentValues args = new ContentValues();
+		args.put(ID_MVP, idMvp);
+		return this.mDb.update(DATABASE_TABLE, args, ROW_ID + "=" + idMatch, null) > 0;
+	}
 
 
 	/**
@@ -122,6 +129,17 @@ public class MatchDBAdapter {
 
 				this.mDb.query(true, DATABASE_TABLE, new String[] { ROW_ID, DATE, TIME,
 						NAME, FIELD, LOCATION, COST, NUMBER_PLAYERS, ID_ORGANIZER}, ROW_ID + "=" + rowId, null, null, null, null, null);
+		if (mCursor != null) {
+			mCursor.moveToFirst();
+		}
+		return mCursor;
+	}
+	
+	public Cursor getMvp(long rowId) throws SQLException {
+
+		Cursor mCursor =
+
+				this.mDb.query(true, DATABASE_TABLE, new String[] { ID_MVP}, ROW_ID + "=" + rowId, null, null, null, null, null);
 		if (mCursor != null) {
 			mCursor.moveToFirst();
 		}
