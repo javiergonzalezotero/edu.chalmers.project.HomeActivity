@@ -116,13 +116,26 @@ public class MatchPlayedDBAdapter {
 
 	public ArrayList<Player> getTeam(int team, long idMatch){
 		ArrayList<Player> teamList = new ArrayList<Player>();
-		Cursor mCursor = this.mDb.query(true, DATABASE_TABLE, new String[] {PLAYERUSERNAME},
-				ID_MATCH + " = "  + idMatch + " AND "+ TEAM +" = " + team, null,null,null,null,null);
+		String query = "SELECT DISTINCT "+ DATABASE_TABLE+"."+PLAYERUSERNAME + ", player." + 
+    			PlayerDBAdapter.PASSWORD + ", player." + PlayerDBAdapter.FIRSTNAME + 
+    			", player." + PlayerDBAdapter.FAMILYNAME + ", player." + 
+    	    	PlayerDBAdapter.MAIL + ", player." + PlayerDBAdapter.RELIABILITY + ", player." + 
+    	    	PlayerDBAdapter.POSITION +", player." + PlayerDBAdapter.CITY +", player." +
+    	    	PlayerDBAdapter.BIRTHDATE+", player." + PlayerDBAdapter.IMGPATH + " FROM " + 
+				DATABASE_TABLE +" JOIN player on " + DATABASE_TABLE+"."+PLAYERUSERNAME + " = player." +
+				PlayerDBAdapter.USERNAME + " WHERE " + DATABASE_TABLE +"." + ID_MATCH + " = " + 
+				idMatch + " AND " + DATABASE_TABLE + "." + TEAM + " = " + team;
+//		Cursor mCursor = this.mDb.query(true, DATABASE_TABLE, new String[] {PLAYERUSERNAME},
+//				ID_MATCH + " = "  + idMatch + " AND "+ TEAM +" = " + team, null,null,null,null,null);
+		Cursor mCursor = this.mDb.rawQuery(query, null);
 		if (mCursor != null) {
 			mCursor.moveToFirst();
 		}
 		while(!(mCursor.isAfterLast())){
-			Player newPlayer = new Player(mCursor.getString(0), null);
+			Player newPlayer = new Player(mCursor.getString(0), mCursor.getString(1), 
+    				mCursor.getString(2), mCursor.getString(3), mCursor.getString(4), mCursor.getInt(5),
+    				mCursor.getString(6), mCursor.getString(7), mCursor.getString(8),
+    				mCursor.getString(9));
 			teamList.add(newPlayer);
 			mCursor.moveToNext();
 		}

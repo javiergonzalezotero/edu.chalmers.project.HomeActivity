@@ -101,10 +101,10 @@ public class HomeActivity extends MapActivity {
 		 this.searchList = new ArrayList<Player>();
 		 PlayerDBAdapter adapter = new PlayerDBAdapter(this);
 		 adapter.open();
-		 searchList = adapter.searchPlayer(searchText);
+		 this.searchList = adapter.searchPlayer(searchText);
 		 adapter.close();
 		 ListView lvList = (ListView) findViewById(R.id.listViewSearchResult);
-		 lvList.setAdapter(new ArrayAdapter<Player>(this, android.R.layout.simple_list_item_1, searchList));
+		 lvList.setAdapter(new PlayerListAdapter(this, this.searchList, R.layout.big_player_list_item));
 		 lvList.setOnItemClickListener(new OnItemClickListener(){
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view, int position, long id){
@@ -166,6 +166,12 @@ public class HomeActivity extends MapActivity {
     		adapter2.deleteFriendship(username2, friend2);
     		adapter2.close();
     		Toast.makeText(this, "Friend removed", Toast.LENGTH_LONG).show();
+    		return true;
+    	case R.id.menu_logout:
+    		Intent intent3 = new Intent(this,FirstScreenActivity.class);
+    		intent3.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
+    		intent3.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    		startActivity(intent3);
     		return true;
     	default:
     		return super.onOptionsItemSelected(item);

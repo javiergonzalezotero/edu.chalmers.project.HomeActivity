@@ -134,8 +134,9 @@ public class PlayerDBAdapter {
 
 		Cursor mCursor =
 
-        this.mDb.query(true, DATABASE_TABLE, new String[] { ROW_ID, FAMILYNAME,
-                USERNAME, PASSWORD, IMGPATH}, ROW_ID + "=" + rowId, null, null, null, null, null);
+        this.mDb.query(true, DATABASE_TABLE, new String[] { ROW_ID, USERNAME,PASSWORD,FIRSTNAME,
+        		FAMILYNAME,MAIL,RELIABILITY,POSITION,CITY,BIRTHDATE, IMGPATH}, 
+        		ROW_ID + "=" + rowId, null, null, null, null, null);
         if (mCursor != null) {
             mCursor.moveToFirst();
         }
@@ -216,7 +217,7 @@ public class PlayerDBAdapter {
 		ArrayList<Player> playerList = new ArrayList<Player>();
 
 		while(cursor.getCount() != 0){
-			Player p = new Player(cursor.getString(2),null);
+			Player p = new Player(cursor.getString(1),null);
 			playerList.add(p);
 			rowId = rowId + 1;
 			cursor = this.getPlayer(rowId);    	
@@ -232,8 +233,11 @@ public class PlayerDBAdapter {
 		cursor = this.getPlayer(rowId);
 		ArrayList<Player> playerList = new ArrayList<Player>();
 		while(cursor.getCount() != 0){
-			if (cursor.getString(2).startsWith(search)) {
-				Player p = new Player(cursor.getString(2),null);
+			if (cursor.getString(1).startsWith(search)) {
+				Player p = new Player(cursor.getString(1),cursor.getString(2),cursor.getString(3),
+						cursor.getString(4),cursor.getString(5),cursor.getInt(6),
+						cursor.getString(7),cursor.getString(8),cursor.getString(9),
+						cursor.getString(10));
 				playerList.add(p);
 			}
 			rowId = rowId + 1;

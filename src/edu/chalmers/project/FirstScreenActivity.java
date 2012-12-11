@@ -1,9 +1,12 @@
 package edu.chalmers.project;
 
 import edu.chalmers.project.data.DBAdapter;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 
 public class FirstScreenActivity extends Activity {
@@ -39,4 +42,5 @@ public class FirstScreenActivity extends Activity {
     	startActivity(intent);
     }
 
+    
 }

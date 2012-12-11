@@ -90,8 +90,8 @@ public class NewAccountActivity extends FragmentActivity {
 
     		int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
     		selectedImagePath = cursor.getString(columnIndex);
-    		profilePhoto.setImageBitmap(BitmapFactory.decodeFile(selectedImagePath));
-	        profilePhoto.setScaleType(ImageView.ScaleType.FIT_XY);
+    		profilePhoto.setImageBitmap(ImageLoader.decodeSampledBitmapFromResource(selectedImagePath, 
+					profilePhoto.getLayoutParams().width,profilePhoto.getLayoutParams().height));
     		cursor.close();
     	}
     	
@@ -133,11 +133,11 @@ public class NewAccountActivity extends FragmentActivity {
 		            		50, spinnerFieldPosition.getSelectedItem().toString(), 
 		            		editTextCity.getText().toString(), editTextdateOfBirth.getText().toString(),
 		            		selectedImagePath);
-		    		intent = new Intent(this, FirstScreenActivity.class);
-		    		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
-		    		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);		
+		    		intent = new Intent(this, FirstScreenActivity.class);		
 	            }
 	            playerAdapter.close();
+	            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
+	    		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 	            startActivity(intent);	    		
     		}
     		else {
@@ -173,12 +173,15 @@ public class NewAccountActivity extends FragmentActivity {
     	editTextCity.setText(cursor.getString(7));
     	editTextdateOfBirth.setText(cursor.getString(8));
     	if(!cursor.getString(10).equals("")){
-    		profilePhoto.setImageBitmap(BitmapFactory.decodeFile(cursor.getString(10)));
-    		profilePhoto.setScaleType(ImageView.ScaleType.FIT_XY);
+    		profilePhoto.setImageBitmap(ImageLoader.decodeSampledBitmapFromResource(cursor.getString(10), 
+    				profilePhoto.getLayoutParams().width,profilePhoto.getLayoutParams().height));
     	}
     	cursor.close();
     	adapter.close();
     }
+    
+    
+    
     
     /*
      * Get the position in the StringArray of the spinner to show his current position
@@ -196,7 +199,7 @@ public class NewAccountActivity extends FragmentActivity {
     }
     
     private void updatePlayer(PlayerDBAdapter adapter){
-    	adapter.updatePlayer(username, 
+    	adapter.updatePlayer(editTextUsername.getText().toString(), 
     			editTextPassword.getText().toString(), editTextFirstname.getText().toString(),
     			editTextFamilyName.getText().toString(), editTextMail.getText().toString(), 
     			spinnerFieldPosition.getSelectedItem().toString(), editTextCity.getText().toString(),

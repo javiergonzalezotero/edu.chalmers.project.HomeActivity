@@ -4,13 +4,7 @@
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content" android:orientation="horizontal"
-		android:padding="10dip">
-
-
-
-
-
-
+		android:padding="5dip">
 
 
 
@@ -19,38 +13,13 @@
 			android:layout_height="match_parent" android:layout_weight="1"
 			android:orientation="vertical">
 
-
-
-
-
-
-
-
-
-			<TextView android:id="@+id/textView1"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content" android:text="Host Team"
-				android:textAppearance="?android:attr/textAppearanceMedium" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+			<TextView
+			    android:id="@+id/textView1"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_marginBottom="10dp"
+			    android:text="Host Team"
+			    android:textAppearance="?android:attr/textAppearanceMedium" />
 
 			<ListView android:id="@+id/listViewHostTeam"
 				android:layout_width="match_parent"
@@ -62,53 +31,33 @@
 			    android:id="@+id/buttonQuitHost"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
-			    android:text="Quit" 
+			    android:layout_gravity="center"
 			    android:onClick="quitMatch"
-			    android:visibility="invisible"/>
+			    android:text="Quit"
+			    android:visibility="invisible" />
 
-			<Button android:id="@+id/buttonJoinHost"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:layout_gravity="bottom"
-				android:text="Join" 
-				android:onClick="joinHost"/>
+			<Button
+			    android:id="@+id/buttonJoinHost"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="bottom|center"
+			    android:onClick="joinHost"
+			    android:text="Join" />
 
 		</LinearLayout>
-
-
-
-
-
-
 
 
 		<LinearLayout android:layout_width="match_parent"
 			android:layout_height="match_parent" android:layout_weight="1"
 			android:orientation="vertical">
 
-
-
-
-
-			<TextView android:id="@+id/textView2"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:text="Guest Team"
-				android:textAppearance="?android:attr/textAppearanceMedium" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+			<TextView
+			    android:id="@+id/textView2"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_marginBottom="10dp"
+			    android:text="Guest Team"
+			    android:textAppearance="?android:attr/textAppearanceMedium" />
 
 			<ListView android:id="@+id/listViewGuestTeam"
 				android:layout_width="match_parent"
@@ -120,15 +69,18 @@
 			    android:id="@+id/buttonQuitGuest"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
+			    android:layout_gravity="center"
 			    android:onClick="quitMatch"
-			    android:text="Quit" 
-			    android:visibility="invisible"/>
+			    android:text="Quit"
+			    android:visibility="invisible" />
 
-			<Button android:id="@+id/buttonJoinGuest"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:layout_gravity="bottom"
-				android:text="Join" 
-				android:onClick="joinGuest"/>
+			<Button
+			    android:id="@+id/buttonJoinGuest"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="bottom|center"
+			    android:onClick="joinGuest"
+			    android:text="Join" />
 
 		</LinearLayout>
 

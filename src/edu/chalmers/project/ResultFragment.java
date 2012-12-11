@@ -49,9 +49,6 @@ public class ResultFragment extends Fragment {
 		int idMatch = b.getInt("position_id_match");  
 		String playerUsername = b.getString("username");
 
-
-
-
 		this.listGoalTeamHost = new ArrayList<Goal>();
 		this.listPlayersNotPresent = new ArrayList<Player>();
 		this.listPlayersNotPresentString = new ArrayList<String>();

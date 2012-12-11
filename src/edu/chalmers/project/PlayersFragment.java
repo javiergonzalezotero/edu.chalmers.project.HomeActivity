@@ -3,17 +3,17 @@ package edu.chalmers.project;
 
 import java.util.ArrayList;
 
-import android.R.integer;
 import android.app.Fragment;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 import edu.chalmers.project.data.MatchDBAdapter;
 import edu.chalmers.project.data.MatchPlayedDBAdapter;
 import edu.chalmers.project.data.Player;
@@ -23,18 +23,20 @@ public class PlayersFragment extends Fragment {
 
 	public static final int HOST = 1;
 	public static final int GUEST = 2;
-	
+	private ArrayList<Player> hostTeam;
+	private ArrayList<Player> guestTeam;
+	Bundle b;
 	
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     	
-    	ArrayList<Player> hostTeam = new ArrayList<Player>();
-    	ArrayList<Player> guestTeam = new ArrayList<Player>();
+    	hostTeam = new ArrayList<Player>();
+    	guestTeam = new ArrayList<Player>();
         // Inflate the layout for this fragment
     	View view = inflater.inflate(R.layout.players_fragment, container, false);
     	view.setClickable(true);
             
-    	Bundle b = getActivity().getIntent().getExtras();
+    	b = getActivity().getIntent().getExtras();
     	int idMatch = b.getInt("position_id_match");
     	String playerUsername = b.getString("username");
     	
@@ -73,19 +75,37 @@ public class PlayersFragment extends Fragment {
         
     	ListView lvListHost = (ListView) view.findViewById(R.id.listViewHostTeam);
     	ListView lvListGuest = (ListView) view.findViewById(R.id.listViewGuestTeam);
-        lvListHost.setAdapter(new ArrayAdapter<Player>(container.getContext(), android.R.layout.simple_list_item_1, hostTeam));
-        lvListGuest.setAdapter(new ArrayAdapter<Player>(container.getContext(), android.R.layout.simple_list_item_1,guestTeam));
+        lvListHost.setAdapter(new PlayerListAdapter(this.getActivity(), hostTeam, R.layout.player_list_item));
+        lvListGuest.setAdapter(new PlayerListAdapter(this.getActivity(), guestTeam, R.layout.player_list_item));
 
         
-      /*  lvList.setOnItemClickListener(new OnItemClickListener(){
+        lvListHost.setOnItemClickListener(new OnItemClickListener(){
         	@Override
         	public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-        			Intent intent = new Intent(getActivity(), MatchActivity.class);
-        			intent.putExtra("position_match", position);
-        			startActivity(intent);
+        		String otherUsername = hostTeam.get(position).getUsername();
+		    	String username = b.getString("username");
+				Intent intent = new Intent(view.getContext(), HomeActivity.class);
+				intent.putExtra("username", username);
+				intent.putExtra("other_username", otherUsername);
+				intent.putExtra("tab_position", 2);
+				startActivity(intent);;
         		
         	}
-        });*/
+        });
+        
+        lvListGuest.setOnItemClickListener(new OnItemClickListener(){
+        	@Override
+        	public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+        		String otherUsername = guestTeam.get(position).getUsername();
+		    	String username = b.getString("username");
+				Intent intent = new Intent(view.getContext(), HomeActivity.class);
+				intent.putExtra("username", username);
+				intent.putExtra("other_username", otherUsername);
+				intent.putExtra("tab_position", 2);
+				startActivity(intent);;
+        		
+        	}
+        });
         
         return view;
        

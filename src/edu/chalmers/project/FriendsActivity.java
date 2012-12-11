@@ -49,7 +49,7 @@ public class FriendsActivity extends Activity{
         friendAdapter.close();
         
     	ListView lvList = (ListView) findViewById(R.id.listViewFriendsList);
-        lvList.setAdapter(new ListAdapter(this, this.friendList));
+        lvList.setAdapter(new PlayerListAdapter(this, this.friendList, R.layout.big_player_list_item));
         lvList.setOnItemClickListener(new OnItemClickListener(){
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id){
@@ -90,29 +90,4 @@ public class FriendsActivity extends Activity{
 		}
 	}
 	
-	class ListAdapter extends ArrayAdapter<Player> {
-
-		ListAdapter(Context context, ArrayList<Player> friendList) {
-			super( context, R.layout.player_list_item, R.id.friendName, friendList);
-		}
-		
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			//View row= super.getView(position, convertView, parent);
-			View row = convertView;
-			if (row==null){
-				LayoutInflater inflater=getLayoutInflater();
-				row=inflater.inflate(R.layout.player_list_item, parent, false);
-				ImageView icon=(ImageView)row.findViewById(R.id.imagePlayerList);
-				TextView playerName = (TextView) row.findViewById(R.id.friendName);
-				playerName.setText(friendList.get(position).getUsername());
-				String imgPath = friendList.get(position).getImgPath();
-				if (!imgPath.equals("")){
-					icon.setImageBitmap(BitmapFactory.decodeFile(imgPath));
-					icon.setScaleType(ImageView.ScaleType.FIT_XY);
-				}
-			}
-			return(row);
-		}
-	}
 }

@@ -4,4 +4,9 @@
         android:icon="@drawable/ic_action_add"
         android:orderInCategory="100"
         android:showAsAction="ifRoom" />
+    
+    <item android:id="@+id/menu_logout"
+        android:title="@string/logout"
+        android:orderInCategory="100"
+        android:showAsAction="never" />
 </menu>

@@ -154,7 +154,7 @@ public class MatchDBAdapter {
 		int rowId = 1;
 		Cursor cursor;
 		cursor = this.getMatch(rowId);
-
+		this.matchList = new ArrayList<Match>();
 
 		while(cursor.getCount() != 0){
 			Match m = new Match(rowId, cursor.getString(3),cursor.getString(1),cursor.getString(2),cursor.getString(5),cursor.getString(4),
@@ -171,7 +171,7 @@ public class MatchDBAdapter {
 	
 	public ArrayList<Match> getUpcomingEvents(String username){
 		matchList = new ArrayList<Match>();
-		String query = "SELECT "+ DATABASE_TABLE +"."+ ROW_ID + ", "+DATABASE_TABLE +"."+ DATE  
+		String query = "SELECT distinct "+ DATABASE_TABLE +"."+ ROW_ID + ", "+DATABASE_TABLE +"."+ DATE  
 				+", "+DATABASE_TABLE +"."+ TIME + ", "+DATABASE_TABLE +"."+ NAME + ", "+
 				DATABASE_TABLE +"."+ FIELD +", "+DATABASE_TABLE +"."+ LOCATION +", "+ 
 				DATABASE_TABLE +"."+ COST +", "+DATABASE_TABLE +"."+ NUMBER_PLAYERS +", "+ 
@@ -211,7 +211,7 @@ public class MatchDBAdapter {
 
 	public ArrayList<Match> getMyEvents(String username) {   	
 		matchList = new ArrayList<Match>();
-		String query = "SELECT "+ DATABASE_TABLE +"."+ ROW_ID + ", "+DATABASE_TABLE +"."+ DATE  
+		String query = "SELECT distinct "+ DATABASE_TABLE +"."+ ROW_ID + ", "+DATABASE_TABLE +"."+ DATE  
 				+", "+DATABASE_TABLE +"."+ TIME + ", "+DATABASE_TABLE +"."+ NAME + ", "+
 				DATABASE_TABLE +"."+ FIELD +", "+DATABASE_TABLE +"."+ LOCATION +", "+ 
 				DATABASE_TABLE +"."+ COST +", "+DATABASE_TABLE +"."+ NUMBER_PLAYERS +", "+ 
