@@ -91,6 +91,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="50%" />
+
+                <ImageView
+                    android:id="@+id/imageViewReliability"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:src="@drawable/green" />
             </LinearLayout>
 
             <LinearLayout
@@ -114,13 +121,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Timetable:" />
-
+
             <LinearLayout
                 android:id="@+id/linearLayoutAvailability"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" >
-
+
                 <Button
                     android:id="@+id/buttonShowAvailability"
                     style="?android:attr/buttonStyleSmall"
@@ -129,9 +136,8 @@
                     android:layout_gravity="center"
                     android:layout_marginBottom="3dp"
                     android:text="Show Availability" />
-
             </LinearLayout>
-            
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
@@ -140,7 +146,6 @@
                     android:id="@+id/textViewMatchPlayed"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:clickable="true"
                     android:onClick="viewMatches"
                     android:text="Matches Played: " />
 

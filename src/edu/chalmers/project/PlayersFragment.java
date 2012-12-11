@@ -1,7 +1,9 @@
 package edu.chalmers.project;
 
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import android.app.Fragment;
 import android.content.Intent;
@@ -26,7 +28,6 @@ public class PlayersFragment extends Fragment {
 	private ArrayList<Player> hostTeam;
 	private ArrayList<Player> guestTeam;
 	Bundle b;
-	
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     	
@@ -56,22 +57,30 @@ public class PlayersFragment extends Fragment {
         Button quitHostButton = (Button) view.findViewById(R.id.buttonQuitHost);
         Button quitGuestButton = (Button) view.findViewById(R.id.buttonQuitGuest);
         
-        if (isJoined(playerUsername, hostTeam)){
-        	joinHostButton.setVisibility(View.INVISIBLE);
-        	joinGuestButton.setVisibility(View.INVISIBLE);
-        	quitHostButton.setVisibility(View.VISIBLE);
+        if(isFuture(cursor.getString(1))==1){
+	        if (isJoined(playerUsername, hostTeam)){
+	        	joinHostButton.setVisibility(View.INVISIBLE);
+	        	joinGuestButton.setVisibility(View.INVISIBLE);
+	        	quitHostButton.setVisibility(View.VISIBLE);
+	        }
+	        if (isJoined(playerUsername, guestTeam)){
+	        	joinHostButton.setVisibility(View.INVISIBLE);
+	        	joinGuestButton.setVisibility(View.INVISIBLE);
+	        	quitGuestButton.setVisibility(View.VISIBLE);
+	        }
+	        
+	        if (isFull(hostTeam, nPlayersTeam))
+	        	joinHostButton.setVisibility(View.INVISIBLE);
+	        
+	        if (isFull(guestTeam, nPlayersTeam))
+	        	joinGuestButton.setVisibility(View.INVISIBLE);
         }
-        if (isJoined(playerUsername, guestTeam)){
+        else{
         	joinHostButton.setVisibility(View.INVISIBLE);
         	joinGuestButton.setVisibility(View.INVISIBLE);
-        	quitGuestButton.setVisibility(View.VISIBLE);
         }
-        
-        if (isFull(hostTeam, nPlayersTeam))
-        	joinHostButton.setVisibility(View.INVISIBLE);
-        
-        if (isFull(guestTeam, nPlayersTeam))
-        	joinGuestButton.setVisibility(View.INVISIBLE);
+        cursor.close();
+        matchAdapter.close();
         
     	ListView lvListHost = (ListView) view.findViewById(R.id.listViewHostTeam);
     	ListView lvListGuest = (ListView) view.findViewById(R.id.listViewGuestTeam);
@@ -112,6 +121,14 @@ public class PlayersFragment extends Fragment {
     }
     
   
+    public static int isFuture(String date){
+    	final String DATE_FORMAT_NOW = "yyyy/MM/dd";
+    	Calendar cal = Calendar.getInstance();
+    	SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_NOW);
+    	String now = sdf.format(cal.getTime());
+    	return (date.compareTo(now));
+    }
+    
     public boolean isJoined(String username, ArrayList<Player> team){
     	Player player = new Player(username, null);
     	return (team.contains(player) );

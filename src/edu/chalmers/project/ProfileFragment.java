@@ -7,7 +7,6 @@ import java.util.Calendar;
 import java.util.ListIterator;
 
 import android.app.Fragment;
-import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -20,7 +19,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import edu.chalmers.project.data.Availability;
@@ -45,7 +43,7 @@ public class ProfileFragment extends Fragment {
 	private TextView positionTextView;
 	private ImageView profilePhoto;
 	private Bitmap bmp;
-	String imagePath;
+	private String imagePath;
 	private LinearLayout linearLayoutAvailability;
 	private String username;
 	private String otherUsername;
@@ -60,6 +58,7 @@ public class ProfileFragment extends Fragment {
 	private TextView tv7;
 	private TextView tvSpace;
 	private ArrayList<Availability> timeAvailability;
+	private ImageView arrowReliability;
 	
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -77,7 +76,7 @@ public class ProfileFragment extends Fragment {
     	matchPlayedTextView = (TextView) view.findViewById(R.id.textViewMatches);
     	goalsScoredTextView = (TextView) view.findViewById(R.id.textViewGoals);
     	positionTextView = (TextView) view.findViewById(R.id.textViewPositionProfile);
-
+    	arrowReliability = (ImageView) view.findViewById(R.id.imageViewReliability);
     	profilePhoto = (ImageView) view.findViewById(R.id.imageViewProfile);
     	linearLayoutAvailability = (LinearLayout) view.findViewById(R.id.linearLayoutAvailability);
     	buttonShowAvailability = (Button) view.findViewById(R.id.buttonShowAvailability);
@@ -148,6 +147,7 @@ public class ProfileFragment extends Fragment {
         ageTextView.setText(calculateAge(cursor.getString(8)));
         reliabilityLevelTextView.setText(cursor.getString(5));
         positionTextView.setText(cursor.getString(6));
+        arrowReliability.setImageResource(selectArrow(cursor.getString(5)));
         if(!cursor.getString(10).equals("")){
         	int height = profilePhoto.getLayoutParams().height;
         	int width = profilePhoto.getLayoutParams().width;
@@ -166,7 +166,7 @@ public class ProfileFragment extends Fragment {
     private String calculateAge(String birthdate){
     	Calendar cal = Calendar.getInstance();
     	Calendar current = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("mm/dd/yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/mm/dd");
         try {
 			cal.setTime(sdf.parse(birthdate));
 		} catch (ParseException e) {
@@ -203,6 +203,25 @@ public class ProfileFragment extends Fragment {
 		Boolean b = adapter.isFriend(username, otherUsername);
 		adapter.close();
 		return b;
+	}
+	
+	public int selectArrow(String reliability){
+		int level = Integer.parseInt(reliability);
+		if (level<21) {
+			return getActivity().getResources().getIdentifier("black", "drawable", getActivity().getPackageName());
+		}
+		else if (level<41) {
+			return getActivity().getResources().getIdentifier("blue", "drawable", getActivity().getPackageName());
+		}
+		else if (level<61) {
+			return getActivity().getResources().getIdentifier("green", "drawable", getActivity().getPackageName());
+		}
+		else if (level<81){
+			return getActivity().getResources().getIdentifier("yellow", "drawable", getActivity().getPackageName());
+		}
+		else{
+			return getActivity().getResources().getIdentifier("red", "drawable", getActivity().getPackageName());
+		}
 	}
 	
 	public void showAvailability(View view){

@@ -51,6 +51,8 @@ public class HomeFragment extends Fragment {
 		        	matchList = matchAdapter.getUpcomingEvents(username);
 		        else if(i==2)
 		        	matchList = matchAdapter.getMyEvents(username);
+		        else if(i==3)
+		        	matchList = matchAdapter.getPastEvents();
 		        matchAdapter.close();
 		        
 				lvList.setAdapter(new ArrayAdapter<Match>(getActivity(), android.R.layout.simple_list_item_1, matchList));
