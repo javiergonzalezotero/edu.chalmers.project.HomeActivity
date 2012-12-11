@@ -4,24 +4,21 @@ package edu.chalmers.project;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
+import edu.chalmers.project.data.AvailabilityDBAdapter;
 import edu.chalmers.project.data.PlayerDBAdapter;
 
 public class NewAccountActivity extends FragmentActivity {
@@ -40,6 +37,7 @@ public class NewAccountActivity extends FragmentActivity {
 	private ImageButton profilePhoto;
 	private EditText editTextCity;
 	private Bundle b;
+	private Button buttonChangeAvailability;
 
 	
     @Override
@@ -59,11 +57,15 @@ public class NewAccountActivity extends FragmentActivity {
         spinnerFieldPosition = (Spinner)findViewById(R.id.spinnerFieldPosition);
         editTextCity = (EditText)findViewById(R.id.editTextCity);
         profilePhoto = (ImageButton) findViewById(R.id.imageButtonSelectPhoto);
+        buttonChangeAvailability = (Button) findViewById(R.id.buttonChangeAvailability);
         editTextdateOfBirth.setKeyListener(null);    
         
         if (!username.equals("")){//Edit profile
         	showProfile(username);
         	this.setTitle("Edit profile");
+        }
+        else{
+        	buttonChangeAvailability.setVisibility(View.INVISIBLE);
         }
 
     }
@@ -136,6 +138,19 @@ public class NewAccountActivity extends FragmentActivity {
 		    		intent = new Intent(this, FirstScreenActivity.class);		
 	            }
 	            playerAdapter.close();
+	            
+	            /* Initialize the availability data at null */
+	            /*AvailabilityDBAdapter availabilityAdapter = new AvailabilityDBAdapter(this);
+				availabilityAdapter.open();
+				availabilityAdapter.createAvailability(editTextUsername.getText().toString(), "monday", "");
+				availabilityAdapter.createAvailability(editTextUsername.getText().toString(), "tuesday", "");
+				availabilityAdapter.createAvailability(editTextUsername.getText().toString(), "wednesday", "");
+				availabilityAdapter.createAvailability(editTextUsername.getText().toString(), "thursday", "");
+				availabilityAdapter.createAvailability(editTextUsername.getText().toString(), "friday", "");
+				availabilityAdapter.createAvailability(editTextUsername.getText().toString(), "saturday", "");
+				availabilityAdapter.createAvailability(editTextUsername.getText().toString(), "sunday", "");
+				availabilityAdapter.close();
+				*/
 	            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
 	    		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 	            startActivity(intent);	    		

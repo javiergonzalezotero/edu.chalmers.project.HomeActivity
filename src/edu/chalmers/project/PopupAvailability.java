@@ -52,11 +52,12 @@ public class PopupAvailability extends Activity {
 			ListIterator it = this.timeAvailability.listIterator();
 			String stringToShow = "";
 			while(it.hasNext()){
+				String currentString = "" + it.next();
 				if(it.hasNext()){
-					stringToShow = stringToShow + it.next() + ",";
+					stringToShow = stringToShow + currentString + ",";
 				}
 				else{
-					stringToShow = stringToShow + it.next();
+					stringToShow = stringToShow + currentString;
 				}
 			}
 			this.editTextMonday.setText(stringToShow);
@@ -68,7 +69,13 @@ public class PopupAvailability extends Activity {
 			ListIterator it = this.timeAvailability.listIterator();
 			String stringToShow = "";
 			while(it.hasNext()){
-				stringToShow = stringToShow + it.next() + ",";
+				String currentString = "" + it.next();
+				if(it.hasNext()){
+					stringToShow = stringToShow + currentString + ",";
+				}
+				else{
+					stringToShow = stringToShow + currentString;
+				}
 			}
 			this.editTextTuesday.setText(stringToShow);
 		}
@@ -79,7 +86,13 @@ public class PopupAvailability extends Activity {
 			ListIterator it = this.timeAvailability.listIterator();
 			String stringToShow = "";
 			while(it.hasNext()){
-				stringToShow = stringToShow + it.next() + ",";
+				String currentString = "" + it.next();
+				if(it.hasNext()){
+					stringToShow = stringToShow + currentString + ",";
+				}
+				else{
+					stringToShow = stringToShow + currentString;
+				}
 			}
 			this.editTextWednesday.setText(stringToShow);
 		}
@@ -90,7 +103,13 @@ public class PopupAvailability extends Activity {
 			ListIterator it = this.timeAvailability.listIterator();
 			String stringToShow = "";
 			while(it.hasNext()){
-				stringToShow = stringToShow + it.next() + ",";
+				String currentString = "" + it.next();
+				if(it.hasNext()){
+					stringToShow = stringToShow + currentString + ",";
+				}
+				else{
+					stringToShow = stringToShow + currentString;
+				}
 			}
 			this.editTextThursday.setText(stringToShow);
 		}
@@ -101,8 +120,13 @@ public class PopupAvailability extends Activity {
 			ListIterator it = this.timeAvailability.listIterator();
 			String stringToShow = "";
 			while(it.hasNext()){
-
-				stringToShow = stringToShow + it.next() + ",";
+				String currentString = "" + it.next();
+				if(it.hasNext()){
+					stringToShow = stringToShow + currentString + ",";
+				}
+				else{
+					stringToShow = stringToShow + currentString;
+				}
 			}
 			this.editTextFriday.setText(stringToShow);
 		}
@@ -113,7 +137,13 @@ public class PopupAvailability extends Activity {
 			ListIterator it = this.timeAvailability.listIterator();
 			String stringToShow = "";
 			while(it.hasNext()){
-				stringToShow = stringToShow + it.next() + ",";
+				String currentString = "" + it.next();
+				if(it.hasNext()){
+					stringToShow = stringToShow + currentString + ",";
+				}
+				else{
+					stringToShow = stringToShow + currentString;
+				}
 			}
 			this.editTextSaturday.setText(stringToShow);
 		}
@@ -124,10 +154,27 @@ public class PopupAvailability extends Activity {
 			ListIterator it = this.timeAvailability.listIterator();
 			String stringToShow = "";
 			while(it.hasNext()){
-				stringToShow = stringToShow + it.next() + ",";
+				String currentString = "" + it.next();
+				if(it.hasNext()){
+					stringToShow = stringToShow + currentString + ",";
+				}
+				else{
+					stringToShow = stringToShow + currentString;
+				}
 			}
 			this.editTextSunday.setText(stringToShow);
 		}
+		
+		availabilityAdapter.deleteAvailability(username, "monday");
+		availabilityAdapter.deleteAvailability(username, "tuesday");
+		availabilityAdapter.deleteAvailability(username, "wednesday");
+		availabilityAdapter.deleteAvailability(username, "thursday");
+		availabilityAdapter.deleteAvailability(username, "friday");
+		availabilityAdapter.deleteAvailability(username, "saturday");
+		availabilityAdapter.deleteAvailability(username, "sunday");
+		
+		availabilityAdapter.close();
+		
 
 
 
@@ -197,7 +244,10 @@ public class PopupAvailability extends Activity {
 				String stringToSave = stringTested;
 				AvailabilityDBAdapter availabilityAdapter = new AvailabilityDBAdapter(this);
 				availabilityAdapter.open();
+				
+				if(stringToSave != ""){
 				availabilityAdapter.createAvailability(username, day, stringToSave);
+				}
 				availabilityAdapter.close();
 			}
 			error = 0;

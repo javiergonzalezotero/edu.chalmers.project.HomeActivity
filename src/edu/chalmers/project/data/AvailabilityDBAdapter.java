@@ -96,6 +96,18 @@ public class AvailabilityDBAdapter {
 		return this.mDb.insert(DATABASE_TABLE, null, initialValues);
 	}
 	
+	public boolean updateAvailability(String username, String day, String interval) 
+	{
+		ContentValues args = new ContentValues();
+		args.put(INTERVAL, interval);
+		return this.mDb.update(DATABASE_TABLE, args, USERNAME + "= '" + username + "' AND " + DAY + 
+				"= '" + day + "'", null) > 0;
+	}
+	
+	public boolean deleteAvailability(String username, String day) {
+
+		return this.mDb.delete(DATABASE_TABLE, USERNAME + "= '" + username + "' AND " + DAY + "= '" + day + "'", null) > 0; 
+	}
 	
 
     public Cursor getAvailability(String username, String day)throws SQLException{
