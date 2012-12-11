@@ -1,182 +1,155 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ScrollViewNewAccount"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:scrollbars="vertical" >
 
-	<ScrollView
-		xmlns:android="http://schemas.android.com/apk/res/android"
-		android:id="@+id/ScrollViewNewAccount"
-		android:layout_width="fill_parent" android:layout_height="fill_parent"
-		android:scrollbars="vertical">
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
 
-		<LinearLayout
-			xmlns:android="http://schemas.android.com/apk/res/android"
-			android:layout_width="fill_parent"
-			android:layout_height="fill_parent" android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="10dip" >
 
-			<LinearLayout
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:layout_gravity="center"
-			    android:padding="10dip" >
+            <ImageView
+                android:id="@+id/imageViewProfile"
+                android:layout_width="106dp"
+                android:layout_height="106dp"
+                android:layout_margin="10dip"
+                android:layout_weight="0.24"
+                android:src="@drawable/ic_launcher" />
 
-			    <ImageView
-			        android:id="@+id/imageViewProfile"
-			        android:layout_width="106dp"
-			        android:layout_height="106dp"
-			        android:layout_margin="10dip"
-			        android:layout_weight="0.24"
-			        android:src="@drawable/ic_launcher" />
+            <ImageButton
+                android:id="@+id/imageButtonFriends"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="seeFriends"
+                android:src="@drawable/ic_friends" />
+        </LinearLayout>
 
-			    <ImageButton
-			        android:id="@+id/imageButtonFriends"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:onClick="seeFriends"
-			        android:src="@drawable/ic_friends" />
-			</LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="40dip"
+            android:orientation="vertical" >
 
-			<LinearLayout android:layout_width="wrap_content"
-				android:layout_height="match_parent"
-				android:layout_marginLeft="40dip" android:orientation="vertical">
+            <TextView
+                android:id="@+id/textViewUsernameProfile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dip"
+                android:text="USERNAME"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
-				<TextView android:id="@+id/textViewUsernameProfile"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content" android:padding="10dip"
-					android:text="USERNAME"
-					android:textAppearance="?android:attr/textAppearanceLarge" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
 
-				<LinearLayout
-				    android:layout_width="match_parent"
-				    android:layout_height="wrap_content" >
+                <TextView
+                    android:id="@+id/textViewFirstName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="5dp"
+                    android:text="TextView" />
 
-					<TextView
-					    android:id="@+id/textViewFirstName"
-					    android:layout_width="wrap_content"
-					    android:layout_height="wrap_content"
-					    android:paddingRight="5dp"
-					    android:text="TextView" />
+                <TextView
+                    android:id="@+id/textViewFamilyName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TextView" />
+            </LinearLayout>
 
-					<TextView
-					    android:id="@+id/textViewFamilyName"
-					    android:layout_width="wrap_content"
-					    android:layout_height="wrap_content"
-					    android:text="TextView" />
+            <TextView
+                android:id="@+id/textViewAgeProfile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="22 years" />
 
-				</LinearLayout>
+            <TextView
+                android:id="@+id/textViewPositionProfile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Defender" />
 
-				<TextView android:id="@+id/textViewAgeProfile"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content" android:text="22 years" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
 
+                <TextView
+                    android:id="@+id/textViewReliabilityProfile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Reliability: " />
 
+                <TextView
+                    android:id="@+id/textViewReliabilityLevelProfile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="50%" />
+            </LinearLayout>
 
-				<TextView android:id="@+id/textViewPositionProfile"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content" android:text="Defender" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
 
-				<LinearLayout android:layout_width="match_parent"
-					android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/textViewMVPProfile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="MVP&apos;s: " />
 
+                <TextView
+                    android:id="@+id/textViewMVPNumberProfile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
 
-					<TextView
-						android:id="@+id/textViewReliabilityProfile"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content" android:text="Reliability: " />
+            <TextView
+                android:id="@+id/textViewTimetableProfile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Timetable:" />
+            
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
 
+                <TextView
+                    android:id="@+id/textViewMatchPlayed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:onClick="viewMatches"
+                    android:text="Matches Played: " />
 
+                <TextView
+                    android:id="@+id/textViewMatches"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
 
-					<TextView
-						android:id="@+id/textViewReliabilityLevelProfile"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content" android:text="50%" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" >
 
-				</LinearLayout>
+                <TextView
+                    android:id="@+id/textViewGoalsScored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Goals Scored: " />
 
-				<LinearLayout android:layout_width="match_parent"
-					android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/textViewGoals"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
 
-
-
-					<TextView android:id="@+id/textViewMVPProfile"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content" android:text="MVP&apos;s: " />
-
-					<TextView
-					    android:id="@+id/textViewMVPNumberProfile"
-					    android:layout_width="wrap_content"
-					    android:layout_height="wrap_content" />
-
-				</LinearLayout>
-
-
-
-				<TextView android:id="@+id/textViewTimetableProfile"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content" android:text="Timetable:" />
-
-
-
-
-				<SlidingDrawer android:id="@+id/slidingDrawer1"
-					android:layout_width="match_parent" android:layout_height="121dp"
-					android:content="@+id/content" android:handle="@+id/handle">
-
-					<Button android:id="@+id/handle"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content" android:text="Handle" />
-
-
-					<LinearLayout android:id="@+id/content"
-						android:layout_width="match_parent" android:layout_height="38dp"
-						android:orientation="vertical">
-
-						<TextView android:id="@+id/textView1"
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content" android:text="TextView" />
-
-						<TextView android:id="@+id/textView2"
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content" android:text="TextView" />
-
-					</LinearLayout>
-
-				</SlidingDrawer>
-
-				<LinearLayout android:layout_width="match_parent"
-					android:layout_height="wrap_content">
-
-
-
-
-					<TextView android:id="@+id/textViewMatchPlayed"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content" android:clickable="true"
-						android:onClick="viewMatches" android:text="Matches Played: " />
-
-
-
-					<TextView android:id="@+id/textViewMatches"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"  />
-
-				</LinearLayout>
-
-				<LinearLayout android:layout_width="wrap_content"
-					android:layout_height="match_parent">
-
-
-
-					<TextView android:id="@+id/textViewGoalsScored"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:text="Goals Scored: " />
-
-
-
-					<TextView android:id="@+id/textViewGoals"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"  />
-
-				</LinearLayout>
-
-			</LinearLayout>
-
-		</LinearLayout>
-	</ScrollView>
+</ScrollView>

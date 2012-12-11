@@ -95,6 +95,36 @@ public class AvailabilityDBAdapter {
 		initialValues.put(INTERVAL, interval);
 		return this.mDb.insert(DATABASE_TABLE, null, initialValues);
 	}
+	
+	
+
+    public Cursor getAvailability(String username, String day)throws SQLException{
+    	Cursor mCursor =
+    	        this.mDb.query(true, DATABASE_TABLE, new String[] {USERNAME,DAY,INTERVAL}, 
+    	        		USERNAME + "= '" + username+ "' AND " + DAY + "= '" + day+ "'", null, null, null, null, null);
+    	        if (mCursor != null ) {
+    	            mCursor.moveToFirst();
+    	        }
+    	        return mCursor;
+    }
+    
+    public ArrayList<Availability> getAvailabilityBis(String username, String day) {
+
+    	ArrayList<Availability> timeAvailability = new ArrayList<Availability>();
+    	
+		Cursor mCursor = this.mDb.query(true, DATABASE_TABLE, new String[] {ROW_ID,USERNAME,DAY,INTERVAL}, 
+        		USERNAME + "= '" + username+ "' AND " + DAY + "= '" + day+ "'", null, null, null, null, null);
+		if (mCursor != null) {
+			mCursor.moveToFirst();
+		}
+		while(!(mCursor.isAfterLast())){
+			Availability newAvailability = new Availability(Integer.parseInt(mCursor.getString(0)),mCursor.getString(1),mCursor.getString(2),mCursor.getString(3));
+			timeAvailability.add(newAvailability);
+			mCursor.moveToNext();
+		}
+		mCursor.close();
+		return timeAvailability;
+	}
 
 	
 

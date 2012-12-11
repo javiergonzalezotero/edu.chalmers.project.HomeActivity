@@ -82,7 +82,7 @@
         
         <activity
             android:name=".PopupChangeResultActivity"       
-            android:theme="@android:style/Theme.Dialog" >
+            android:theme="@android:style/Theme.Holo.Dialog" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.chalmers.project.FirstScreenActivity" />
@@ -91,6 +91,14 @@
         <activity
             android:name="ChangeResultActivity"
             android:uiOptions="splitActionBarWhenNarrow" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.chalmers.project.FirstScreenActivity" />
+        </activity>
+        
+        <activity
+            android:name=".PopupAvailability"       
+            android:theme="@android:style/Theme.Holo.Dialog" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.chalmers.project.FirstScreenActivity" />

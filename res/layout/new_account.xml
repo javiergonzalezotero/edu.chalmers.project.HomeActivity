@@ -170,6 +170,13 @@
                 android:src="@drawable/ic_launcher" />
 
         </LinearLayout>
+
+        <Button
+            android:id="@+id/buttonChangeAvailability"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="changeAvailability"
+            android:text="Change Availability" />
 
     </LinearLayout>
 
