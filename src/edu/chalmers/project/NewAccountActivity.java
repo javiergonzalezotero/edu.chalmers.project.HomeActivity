@@ -216,4 +216,12 @@ public class NewAccountActivity extends FragmentActivity {
         newFragment.show(getSupportFragmentManager(), "datePicker");
         
     }
+    
+    public void changeAvailability(View v){
+    	Intent intent = new Intent(this, PopupAvailability.class);
+    	intent.putExtra("username", username);
+    	startActivity(intent);
+    }
+    
+   
 }

@@ -2,7 +2,9 @@ package edu.chalmers.project;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.ListIterator;
 
 import android.R.integer;
 import android.app.Fragment;
@@ -17,7 +19,13 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
+
+import edu.chalmers.project.data.Availability;
+import edu.chalmers.project.data.AvailabilityDBAdapter;
+
 import edu.chalmers.project.data.FriendDBAdapter;
 import edu.chalmers.project.data.GoalDBAdapter;
 import edu.chalmers.project.data.MatchDBAdapter;
@@ -39,6 +47,9 @@ public class ProfileFragment extends Fragment {
 	private ImageView profilePhoto;
 	private Bitmap bmp;
 	String imagePath;
+	private TextView textViewMonday;
+	private LinearLayout content;
+	private ArrayList<Availability> timeAvailability;
 	
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -56,8 +67,7 @@ public class ProfileFragment extends Fragment {
     	matchPlayedTextView = (TextView) view.findViewById(R.id.textViewMatches);
     	goalsScoredTextView = (TextView) view.findViewById(R.id.textViewGoals);
     	positionTextView = (TextView) view.findViewById(R.id.textViewPositionProfile);
-    	profilePhoto = (ImageView) view.findViewById(R.id.imageViewProfile);
-    	
+    	profilePhoto = (ImageView) view.findViewById(R.id.imageViewProfile);   	
     	Bundle b = getActivity().getIntent().getExtras();
         String username = b.getString("username");
         String otherUsername = b.getString("other_username");
@@ -66,9 +76,131 @@ public class ProfileFragment extends Fragment {
         else {
 			inflatePlayer(otherUsername);
 		}
-        return view;
-       
-    }
+
+
+		this.timeAvailability = new ArrayList<Availability>();
+		AvailabilityDBAdapter availabilityAdapter = new AvailabilityDBAdapter(container.getContext());
+		availabilityAdapter.open();
+		this.timeAvailability = availabilityAdapter.getAvailabilityBis(username, "monday");
+		if(!(this.timeAvailability.isEmpty())){
+			
+			ListIterator it = this.timeAvailability.listIterator();
+			String stringToShow = "Monday : ";
+			while(it.hasNext()){
+				stringToShow = stringToShow + it.next() + " | ";
+			}
+			LayoutParams lparams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+			TextView tv=new TextView(container.getContext());
+			tv.setLayoutParams(lparams);
+			tv.setText(stringToShow);
+			this.content.addView(tv);
+			
+		}
+		
+		this.timeAvailability = availabilityAdapter.getAvailabilityBis(username, "tuesday");
+		if(!(this.timeAvailability.isEmpty())){
+			
+			ListIterator it = this.timeAvailability.listIterator();
+			String stringToShow = "Tuesday : ";
+			while(it.hasNext()){
+				stringToShow = stringToShow + it.next() + " | ";
+			}
+			LayoutParams lparams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+			TextView tv=new TextView(container.getContext());
+			tv.setLayoutParams(lparams);
+			tv.setText(stringToShow);
+			this.content.addView(tv);
+			
+		}
+		
+		this.timeAvailability = availabilityAdapter.getAvailabilityBis(username, "wednesday");
+		if(!(this.timeAvailability.isEmpty())){
+			
+			ListIterator it = this.timeAvailability.listIterator();
+			String stringToShow = "Wednesday : ";
+			while(it.hasNext()){
+				stringToShow = stringToShow + it.next() + " | ";
+			}
+			LayoutParams lparams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+			TextView tv=new TextView(container.getContext());
+			tv.setLayoutParams(lparams);
+			tv.setText(stringToShow);
+			this.content.addView(tv);
+			
+		}
+		
+		this.timeAvailability = availabilityAdapter.getAvailabilityBis(username, "thursday");
+		if(!(this.timeAvailability.isEmpty())){
+			
+			ListIterator it = this.timeAvailability.listIterator();
+			String stringToShow = "Thursday : ";
+			while(it.hasNext()){
+				stringToShow = stringToShow + it.next() + " | ";
+			}
+			LayoutParams lparams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+			TextView tv=new TextView(container.getContext());
+			tv.setLayoutParams(lparams);
+			tv.setText(stringToShow);
+			this.content.addView(tv);
+			
+		}
+		
+		this.timeAvailability = availabilityAdapter.getAvailabilityBis(username, "friday");
+		if(!(this.timeAvailability.isEmpty())){
+			
+			ListIterator it = this.timeAvailability.listIterator();
+			String stringToShow = "Friday : ";
+			while(it.hasNext()){
+				stringToShow = stringToShow + it.next() + " | ";
+			}
+			LayoutParams lparams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+			TextView tv=new TextView(container.getContext());
+			tv.setLayoutParams(lparams);
+			tv.setText(stringToShow);
+			this.content.addView(tv);
+			
+		}
+		
+		this.timeAvailability = availabilityAdapter.getAvailabilityBis(username, "saturday");
+		if(!(this.timeAvailability.isEmpty())){
+			
+			ListIterator it = this.timeAvailability.listIterator();
+			String stringToShow = "Saturday : ";
+			while(it.hasNext()){
+				stringToShow = stringToShow + it.next() + " | ";
+			}
+			LayoutParams lparams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+			TextView tv=new TextView(container.getContext());
+			tv.setLayoutParams(lparams);
+			tv.setText(stringToShow);
+			this.content.addView(tv);
+			
+		}
+		
+		this.timeAvailability = availabilityAdapter.getAvailabilityBis(username, "sunday");
+		if(!(this.timeAvailability.isEmpty())){
+			
+			ListIterator it = this.timeAvailability.listIterator();
+			String stringToShow = "Sunday : ";
+			while(it.hasNext()){
+				stringToShow = stringToShow + it.next() + " | ";
+			}
+			LayoutParams lparams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+			TextView tv=new TextView(container.getContext());
+			tv.setLayoutParams(lparams);
+			tv.setText(stringToShow);
+			this.content.addView(tv);
+			
+		}
+		availabilityAdapter.close();
+
+
+
+		return view;
+
+	}
+
+
     
     /*
      * Loads the information of the player from the db
@@ -121,8 +253,8 @@ public class ProfileFragment extends Fragment {
 		int age = cal.get(Calendar.YEAR)-1970;
 		if(age==0)
 			return "N/D years";
-    	return Integer.toString(age) + " years";
-    }
+		return Integer.toString(age) + " years";
+	}
     
     
     @Override
@@ -135,18 +267,18 @@ public class ProfileFragment extends Fragment {
         else if (isMyFriend(username, otherUsername)){
 			inflater.inflate(R.menu.friend_profile, menu);
 		} 	
-        else{
-        	inflater.inflate(R.menu.other_profile_fragment, menu);
-        }
-    	
-    }
-    
-    public boolean isMyFriend(String username, String otherUsername){
-    	FriendDBAdapter adapter = new FriendDBAdapter(this.getActivity());
-    	adapter.open();
-    	Boolean b = adapter.isFriend(username, otherUsername);
-    	adapter.close();
-    	return b;
-    }
-   
+		else{
+			inflater.inflate(R.menu.other_profile_fragment, menu);
+		}
+
+	}
+
+	public boolean isMyFriend(String username, String otherUsername){
+		FriendDBAdapter adapter = new FriendDBAdapter(this.getActivity());
+		adapter.open();
+		Boolean b = adapter.isFriend(username, otherUsername);
+		adapter.close();
+		return b;
+	}
+
 }

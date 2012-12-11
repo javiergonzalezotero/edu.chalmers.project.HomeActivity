@@ -155,11 +155,12 @@
             android:ems="10" />
 
     </LinearLayout>
-
+
     <Button
         android:id="@+id/buttonFinishAvailability"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="finishPopupAvailability"
         android:text="Finish" />
 
 </LinearLayout>
