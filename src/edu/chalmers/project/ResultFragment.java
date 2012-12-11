@@ -94,7 +94,6 @@ public class ResultFragment extends Fragment {
 
 		matchAdapter.open();
 		Cursor cursorIdMvp = matchAdapter.getMvp(idMatch);
-		matchAdapter.close();
 		if(cursorIdMvp.getString(0) != null){
 			int idMvp = Integer.parseInt(cursorIdMvp.getString(0));
 			Cursor cursorMvp = playerAdapter.getPlayer(idMvp);
@@ -105,11 +104,13 @@ public class ResultFragment extends Fragment {
 		}
 
 		playerAdapter.close();
-
-		if(Integer.parseInt(cursorOrganizer.getString(1)) == Integer.parseInt(cursorPlayer.getString(9))){
+		Cursor cursor = matchAdapter.getMatch(idMatch);
+		if((Integer.parseInt(cursorOrganizer.getString(1)) == Integer.parseInt(cursorPlayer.getString(9))) &&
+				!(PlayersFragment.isFuture(cursor.getString(1))==1)){
 			this.buttonChangeResult.setVisibility(View.VISIBLE);
 		}
-
+		cursor.close();
+		matchAdapter.close();
 
 		MatchPlayedDBAdapter matchPlayedAdapter = new MatchPlayedDBAdapter(container.getContext());
 		matchPlayedAdapter.open();

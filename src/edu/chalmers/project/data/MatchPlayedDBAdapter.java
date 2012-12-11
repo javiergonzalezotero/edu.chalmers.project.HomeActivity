@@ -137,8 +137,6 @@ public class MatchPlayedDBAdapter {
 				DATABASE_TABLE +" JOIN player on " + DATABASE_TABLE+"."+PLAYERUSERNAME + " = player." +
 				PlayerDBAdapter.USERNAME + " WHERE " + DATABASE_TABLE +"." + ID_MATCH + " = " + 
 				idMatch + " AND " + DATABASE_TABLE + "." + TEAM + " = " + team;
-//		Cursor mCursor = this.mDb.query(true, DATABASE_TABLE, new String[] {PLAYERUSERNAME},
-//				ID_MATCH + " = "  + idMatch + " AND "+ TEAM +" = " + team, null,null,null,null,null);
 		Cursor mCursor = this.mDb.rawQuery(query, null);
 		if (mCursor != null) {
 			mCursor.moveToFirst();
@@ -158,8 +156,9 @@ public class MatchPlayedDBAdapter {
 	public String getMatchesPlayed(String username){
 		String query = "SELECT "+ "count(*) FROM " + "match join "+ DATABASE_TABLE + 
 				" ON match."+MatchDBAdapter.ROW_ID + " = " + DATABASE_TABLE+"."+MatchPlayedDBAdapter.ID_MATCH
-				+ " WHERE " + MatchPlayedDBAdapter.PLAYERUSERNAME + " = '"+ username+"'" /*+"' AND " + 			 
-    			"datetime('now') < datetime('match."+MatchDBAdapter.DATE + "')"*/; 
+				+ " WHERE " + MatchPlayedDBAdapter.PLAYERUSERNAME + " = '"+ username+"'" +" AND " + 			 
+    			"date('now') > match."+MatchDBAdapter.DATE + " AND " + 
+				DATABASE_TABLE + "." + PRESENT + " = 1"; 
 		Cursor mCursor = this.mDb.rawQuery(query, null);
 		if (mCursor != null) {
 			mCursor.moveToFirst();
@@ -185,10 +184,4 @@ public class MatchPlayedDBAdapter {
 		return playersNotPresentList;
 	}
 
-	/**
-	 * Return a Cursor positioned at the match that matches the given rowId
-	 * @param rowId
-	 * @return Cursor positioned to matching car, if found
-	 * @throws SQLException if player could not be found/retrieved
-	 */
 }

@@ -1,5 +1,6 @@
 package edu.chalmers.project.data;
 
+import java.math.MathContext;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -144,40 +145,9 @@ public class MatchDBAdapter {
 		}
 		return mCursor;
 	}
-
-	/**
-	 * @return Return the list of all the matches
-	 */
-	public ArrayList<Match> getMatchList() {
-
-		int rowId = 1;
-		Cursor cursor;
-		cursor = this.getMatch(rowId);
-		this.matchList = new ArrayList<Match>();
-
-		while(cursor.getCount() != 0){
-			Match m = new Match(rowId, cursor.getString(3),cursor.getString(1),cursor.getString(2),cursor.getString(5),cursor.getString(4),
-					Integer.parseInt(cursor.getString(6)),Integer.parseInt(cursor.getString(7)), Integer.parseInt(cursor.getString(8)));
-			this.matchList.add(m);
-			rowId = rowId + 1;
-			cursor = this.getMatch(rowId);    	
-		}
-		cursor.close();
-		Collections.sort(this.matchList, new MatchComparable());
-		return this.matchList;
-	}
-
 	
-	public ArrayList<Match> getUpcomingEvents(String username){
+	public ArrayList<Match> execQuery(String query){
 		matchList = new ArrayList<Match>();
-		String query = "SELECT distinct "+ DATABASE_TABLE +"."+ ROW_ID + ", "+DATABASE_TABLE +"."+ DATE  
-				+", "+DATABASE_TABLE +"."+ TIME + ", "+DATABASE_TABLE +"."+ NAME + ", "+
-				DATABASE_TABLE +"."+ FIELD +", "+DATABASE_TABLE +"."+ LOCATION +", "+ 
-				DATABASE_TABLE +"."+ COST +", "+DATABASE_TABLE +"."+ NUMBER_PLAYERS +", "+ 
-				DATABASE_TABLE +"."+ ID_ORGANIZER +" FROM "+ DATABASE_TABLE +
-				" join match_played on "+ "match_played."+ MatchPlayedDBAdapter.ID_MATCH+ " = "+ 
-				DATABASE_TABLE+"."+ROW_ID + " WHERE "+ "match_played."+
-				MatchPlayedDBAdapter.PLAYERUSERNAME + " = '"+ username +"'";
 		Cursor cursor = this.mDb.rawQuery(query, null);
 		if (cursor != null) {
 			cursor.moveToFirst();
@@ -193,6 +163,46 @@ public class MatchDBAdapter {
 		cursor.close();  	
 		Collections.sort(this.matchList, new MatchComparable());
 		return this.matchList;
+	}
+
+	/**
+	 * @return Return the list of all the future matches
+	 */
+	public ArrayList<Match> getMatchList() {
+
+		
+		String query = "SELECT distinct "+ DATABASE_TABLE +"."+ ROW_ID + ", "+DATABASE_TABLE +"."+ DATE  
+				+", "+DATABASE_TABLE +"."+ TIME + ", "+DATABASE_TABLE +"."+ NAME + ", "+
+				DATABASE_TABLE +"."+ FIELD +", "+DATABASE_TABLE +"."+ LOCATION +", "+ 
+				DATABASE_TABLE +"."+ COST +", "+DATABASE_TABLE +"."+ NUMBER_PLAYERS +", "+ 
+				DATABASE_TABLE +"."+ ID_ORGANIZER +" FROM "+ DATABASE_TABLE +
+			    " WHERE date('now') < " + DATABASE_TABLE + "." + DATE;
+		return execQuery(query);
+		
+	}
+	
+	public ArrayList<Match> getPastEvents(){
+		String query = "SELECT distinct "+ DATABASE_TABLE +"."+ ROW_ID + ", "+DATABASE_TABLE +"."+ DATE  
+				+", "+DATABASE_TABLE +"."+ TIME + ", "+DATABASE_TABLE +"."+ NAME + ", "+
+				DATABASE_TABLE +"."+ FIELD +", "+DATABASE_TABLE +"."+ LOCATION +", "+ 
+				DATABASE_TABLE +"."+ COST +", "+DATABASE_TABLE +"."+ NUMBER_PLAYERS +", "+ 
+				DATABASE_TABLE +"."+ ID_ORGANIZER +" FROM "+ DATABASE_TABLE +
+			    " WHERE date('now') > " + DATABASE_TABLE + "." + DATE;
+		return execQuery(query);
+	}
+
+	
+	public ArrayList<Match> getUpcomingEvents(String username){
+		String query = "SELECT distinct "+ DATABASE_TABLE +"."+ ROW_ID + ", "+DATABASE_TABLE +"."+ DATE  
+				+", "+DATABASE_TABLE +"."+ TIME + ", "+DATABASE_TABLE +"."+ NAME + ", "+
+				DATABASE_TABLE +"."+ FIELD +", "+DATABASE_TABLE +"."+ LOCATION +", "+ 
+				DATABASE_TABLE +"."+ COST +", "+DATABASE_TABLE +"."+ NUMBER_PLAYERS +", "+ 
+				DATABASE_TABLE +"."+ ID_ORGANIZER +" FROM "+ DATABASE_TABLE +
+				" join match_played on "+ "match_played."+ MatchPlayedDBAdapter.ID_MATCH+ " = "+ 
+				DATABASE_TABLE+"."+ROW_ID + " WHERE "+ "match_played."+
+				MatchPlayedDBAdapter.PLAYERUSERNAME + " = '"+ username +"'" + " AND " +
+				"date('now') <= " + DATABASE_TABLE + "." + DATE;
+		return execQuery(query);
 	}
 	
 	
@@ -210,7 +220,6 @@ public class MatchDBAdapter {
 	}
 
 	public ArrayList<Match> getMyEvents(String username) {   	
-		matchList = new ArrayList<Match>();
 		String query = "SELECT distinct "+ DATABASE_TABLE +"."+ ROW_ID + ", "+DATABASE_TABLE +"."+ DATE  
 				+", "+DATABASE_TABLE +"."+ TIME + ", "+DATABASE_TABLE +"."+ NAME + ", "+
 				DATABASE_TABLE +"."+ FIELD +", "+DATABASE_TABLE +"."+ LOCATION +", "+ 
@@ -219,21 +228,7 @@ public class MatchDBAdapter {
 				" join player on "+ "player."+ PlayerDBAdapter.ROW_ID+ " = "+ 
 				DATABASE_TABLE+"."+ID_ORGANIZER + " WHERE "+ "player."+PlayerDBAdapter.USERNAME + 
 				" = '"+ username +"'";
-		Cursor cursor = this.mDb.rawQuery(query, null);
-		if (cursor != null) {
-			cursor.moveToFirst();
-		}
-		while(!cursor.isAfterLast()){
-			Match m = new Match(cursor.getInt(0), cursor.getString(3),cursor.getString(1),
-					cursor.getString(2),cursor.getString(5),cursor.getString(4),
-					Integer.parseInt(cursor.getString(6)),Integer.parseInt(cursor.getString(7)), 
-					Integer.parseInt(cursor.getString(8)));
-			this.matchList.add(m);
-			cursor.moveToNext();   	
-		}
-		cursor.close();  	
-		Collections.sort(this.matchList, new MatchComparable());
-		return this.matchList;
+		return execQuery(query);
 	}
 	
 	public Cursor getIdOrganizer(long idMatch) throws SQLException {
