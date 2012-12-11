@@ -1,5 +1,9 @@
 package edu.chalmers.project.data;
 
+import java.util.Comparator;
+
+import android.R.integer;
+
 public class Match {
 	
 	private int id;
@@ -12,7 +16,8 @@ public class Match {
 	private int numberPlayers;
 	private int id_organizer;
 	
-	public Match(int id, String name, String date, String time, String location, String field, int cost, int numberPlayers, int id_organizer){
+	public Match(int id, String name, String date, String time, String location, String field, 
+			int cost, int numberPlayers, int id_organizer) {
 		this.id = id;
 		this.name=name;
 		this.date=date;
@@ -99,6 +104,8 @@ public class Match {
 	public String toString(){
 		return this.name;
 	}
-
 	
 }
+
+	
+

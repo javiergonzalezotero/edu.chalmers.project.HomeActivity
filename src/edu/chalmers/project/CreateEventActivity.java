@@ -71,42 +71,47 @@ public class CreateEventActivity extends FragmentActivity {
 			MatchDBAdapter matchAdapter = new MatchDBAdapter(this);
 			matchAdapter.open();
 			MatchPlayedDBAdapter adapter = new MatchPlayedDBAdapter(this);
-        	adapter.open();
+			adapter.open();
 			PlayerDBAdapter playerAdapter = new PlayerDBAdapter(this);
 			playerAdapter.open();
 			Cursor cursorPlayer = playerAdapter.getPlayer(this.username);
 
+			if(matchAdapter.matchNameExists(editTextNameEvent.getText().toString())){
+				if((editTextNameEvent.getText().toString().compareTo("")!=0) && (editTextDate.getText().toString().compareTo("")!=0)
+						&& (editTextTime.getText().toString().compareTo("")!=0) && (editTextField.getText().toString().compareTo("")!=0) 
+						&& (editTextPlace.getText().toString().compareTo("")!=0) && (editTextCost.getText().toString().compareTo("")!=0)
+						&& (editTextPlayersLimit.getText().toString().compareTo("")!=0)){
+					if((Integer.parseInt(editTextPlayersLimit.getText().toString()) % 2) == 0){
+						long rowId= matchAdapter.createMatch(editTextDate.getText().toString(), editTextTime.getText().toString(), 
+								editTextNameEvent.getText().toString(), editTextField.getText().toString(),
+								editTextPlace.getText().toString(), Integer.parseInt(editTextCost.getText().toString()), 
+								Integer.parseInt(editTextPlayersLimit.getText().toString()),
+								Integer.parseInt(cursorPlayer.getString(9)));
+						adapter.joinMatch(b.getString("username"), rowId, 1);//Join host team automatically
 
-			if((editTextNameEvent.getText().toString().compareTo("")!=0) && (editTextDate.getText().toString().compareTo("")!=0)
-					&& (editTextTime.getText().toString().compareTo("")!=0) && (editTextField.getText().toString().compareTo("")!=0) 
-					&& (editTextPlace.getText().toString().compareTo("")!=0) && (editTextCost.getText().toString().compareTo("")!=0)
-					&& (editTextPlayersLimit.getText().toString().compareTo("")!=0)){
-				if((Integer.parseInt(editTextPlayersLimit.getText().toString()) % 2) == 0){
-				long rowId= matchAdapter.createMatch(editTextDate.getText().toString(), editTextTime.getText().toString(), 
-						editTextNameEvent.getText().toString(), editTextField.getText().toString(),
-						editTextPlace.getText().toString(), Integer.parseInt(editTextCost.getText().toString()), 
-						Integer.parseInt(editTextPlayersLimit.getText().toString()),
-						Integer.parseInt(cursorPlayer.getString(9)));
-				adapter.joinMatch(b.getString("username"), rowId, 1);//Join host team automatically
-				
-				adapter.close();
-				matchAdapter.close();
-				cursorPlayer.close();
-				playerAdapter.close();
+						adapter.close();
+						matchAdapter.close();
+						cursorPlayer.close();
+						playerAdapter.close();
 
-				Intent intent = new Intent(this, HomeActivity.class);
-				intent.putExtra("tab_position", 0);
-				intent.putExtras(b);
-				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
-				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				startActivity(intent);
+						Intent intent = new Intent(this, HomeActivity.class);
+						intent.putExtra("tab_position", 0);
+						intent.putExtras(b);
+						intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
+						intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+						startActivity(intent);
+					}
+					else{
+						Toast.makeText(this, "You have to enter an even number", Toast.LENGTH_SHORT).show();
+					}
 				}
 				else{
-					Toast.makeText(this, "You have to enter an even number", Toast.LENGTH_SHORT).show();
+					Toast.makeText(this, "You have to enter all the fields", Toast.LENGTH_LONG).show();
 				}
 			}
 			else{
-				Toast.makeText(this, "You have to enter all the fields", Toast.LENGTH_LONG).show();
+				Toast.makeText(this, "Name of the match already exists", Toast.LENGTH_LONG).show();
+
 			}
 
 			return true;    
@@ -114,7 +119,7 @@ public class CreateEventActivity extends FragmentActivity {
 			return super.onOptionsItemSelected(item);
 		}
 	}
-	
+
 
 	public void showDatePickerDialog(View v) {
 		DialogFragment newFragment = new DatePickerFragment(this.editTextDate);

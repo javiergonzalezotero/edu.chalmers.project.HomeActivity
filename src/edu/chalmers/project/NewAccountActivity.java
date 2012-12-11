@@ -127,13 +127,19 @@ public class NewAccountActivity extends FragmentActivity {
 	            	intent.putExtra("tab_position", 2);
 	            }
 	            else{
-	            playerAdapter.createPlayer(editTextUsername.getText().toString(), 
-		            		editTextPassword.getText().toString(),editTextFirstname.getText().toString(),
-		            		editTextFamilyName.getText().toString(),editTextMail.getText().toString(),
-		            		50, spinnerFieldPosition.getSelectedItem().toString(), 
-		            		editTextCity.getText().toString(), editTextdateOfBirth.getText().toString(),
-		            		selectedImagePath);
-		    		intent = new Intent(this, FirstScreenActivity.class);		
+	            	if(playerAdapter.usernameExists(editTextUsername.getText().toString())){
+		            	playerAdapter.createPlayer(editTextUsername.getText().toString(), 
+			            		editTextPassword.getText().toString(),editTextFirstname.getText().toString(),
+			            		editTextFamilyName.getText().toString(),editTextMail.getText().toString(),
+			            		50, spinnerFieldPosition.getSelectedItem().toString(), 
+			            		editTextCity.getText().toString(), editTextdateOfBirth.getText().toString(),
+			            		selectedImagePath);
+			    		intent = new Intent(this, FirstScreenActivity.class);
+	            	}
+	            	else{
+	            		Toast.makeText(this, "Username already exists", Toast.LENGTH_LONG).show();
+	            		return true;
+	            	}
 	            }
 	            playerAdapter.close();
 	            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 

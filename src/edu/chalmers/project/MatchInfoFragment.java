@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 import edu.chalmers.project.data.MatchDBAdapter;
+import edu.chalmers.project.data.MatchPlayedDBAdapter;
 import edu.chalmers.project.data.PlayerDBAdapter;
 
 
@@ -34,17 +35,17 @@ public class MatchInfoFragment extends Fragment {
         TextView limitePlayersMatch = (TextView)view.findViewById(R.id.textViewLimitPlayersMatch);
         
         PlayerDBAdapter playerAdapter = new PlayerDBAdapter(container.getContext());
-        playerAdapter.open();
-       
+        playerAdapter.open();  
         
         MatchDBAdapter matchAdapter = new MatchDBAdapter(container.getContext());
         matchAdapter.open();
-        Cursor cursorMatch = matchAdapter.getMatch(position);
-        
+        Cursor cursorMatch = matchAdapter.getMatch(position);  
         
         int id_organizer = Integer.parseInt(cursorMatch.getString(8));
         Cursor cursorPlayer = playerAdapter.getPlayer(id_organizer);
         
+        MatchPlayedDBAdapter adapter = new MatchPlayedDBAdapter(container.getContext());
+        adapter.open();     
         
         idOrganizer.setText(cursorPlayer.getString(2));
         nameMatch.setText(cursorMatch.getString(3));
@@ -53,13 +54,14 @@ public class MatchInfoFragment extends Fragment {
         placeMatch.setText(cursorMatch.getString(5));
         fieldMatch.setText(cursorMatch.getString(4));
         costMatch.setText(cursorMatch.getString(6));
-        limitePlayersMatch.setText(cursorMatch.getString(7));
+        limitePlayersMatch.setText(adapter.getNumberPlayersJoined(cursorMatch.getLong(0))+
+        		"/"+cursorMatch.getString(7));
         
         cursorPlayer.close();
         playerAdapter.close();
         cursorMatch.close();
         matchAdapter.close();      
-        
+        adapter.close();
         return view;
        
     }
