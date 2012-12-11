@@ -58,7 +58,7 @@ public class DBAdapter {
 			   "create table if not exists  availability(_id integer primary key autoincrement, " 
 			+ AvailabilityDBAdapter.USERNAME+ " TEXT,"
 			+ AvailabilityDBAdapter.DAY+ " INTEGER, "
-			+ AvailabilityDBAdapter.INTERVAL+ " INTEGER, "+ ");"; 
+			+ AvailabilityDBAdapter.INTERVAL+ " INTEGER "+ ");"; 
 	
 	
 	

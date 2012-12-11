@@ -39,6 +39,8 @@ public class LoginActivity extends Activity {
         	Intent intent = new Intent(this, HomeActivity.class);
         	intent.putExtra("username", cursor.getString(0));
         	intent.putExtra("tab_position", 0);
+        	intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK); 
+    		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         	startActivity(intent);
         }
         else {

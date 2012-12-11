@@ -41,7 +41,7 @@ public class HomeFragment extends Fragment {
 		username = bundle.getString("username");
 		matchAdapter = new MatchDBAdapter(container.getContext());
 		lvList = (ListView) view.findViewById(R.id.listViewHomeMatches);
-		
+	
 		matchSelectionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 		    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 
 		    	matchAdapter.open();

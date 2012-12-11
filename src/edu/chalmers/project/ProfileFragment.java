@@ -4,20 +4,20 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import android.R.integer;
 import android.app.Fragment;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import edu.chalmers.project.data.FriendDBAdapter;
 import edu.chalmers.project.data.GoalDBAdapter;
 import edu.chalmers.project.data.MatchDBAdapter;
@@ -61,7 +61,7 @@ public class ProfileFragment extends Fragment {
     	Bundle b = getActivity().getIntent().getExtras();
         String username = b.getString("username");
         String otherUsername = b.getString("other_username");
-        if (otherUsername==null)
+        if ((otherUsername==null) || (username.equals(otherUsername)))
         	inflatePlayer(username);
         else {
 			inflatePlayer(otherUsername);
@@ -93,8 +93,10 @@ public class ProfileFragment extends Fragment {
         reliabilityLevelTextView.setText(cursor.getString(5));
         positionTextView.setText(cursor.getString(6));
         if(!cursor.getString(10).equals("")){
-	        profilePhoto.setImageBitmap(BitmapFactory.decodeFile(cursor.getString(10)));
-	        profilePhoto.setScaleType(ImageView.ScaleType.FIT_XY);
+        	int height = profilePhoto.getLayoutParams().height;
+        	int width = profilePhoto.getLayoutParams().width;
+        	profilePhoto.setImageBitmap(ImageLoader.decodeSampledBitmapFromResource(cursor.getString(10), 
+					width, height));
         }
         cursor.close();
         playerAdapter.close();
@@ -128,7 +130,7 @@ public class ProfileFragment extends Fragment {
     	Bundle b = getActivity().getIntent().getExtras();
         String otherUsername = b.getString("other_username");
         String username = b.getString("username");
-        if (otherUsername==null)
+        if ((otherUsername==null) || (username.equals(otherUsername)))
         	inflater.inflate(R.menu.profile_fragment, menu);
         else if (isMyFriend(username, otherUsername)){
 			inflater.inflate(R.menu.friend_profile, menu);

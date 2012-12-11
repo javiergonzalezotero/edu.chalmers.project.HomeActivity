@@ -156,7 +156,8 @@ public class ChangeResultActivity extends Activity {
 			intent.putExtra("position_id_match", idMatch);
 			intent.putExtra("tab_position", 2);
 			intent.putExtra("username", playerUsername);
-			
+    		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
+    		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);		
 		
 			startActivity(intent);
     		
