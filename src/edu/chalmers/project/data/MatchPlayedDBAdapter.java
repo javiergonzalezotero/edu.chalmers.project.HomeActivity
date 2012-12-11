@@ -108,6 +108,18 @@ public class MatchPlayedDBAdapter {
 	}
 
 
+	public String getNumberPlayersJoined(long idMatch){
+		String query = "SELECT COUNT(*) FROM " + DATABASE_TABLE + " WHERE " +
+				DATABASE_TABLE+ "." + ID_MATCH +" = " + idMatch;
+		Cursor mCursor = this.mDb.rawQuery(query, null);
+		if (mCursor != null) {
+			mCursor.moveToFirst();
+		}
+		Integer count = mCursor.getInt(0);
+		mCursor.close();
+		return count.toString();
+		
+	}
 
 	public boolean quitMatch(String playerUsername, long idMatch){
 		return this.mDb.delete(DATABASE_TABLE, 

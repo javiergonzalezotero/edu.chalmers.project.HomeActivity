@@ -1,8 +1,7 @@
 package edu.chalmers.project.data;
 
-import java.sql.Date;
 import java.util.ArrayList;
-
+import java.util.Collections;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -164,7 +163,7 @@ public class MatchDBAdapter {
 			cursor = this.getMatch(rowId);    	
 		}
 		cursor.close();
-
+		Collections.sort(this.matchList, new MatchComparable());
 		return this.matchList;
 	}
 
@@ -192,6 +191,7 @@ public class MatchDBAdapter {
 			cursor.moveToNext();   	
 		}
 		cursor.close();  	
+		Collections.sort(this.matchList, new MatchComparable());
 		return this.matchList;
 	}
 	
@@ -232,6 +232,7 @@ public class MatchDBAdapter {
 			cursor.moveToNext();   	
 		}
 		cursor.close();  	
+		Collections.sort(this.matchList, new MatchComparable());
 		return this.matchList;
 	}
 	
@@ -244,6 +245,18 @@ public class MatchDBAdapter {
 			mCursor.moveToFirst();
 		}
 		return mCursor;
+	}
+	
+	public boolean matchNameExists(String matchName){
+		Cursor mCursor =
+    	        this.mDb.query(true, DATABASE_TABLE, new String[] { ROW_ID}, 
+    	        		NAME + "= '" + matchName+ "'", null, null, null, null, null);
+    	        if (mCursor != null ) {
+    	            mCursor.moveToFirst();
+    	        }
+    	boolean res = mCursor.isAfterLast();
+    	mCursor.close();
+    	return res;
 	}
 
 

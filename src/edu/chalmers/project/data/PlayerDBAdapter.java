@@ -248,6 +248,19 @@ public class PlayerDBAdapter {
 		return playerList;
 	}
 
+	
+	public boolean usernameExists(String username){
+		Cursor mCursor =
+    	        this.mDb.query(true, DATABASE_TABLE, new String[] {USERNAME,PASSWORD,FIRSTNAME,FAMILYNAME,
+    	        		MAIL,RELIABILITY,POSITION,CITY,BIRTHDATE, ROW_ID, IMGPATH}, 
+    	        		USERNAME + "= '" + username+ "'", null, null, null, null, null);
+    	        if (mCursor != null ) {
+    	            mCursor.moveToFirst();
+    	        }
+    	boolean res = mCursor.isAfterLast();
+    	mCursor.close();
+    	return res;
+	}
 }
 
 
