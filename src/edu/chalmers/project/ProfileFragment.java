@@ -6,26 +6,25 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.ListIterator;
 
-import android.R.integer;
 import android.app.Fragment;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
-
 import edu.chalmers.project.data.Availability;
 import edu.chalmers.project.data.AvailabilityDBAdapter;
-
 import edu.chalmers.project.data.FriendDBAdapter;
 import edu.chalmers.project.data.GoalDBAdapter;
 import edu.chalmers.project.data.MatchDBAdapter;
@@ -47,8 +46,19 @@ public class ProfileFragment extends Fragment {
 	private ImageView profilePhoto;
 	private Bitmap bmp;
 	String imagePath;
-	private TextView textViewMonday;
-	private LinearLayout content;
+	private LinearLayout linearLayoutAvailability;
+	private String username;
+	private String otherUsername;
+	private Button buttonShowAvailability;
+	private int buttonPressed;
+	private TextView tv1;
+	private TextView tv2;
+	private TextView tv3;
+	private TextView tv4;
+	private TextView tv5;
+	private TextView tv6;
+	private TextView tv7;
+	private TextView tvSpace;
 	private ArrayList<Availability> timeAvailability;
 	
     @Override
@@ -68,12 +78,14 @@ public class ProfileFragment extends Fragment {
     	goalsScoredTextView = (TextView) view.findViewById(R.id.textViewGoals);
     	positionTextView = (TextView) view.findViewById(R.id.textViewPositionProfile);
     	profilePhoto = (ImageView) view.findViewById(R.id.imageViewProfile);
+    	linearLayoutAvailability = (LinearLayout) view.findViewById(R.id.linearLayoutAvailability);
+    	buttonShowAvailability = (Button) view.findViewById(R.id.buttonShowAvailability);
     	
-    	content = (LinearLayout) view.findViewById(R.id.content);
-    	
+    	this.buttonPressed = 0;
+ 
     	Bundle b = getActivity().getIntent().getExtras();
-        String username = b.getString("username");
-        String otherUsername = b.getString("other_username");
+        this.username = b.getString("username");
+        this.otherUsername = b.getString("other_username");
         if ((otherUsername==null) || (username.equals(otherUsername)))
         	inflatePlayer(username);
         else {
@@ -81,121 +93,29 @@ public class ProfileFragment extends Fragment {
 		}
 
 
-		this.timeAvailability = new ArrayList<Availability>();
-		AvailabilityDBAdapter availabilityAdapter = new AvailabilityDBAdapter(container.getContext());
-		availabilityAdapter.open();
-		this.timeAvailability = availabilityAdapter.getAvailabilityBis(username, "monday");
-		if(!(this.timeAvailability.isEmpty())){
-			
-			ListIterator it = this.timeAvailability.listIterator();
-			String stringToShow = "Monday : ";
-			while(it.hasNext()){
-				stringToShow = stringToShow + it.next() + " | ";
+        buttonShowAvailability.setOnClickListener(new OnClickListener(){
+			public void onClick(View v){
+				if(buttonPressed == 0){
+					
+					showAvailability(v);
+					buttonPressed=1;
+					buttonShowAvailability.setText("Hide Availability");
+				}
+				else{
+					linearLayoutAvailability.removeView(tv1);
+					linearLayoutAvailability.removeView(tv2);
+					linearLayoutAvailability.removeView(tv3);
+					linearLayoutAvailability.removeView(tv4);
+					linearLayoutAvailability.removeView(tv5);
+					linearLayoutAvailability.removeView(tv6);
+					linearLayoutAvailability.removeView(tv7);
+					linearLayoutAvailability.removeView(tvSpace);
+					buttonPressed=0;
+					buttonShowAvailability.setText("Show Availability");
+					
+				}
 			}
-			LayoutParams lparams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-			TextView tv=new TextView(container.getContext());
-			tv.setLayoutParams(lparams);
-			tv.setText(stringToShow);
-			this.content.addView(tv);
-			
-		}
-		
-		this.timeAvailability = availabilityAdapter.getAvailabilityBis(username, "tuesday");
-		if(!(this.timeAvailability.isEmpty())){
-			
-			ListIterator it = this.timeAvailability.listIterator();
-			String stringToShow = "Tuesday : ";
-			while(it.hasNext()){
-				stringToShow = stringToShow + it.next() + " | ";
-			}
-			LayoutParams lparams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-			TextView tv=new TextView(container.getContext());
-			tv.setLayoutParams(lparams);
-			tv.setText(stringToShow);
-			this.content.addView(tv);
-			
-		}
-		
-		this.timeAvailability = availabilityAdapter.getAvailabilityBis(username, "wednesday");
-		if(!(this.timeAvailability.isEmpty())){
-			
-			ListIterator it = this.timeAvailability.listIterator();
-			String stringToShow = "Wednesday : ";
-			while(it.hasNext()){
-				stringToShow = stringToShow + it.next() + " | ";
-			}
-			LayoutParams lparams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-			TextView tv=new TextView(container.getContext());
-			tv.setLayoutParams(lparams);
-			tv.setText(stringToShow);
-			this.content.addView(tv);
-			
-		}
-		
-		this.timeAvailability = availabilityAdapter.getAvailabilityBis(username, "thursday");
-		if(!(this.timeAvailability.isEmpty())){
-			
-			ListIterator it = this.timeAvailability.listIterator();
-			String stringToShow = "Thursday : ";
-			while(it.hasNext()){
-				stringToShow = stringToShow + it.next() + " | ";
-			}
-			LayoutParams lparams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-			TextView tv=new TextView(container.getContext());
-			tv.setLayoutParams(lparams);
-			tv.setText(stringToShow);
-			this.content.addView(tv);
-			
-		}
-		
-		this.timeAvailability = availabilityAdapter.getAvailabilityBis(username, "friday");
-		if(!(this.timeAvailability.isEmpty())){
-			
-			ListIterator it = this.timeAvailability.listIterator();
-			String stringToShow = "Friday : ";
-			while(it.hasNext()){
-				stringToShow = stringToShow + it.next() + " | ";
-			}
-			LayoutParams lparams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-			TextView tv=new TextView(container.getContext());
-			tv.setLayoutParams(lparams);
-			tv.setText(stringToShow);
-			this.content.addView(tv);
-			
-		}
-		
-		this.timeAvailability = availabilityAdapter.getAvailabilityBis(username, "saturday");
-		if(!(this.timeAvailability.isEmpty())){
-			
-			ListIterator it = this.timeAvailability.listIterator();
-			String stringToShow = "Saturday : ";
-			while(it.hasNext()){
-				stringToShow = stringToShow + it.next() + " | ";
-			}
-			LayoutParams lparams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-			TextView tv=new TextView(container.getContext());
-			tv.setLayoutParams(lparams);
-			tv.setText(stringToShow);
-			this.content.addView(tv);
-			
-		}
-		
-		this.timeAvailability = availabilityAdapter.getAvailabilityBis(username, "sunday");
-		if(!(this.timeAvailability.isEmpty())){
-			
-			ListIterator it = this.timeAvailability.listIterator();
-			String stringToShow = "Sunday : ";
-			while(it.hasNext()){
-				stringToShow = stringToShow + it.next() + " | ";
-			}
-			LayoutParams lparams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-			TextView tv=new TextView(container.getContext());
-			tv.setLayoutParams(lparams);
-			tv.setText(stringToShow);
-			this.content.addView(tv);
-			
-		}
-		availabilityAdapter.close();
+		});
 
 
 
@@ -282,6 +202,130 @@ public class ProfileFragment extends Fragment {
 		Boolean b = adapter.isFriend(username, otherUsername);
 		adapter.close();
 		return b;
+	}
+	
+	public void showAvailability(View view){
+		this.timeAvailability = new ArrayList<Availability>();
+		AvailabilityDBAdapter availabilityAdapter = new AvailabilityDBAdapter(view.getContext());
+		availabilityAdapter.open();
+		this.timeAvailability = availabilityAdapter.getAvailabilityBis(username, "monday");
+		if(!(this.timeAvailability.isEmpty())){
+			
+			ListIterator it = this.timeAvailability.listIterator();
+			String stringToShow = "Monday : ";
+			while(it.hasNext()){
+				stringToShow = stringToShow + it.next() + " | ";
+			}
+			LayoutParams lparams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+			tv1=new TextView(view.getContext());
+			tv1.setLayoutParams(lparams);
+			tv1.setText(stringToShow);
+			this.linearLayoutAvailability.addView(tv1);
+			
+		}
+		
+		this.timeAvailability = availabilityAdapter.getAvailabilityBis(username, "tuesday");
+		if(!(this.timeAvailability.isEmpty())){
+			
+			ListIterator it = this.timeAvailability.listIterator();
+			String stringToShow = "Tuesday : ";
+			while(it.hasNext()){
+				stringToShow = stringToShow + it.next() + " | ";
+			}
+			LayoutParams lparams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+			tv2=new TextView(view.getContext());
+			tv2.setLayoutParams(lparams);
+			tv2.setText(stringToShow);
+			this.linearLayoutAvailability.addView(tv2);
+			
+		}
+		
+		this.timeAvailability = availabilityAdapter.getAvailabilityBis(username, "wednesday");
+		if(!(this.timeAvailability.isEmpty())){
+			
+			ListIterator it = this.timeAvailability.listIterator();
+			String stringToShow = "Wednesday : ";
+			while(it.hasNext()){
+				stringToShow = stringToShow + it.next() + " | ";
+			}
+			LayoutParams lparams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+			tv3=new TextView(view.getContext());
+			tv3.setLayoutParams(lparams);
+			tv3.setText(stringToShow);
+			this.linearLayoutAvailability.addView(tv3);
+			
+		}
+		
+		this.timeAvailability = availabilityAdapter.getAvailabilityBis(username, "thursday");
+		if(!(this.timeAvailability.isEmpty())){
+			
+			ListIterator it = this.timeAvailability.listIterator();
+			String stringToShow = "Thursday : ";
+			while(it.hasNext()){
+				stringToShow = stringToShow + it.next() + " | ";
+			}
+			LayoutParams lparams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+			tv4=new TextView(view.getContext());
+			tv4.setLayoutParams(lparams);
+			tv4.setText(stringToShow);
+			this.linearLayoutAvailability.addView(tv4);
+			
+		}
+		
+		this.timeAvailability = availabilityAdapter.getAvailabilityBis(username, "friday");
+		if(!(this.timeAvailability.isEmpty())){
+			
+			ListIterator it = this.timeAvailability.listIterator();
+			String stringToShow = "Friday : ";
+			while(it.hasNext()){
+				stringToShow = stringToShow + it.next() + " | ";
+			}
+			LayoutParams lparams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+			tv5=new TextView(view.getContext());
+			tv5.setLayoutParams(lparams);
+			tv5.setText(stringToShow);
+			this.linearLayoutAvailability.addView(tv5);
+			
+		}
+		
+		this.timeAvailability = availabilityAdapter.getAvailabilityBis(username, "saturday");
+		if(!(this.timeAvailability.isEmpty())){
+			
+			ListIterator it = this.timeAvailability.listIterator();
+			String stringToShow = "Saturday : ";
+			while(it.hasNext()){
+				stringToShow = stringToShow + it.next() + " | ";
+			}
+			LayoutParams lparams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+			tv6=new TextView(view.getContext());
+			tv6.setLayoutParams(lparams);
+			tv6.setText(stringToShow);
+			this.linearLayoutAvailability.addView(tv6);
+			
+		}
+		
+		this.timeAvailability = availabilityAdapter.getAvailabilityBis(username, "sunday");
+		if(!(this.timeAvailability.isEmpty())){
+			
+			ListIterator it = this.timeAvailability.listIterator();
+			String stringToShow = "Sunday : ";
+			while(it.hasNext()){
+				stringToShow = stringToShow + it.next() + " | ";
+			}
+			LayoutParams lparams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+			tv7=new TextView(view.getContext());
+			tv7.setLayoutParams(lparams);
+			tv7.setText(stringToShow);
+			this.linearLayoutAvailability.addView(tv7);
+			
+		}
+		availabilityAdapter.close();
+		
+		LayoutParams lparams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		tvSpace=new TextView(view.getContext());
+		tvSpace.setLayoutParams(lparams);
+		tvSpace.setText("");
+		this.linearLayoutAvailability.addView(tvSpace);
 	}
 
 }
