@@ -1,4 +1,4 @@
-package edu.chalmers.project.data;
+  package edu.chalmers.project.data;
 
 import java.util.ArrayList;
 
