@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 public class MatchDBAdapter {
 
@@ -205,6 +206,19 @@ public class MatchDBAdapter {
 		return execQuery(query);
 	}
 	
+	public ArrayList<Match> getEventAvailability(String username){
+		String query = "SELECT distinct "+ DATABASE_TABLE +"."+ ROW_ID + ", "+DATABASE_TABLE +"."+ DATE  
+				+", "+DATABASE_TABLE +"."+ TIME + ", "+DATABASE_TABLE +"."+ NAME + ", "+
+				DATABASE_TABLE +"."+ FIELD +", "+DATABASE_TABLE +"."+ LOCATION +", "+ 
+				DATABASE_TABLE +"."+ COST +", "+DATABASE_TABLE +"."+ NUMBER_PLAYERS +", "+ 
+				DATABASE_TABLE +"."+ ID_ORGANIZER +" FROM "+ DATABASE_TABLE +
+				" join match_played on "+ "match_played."+ MatchPlayedDBAdapter.ID_MATCH+ " = "+ 
+				DATABASE_TABLE+"."+ROW_ID + " WHERE "+ "match_played."+
+				MatchPlayedDBAdapter.PLAYERUSERNAME + " = '"+ username +"'" + " AND " +
+				"date('now') <= " + DATABASE_TABLE + "." + DATE;
+		return execQuery(query);
+	}
+	
 	
 	public String getNumberMVPs(long idPlayer){
 		String query = "SELECT COUNT(*)"+ " FROM "+ DATABASE_TABLE + " WHERE "+ 
@@ -253,6 +267,17 @@ public class MatchDBAdapter {
     	mCursor.close();
     	return res;
 	}
+	
+	public Cursor getDayDate(String date) throws SQLException {
+		String query = "SELECT strftime( '%w' , '" + date + "')";
+		Cursor cursor = this.mDb.rawQuery(query, null);
+		if (cursor != null) {
+			cursor.moveToFirst();
+		}
+
+		return cursor;
+	}
+	
 
 
 }

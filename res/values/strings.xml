@@ -14,7 +14,7 @@
 
     <string-array name="spinner_matches">
         <item>All Events</item><item>My Upcoming Events</item><item>My events</item>
-        <item >Past Events</item>
+        <item >Past Events</item><item>My Available Events</item>
         
         
     </string-array>
