@@ -57,7 +57,7 @@ public class PlayersFragment extends Fragment {
         Button quitHostButton = (Button) view.findViewById(R.id.buttonQuitHost);
         Button quitGuestButton = (Button) view.findViewById(R.id.buttonQuitGuest);
         
-        if(isFuture(cursor.getString(1))==1){
+        if(isFuture(cursor.getString(1))>=1){
 	        if (isJoined(playerUsername, hostTeam)){
 	        	joinHostButton.setVisibility(View.INVISIBLE);
 	        	joinGuestButton.setVisibility(View.INVISIBLE);
@@ -122,7 +122,7 @@ public class PlayersFragment extends Fragment {
     
   
     public static int isFuture(String date){
-    	final String DATE_FORMAT_NOW = "yyyy/MM/dd";
+    	final String DATE_FORMAT_NOW = "yyyy-MM-dd";
     	Calendar cal = Calendar.getInstance();
     	SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_NOW);
     	String now = sdf.format(cal.getTime());

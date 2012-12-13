@@ -84,11 +84,6 @@ public class HomeActivity extends MapActivity {
 
         });*/
     }
-  
-	public void viewMatches(View view){
-		Intent intent = new Intent (this, MatchActivity.class);
-        startActivity(intent);
-	}
 	
 	
 	 public void seeFriends(View view){

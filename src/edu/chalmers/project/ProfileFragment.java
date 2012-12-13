@@ -168,7 +168,7 @@ public class ProfileFragment extends Fragment {
     private String calculateAge(String birthdate){
     	Calendar cal = Calendar.getInstance();
     	Calendar current = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/mm/dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
         try {
 			cal.setTime(sdf.parse(birthdate));
 		} catch (ParseException e) {

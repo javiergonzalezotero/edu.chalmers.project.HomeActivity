@@ -123,12 +123,16 @@ public class HomeFragment extends Fragment {
 		    Intent intent = new Intent(this.getActivity(),CreateEventActivity.class);
 			intent.putExtras(bundle);
 			intent.putExtra("idMatch", idMatch);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
+	    	intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			startActivity(intent);
 	   }
 	   else if(item.getItemId()==1){ //Delete match
 		    adapter.deleteMatch(idMatch);
 		    Intent intent = new Intent(this.getActivity(),HomeActivity.class);
 			intent.putExtras(bundle);
+			 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
+	    	intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			startActivity(intent);
 	   }
 	   adapter.close();

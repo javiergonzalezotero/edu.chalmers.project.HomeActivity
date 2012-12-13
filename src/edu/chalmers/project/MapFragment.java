@@ -3,27 +3,46 @@ package edu.chalmers.project;
 import java.util.List;
 
 import android.app.Fragment;
-import android.content.Context;
-import android.location.Criteria;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.android.maps.GeoPoint;
-import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
+import com.google.android.maps.OverlayItem;
 
 
 public class MapFragment extends Fragment  {
-
-	private MapController mapController;
+	
+	private MapView mapView;
+	private View view;
+	
+	@Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		 // Inflate the layout for this fragment
+		if (view==null){
+	    	view = inflater.inflate(R.layout.map_fragment, container, false);
+	    	view.setClickable(true);
+		}
+		mapView = (MapView) view.findViewById(R.id.mainMap);
+		mapView.setBuiltInZoomControls(true);
+		
+		List<Overlay> mapOverlays = mapView.getOverlays();
+		Drawable drawable = this.getResources().getDrawable(R.drawable.black);
+		MyItemizedOverlay itemizedoverlay = new MyItemizedOverlay(drawable, this.getActivity());
+		GeoPoint point = new GeoPoint(19240000,-99120000);
+		OverlayItem overlayitem = new OverlayItem(point, "Hola, Mundo!", "I'm in Mexico City!");
+		itemizedoverlay.addOverlay(overlayitem);
+		GeoPoint point2 = new GeoPoint(35410000, 139460000);
+		OverlayItem overlayitem2 = new OverlayItem(point2, "Sekai, konichiwa!", "I'm in Japan!");
+		itemizedoverlay.addOverlay(overlayitem2);
+		mapOverlays.add(itemizedoverlay);
+		return view;
+	}
+/*	private MapController mapController;
 	private LocationManager locMgr;
 	private MyLocationListener locLstnr;
     private GeoPoint p;
@@ -54,10 +73,10 @@ public class MapFragment extends Fragment  {
         Log.i("--- Latitude",""+location.getLongitude());
         
 
-     /*   
+     
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0, 0, new GeoUpdateHandler());
-        */
+        
         return view;
        
     }
@@ -108,7 +127,7 @@ public class MapFragment extends Fragment  {
     }
 
     }
-
+*/
 
 /*
 class MapOverlay extends com.google.android.maps.Overlay
