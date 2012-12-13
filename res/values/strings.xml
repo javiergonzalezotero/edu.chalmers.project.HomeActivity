@@ -47,5 +47,9 @@
     <string name="title_activity_friends">My friends</string>
     <string name="menu_change_result">Change result</string>
     <string name="logout">Log Out</string>
+    <string-array name="ContextMenu">
+        <item >Edit Match</item>
+        <item >Delete Match</item>
+    </string-array>
 
 </resources>

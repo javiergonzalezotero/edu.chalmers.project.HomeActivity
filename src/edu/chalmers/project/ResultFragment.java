@@ -106,7 +106,7 @@ public class ResultFragment extends Fragment {
 		playerAdapter.close();
 		Cursor cursor = matchAdapter.getMatch(idMatch);
 		if((Integer.parseInt(cursorOrganizer.getString(1)) == Integer.parseInt(cursorPlayer.getString(9))) &&
-				!(PlayersFragment.isFuture(cursor.getString(1))==1)){
+				!(PlayersFragment.isFuture(cursor.getString(1))>=1)){
 			this.buttonChangeResult.setVisibility(View.VISIBLE);
 		}
 		cursor.close();
@@ -118,14 +118,14 @@ public class ResultFragment extends Fragment {
 		matchPlayedAdapter.close();
 
 		ListIterator it = this.listPlayersNotPresent.listIterator();
-		
+
 		while(it.hasNext()){
 			this.listPlayersNotPresentString.add(it.next() + " was not present");
 		}
-		
+
 		listViewPlayersNotPresent.setAdapter(new ArrayAdapter<String>(container.getContext(), android.R.layout.simple_list_item_1, this.listPlayersNotPresentString));
-		
-		
+
+
 
 
 

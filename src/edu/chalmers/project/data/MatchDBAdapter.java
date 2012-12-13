@@ -110,6 +110,32 @@ public class MatchDBAdapter {
 		return this.mDb.insert(DATABASE_TABLE, null, initialValues);
 	}
 	
+	/**
+	 * Delete the match with the given rowId
+	 * 
+	 * @param rowId
+	 * @return true if deleted, false otherwise
+	 */
+	public boolean deleteMatch(long rowId) {
+
+		return this.mDb.delete(DATABASE_TABLE, ROW_ID + "=" + rowId, null) > 0; 
+	}
+	
+	
+	public boolean updateMatch( long id, String date, String time, String name, String field,
+            String location, int cost, int numberPlayers){
+        ContentValues args = new ContentValues();
+        args.put(DATE, date);
+        args.put(TIME, time);
+        args.put(NAME, name);
+        args.put(FIELD, field);
+        args.put(LOCATION, location);
+        args.put(COST, cost);
+        args.put(NUMBER_PLAYERS, numberPlayers);
+        
+        return this.mDb.update(DATABASE_TABLE, args, ROW_ID + "=" + id, null) >0; 
+    }
+	
 	public boolean updateMvp(long idMatch, int idMvp) 
 	{
 		ContentValues args = new ContentValues();
@@ -255,6 +281,7 @@ public class MatchDBAdapter {
 		}
 		return mCursor;
 	}
+	
 	
 	public boolean matchNameExists(String matchName){
 		Cursor mCursor =

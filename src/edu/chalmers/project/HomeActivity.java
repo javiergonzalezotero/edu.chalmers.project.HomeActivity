@@ -9,20 +9,23 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
 
 import com.google.android.maps.MapActivity;
 
 import edu.chalmers.project.data.FriendDBAdapter;
-import edu.chalmers.project.data.Match;
+import edu.chalmers.project.data.MatchDBAdapter;
 import edu.chalmers.project.data.Player;
 import edu.chalmers.project.data.PlayerDBAdapter;
 
@@ -123,6 +126,8 @@ public class HomeActivity extends MapActivity {
 		 
 	 }
 	
+
+	 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
     	switch (item.getItemId()) {
@@ -139,6 +144,7 @@ public class HomeActivity extends MapActivity {
     		Bundle b2 = this.getIntent().getExtras();
     		Intent intent = new Intent(this,CreateEventActivity.class);
     		intent.putExtras(b2);
+    		intent.putExtra("idMatch", -1);
     		startActivity(intent);
     		return true;
     	case R.id.menu_edit_profile: //Edit profile in profile fragment

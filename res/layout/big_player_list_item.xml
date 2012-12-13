@@ -16,6 +16,13 @@
         android:padding="10dp"
         android:textSize="21sp" />
 
+     <View
+         android:layout_width="1px"
+         android:layout_height="fill_parent"
+         android:background="#90909090" 
+         android:layout_marginTop="5dp"
+         android:layout_marginBottom="5dp"/>
+
     <ImageView
         android:id="@+id/imagePlayerList"
         android:layout_width="80dp"

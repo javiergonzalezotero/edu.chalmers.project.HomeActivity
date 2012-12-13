@@ -29,6 +29,7 @@ public class CreateEventActivity extends FragmentActivity {
 	private EditText editTextDate;
 	private Bundle b;
 	private String username;
+	private long idMatch;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,7 @@ public class CreateEventActivity extends FragmentActivity {
 
 		this.b = getIntent().getExtras();
 		this.username = this.b.getString("username");
+		idMatch = this.b.getInt("idMatch");
 
 		editTextNameEvent = (EditText)findViewById(R.id.editTextNameEvent);
 		editTextPlace = (EditText)findViewById(R.id.editTextPlace);
@@ -46,6 +48,10 @@ public class CreateEventActivity extends FragmentActivity {
 		editTextDate = (EditText)findViewById(R.id.editTextDate);
 		editTextTime = (EditText)findViewById(R.id.editTextTime);
 		editTextNameEvent.requestFocus();
+		if (idMatch!=-1) {
+			showEventInfo(idMatch);
+			this.setTitle("Edit Match");
+		}
 	}
 
 	@Override
@@ -76,43 +82,53 @@ public class CreateEventActivity extends FragmentActivity {
 			playerAdapter.open();
 			Cursor cursorPlayer = playerAdapter.getPlayer(this.username);
 
-			if(matchAdapter.matchNameExists(editTextNameEvent.getText().toString())){
-				if((editTextNameEvent.getText().toString().compareTo("")!=0) && (editTextDate.getText().toString().compareTo("")!=0)
-						&& (editTextTime.getText().toString().compareTo("")!=0) && (editTextField.getText().toString().compareTo("")!=0) 
-						&& (editTextPlace.getText().toString().compareTo("")!=0) && (editTextCost.getText().toString().compareTo("")!=0)
-						&& (editTextPlayersLimit.getText().toString().compareTo("")!=0)){
-					if((Integer.parseInt(editTextPlayersLimit.getText().toString()) % 2) == 0){
-						long rowId= matchAdapter.createMatch(editTextDate.getText().toString(), editTextTime.getText().toString(), 
-								editTextNameEvent.getText().toString(), editTextField.getText().toString(),
-								editTextPlace.getText().toString(), Integer.parseInt(editTextCost.getText().toString()), 
-								Integer.parseInt(editTextPlayersLimit.getText().toString()),
-								Integer.parseInt(cursorPlayer.getString(9)));
-						adapter.joinMatch(b.getString("username"), rowId, 1);//Join host team automatically
+			if((editTextNameEvent.getText().toString().compareTo("")!=0) && (editTextDate.getText().toString().compareTo("")!=0)
+					&& (editTextTime.getText().toString().compareTo("")!=0) && (editTextField.getText().toString().compareTo("")!=0) 
+					&& (editTextPlace.getText().toString().compareTo("")!=0) && (editTextCost.getText().toString().compareTo("")!=0)
+					&& (editTextPlayersLimit.getText().toString().compareTo("")!=0)){
+				if((Integer.parseInt(editTextPlayersLimit.getText().toString()) % 2) == 0){
+					if(idMatch==-1){
+						if(matchAdapter.matchNameExists(editTextNameEvent.getText().toString())){
+							long rowId= matchAdapter.createMatch(editTextDate.getText().toString(), editTextTime.getText().toString(), 
+									editTextNameEvent.getText().toString(), editTextField.getText().toString(),
+									editTextPlace.getText().toString(), Integer.parseInt(editTextCost.getText().toString()), 
+									Integer.parseInt(editTextPlayersLimit.getText().toString()),
+									Integer.parseInt(cursorPlayer.getString(9)));
+							adapter.joinMatch(b.getString("username"), rowId, 1);//Join host team automatically
+						}
+						else{
+							Toast.makeText(this, "Name of the match already exists", Toast.LENGTH_LONG).show();
 
-						adapter.close();
-						matchAdapter.close();
-						cursorPlayer.close();
-						playerAdapter.close();
-
-						Intent intent = new Intent(this, HomeActivity.class);
-						intent.putExtra("tab_position", 0);
-						intent.putExtras(b);
-						intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
-						intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-						startActivity(intent);
+						}
 					}
 					else{
-						Toast.makeText(this, "You have to enter an even number", Toast.LENGTH_SHORT).show();
+						matchAdapter.updateMatch(idMatch, editTextDate.getText().toString(), editTextTime.getText().toString(), 
+								editTextNameEvent.getText().toString(), editTextField.getText().toString(),
+								editTextPlace.getText().toString(), Integer.parseInt(editTextCost.getText().toString()), 
+								Integer.parseInt(editTextPlayersLimit.getText().toString()));
 					}
+
+					adapter.close();
+					matchAdapter.close();
+					cursorPlayer.close();
+					playerAdapter.close();
+
+					Intent intent = new Intent(this, HomeActivity.class);
+					intent.putExtra("tab_position", 0);
+					intent.putExtras(b);
+					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
+					intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					startActivity(intent);
 				}
 				else{
-					Toast.makeText(this, "You have to enter all the fields", Toast.LENGTH_LONG).show();
+					Toast.makeText(this, "You have to enter an even number", Toast.LENGTH_SHORT).show();
 				}
 			}
 			else{
-				Toast.makeText(this, "Name of the match already exists", Toast.LENGTH_LONG).show();
-
+				Toast.makeText(this, "You have to enter all the fields", Toast.LENGTH_LONG).show();
 			}
+
+
 
 			return true;    
 		default:
@@ -120,6 +136,21 @@ public class CreateEventActivity extends FragmentActivity {
 		}
 	}
 
+
+	public void showEventInfo(long idMatch){
+		MatchDBAdapter adapter = new MatchDBAdapter(this);
+		adapter.open();
+		Cursor cursor = adapter.getMatch(idMatch);
+		editTextNameEvent.setText(cursor.getString(3));
+		editTextPlace.setText(cursor.getString(5));
+		editTextCost.setText(cursor.getString(6));
+		editTextPlayersLimit.setText(cursor.getString(7));
+		editTextField.setText(cursor.getString(4));
+		editTextTime.setText(cursor.getString(2));
+		editTextDate.setText(cursor.getString(1));
+		cursor.close();
+		adapter.close();
+	}
 
 	public void showDatePickerDialog(View v) {
 		DialogFragment newFragment = new DatePickerFragment(this.editTextDate);
