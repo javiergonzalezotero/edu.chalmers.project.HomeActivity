@@ -5,10 +5,14 @@ import java.util.ArrayList;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -16,8 +20,10 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 import edu.chalmers.project.data.Match;
 import edu.chalmers.project.data.MatchDBAdapter;
+import edu.chalmers.project.data.PlayerDBAdapter;
 
 
 public class HomeFragment extends Fragment {
@@ -41,7 +47,7 @@ public class HomeFragment extends Fragment {
 		username = bundle.getString("username");
 		matchAdapter = new MatchDBAdapter(container.getContext());
 		lvList = (ListView) view.findViewById(R.id.listViewHomeMatches);
-	
+		this.registerForContextMenu(lvList);
 		matchSelectionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 		    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 
 		    	matchAdapter.open();
@@ -55,7 +61,7 @@ public class HomeFragment extends Fragment {
 		        	matchList = matchAdapter.getPastEvents();
 		        matchAdapter.close();
 		        
-				lvList.setAdapter(new ArrayAdapter<Match>(getActivity(), android.R.layout.simple_list_item_1, matchList));
+				lvList.setAdapter(new MatchListAdapter(getActivity(), matchList, R.layout.match_list_item));
 				lvList.setOnItemClickListener(new OnItemClickListener(){
 					@Override
 					public void onItemClick(AdapterView<?> parent, View view, int position, long id){
@@ -75,20 +81,59 @@ public class HomeFragment extends Fragment {
 		        return;
 		    } 
 		}); 
-		/*if (matchSelection.equals(spinnerSelections[0])){
-			this.matchList = matchAdapter.getMatchList();
-		}
-		else if(matchSelection.equals(spinnerSelections[2])){
-			this.matchList = matchAdapter.getMyEvents(username);
-		}*/
-		
-		
-
 		
 
 		return view;
 
 	}
+	
+	 @Override
+	 public void onCreateContextMenu(ContextMenu menu, View v,
+	     ContextMenuInfo menuInfo) {
+	     AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
+	     int idMatch = matchList.get(info.position).getId();
+	     MatchDBAdapter adapter = new MatchDBAdapter(this.getActivity());
+	     PlayerDBAdapter playerAdapter = new PlayerDBAdapter(this.getActivity());
+	     playerAdapter.open();
+	     adapter.open();
+	     Cursor cursor = adapter.getIdOrganizer(idMatch);
+	     Cursor playerCursor = playerAdapter.getPlayer(username);
+	     if(cursor.getLong(1)==playerCursor.getLong(9)){
+		     String[] menuItems = getResources().getStringArray(R.array.ContextMenu);
+		     for (int i = 0; i<menuItems.length; i++) {
+		       menu.add(Menu.NONE, i, i, menuItems[i]);
+		     }
+	     }
+	     else{
+	    	 Toast.makeText(getActivity(),"You are not the organizer", Toast.LENGTH_LONG).show();
+	     }
+	     cursor.close();
+	     playerCursor.close();
+	     adapter.close();
+	     playerAdapter.close();
+	 }
+	 
+	 @Override
+	 public boolean onContextItemSelected(MenuItem item) {
+	   AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+	   int idMatch = matchList.get(info.position).getId();
+	   MatchDBAdapter adapter = new MatchDBAdapter(this.getActivity());
+	   adapter.open();
+	   if (item.getItemId()==0){ //Edit match
+		    Intent intent = new Intent(this.getActivity(),CreateEventActivity.class);
+			intent.putExtras(bundle);
+			intent.putExtra("idMatch", idMatch);
+			startActivity(intent);
+	   }
+	   else if(item.getItemId()==1){ //Delete match
+		    adapter.deleteMatch(idMatch);
+		    Intent intent = new Intent(this.getActivity(),HomeActivity.class);
+			intent.putExtras(bundle);
+			startActivity(intent);
+	   }
+	   adapter.close();
+	   return true;
+	 }
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){

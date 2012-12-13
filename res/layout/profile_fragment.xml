@@ -7,29 +7,52 @@
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical" >
-
+        android:layout_height="wrap_content"
+        android:orientation="vertical" 
+		android:background="@drawable/background_color">
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:padding="10dip" >
+            android:padding="5dp" >
 
             <ImageView
                 android:id="@+id/imageViewProfile"
-                android:layout_width="106dp"
-                android:layout_height="106dp"
+                android:layout_width="166dp"
+                android:layout_height="166dp"
                 android:layout_margin="10dip"
-                android:layout_weight="0.24"
+                android:adjustViewBounds="true"
                 android:src="@drawable/ic_launcher" />
 
-            <ImageButton
-                android:id="@+id/imageButtonFriends"
+            <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="seeFriends"
-                android:src="@drawable/ic_friends" />
+                android:layout_height="match_parent" >
+
+                <ImageButton
+                    android:id="@+id/imageButtonFriends"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:onClick="seeFriends"
+                    android:scaleType="center"
+                    android:src="@drawable/ic_friends" />
+
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/imageButtonFriends"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="8dp"
+                    android:text="FRIENDS"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#ffee5f12" 
+                    android:textStyle="italic"
+            		android:typeface="serif" />
+
+            </RelativeLayout>
+
         </LinearLayout>
 
         <LinearLayout
@@ -42,9 +65,10 @@
                 android:id="@+id/textViewUsernameProfile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="10dip"
+                android:padding="5dp"
                 android:text="USERNAME"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="25sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -55,26 +79,30 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingRight="5dp"
-                    android:text="TextView" />
+                    android:text="TextView"
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/textViewFamilyName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="TextView" />
+                    android:text="TextView"
+                    android:textSize="20sp" />
             </LinearLayout>
 
             <TextView
                 android:id="@+id/textViewAgeProfile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="22 years" />
+                android:text="22 years"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/textViewPositionProfile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Defender" />
+                android:text="Defender"
+                android:textSize="16sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -84,18 +112,21 @@
                     android:id="@+id/textViewReliabilityProfile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Reliability: " />
+                    android:text="Reliability: "
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/textViewReliabilityLevelProfile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="50%" />
+                    android:text="50%"
+                    android:textSize="16sp" />
 
                 <ImageView
                     android:id="@+id/imageViewReliability"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_marginLeft="7dp"
                     android:src="@drawable/green" />
             </LinearLayout>
@@ -108,19 +139,22 @@
                     android:id="@+id/textViewMVPProfile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="MVP&apos;s: " />
+                    android:text="MVP&apos;s: "
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/textViewMVPNumberProfile"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <TextView
                 android:id="@+id/textViewTimetableProfile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Timetable:" />
+                android:text="Timetable:"
+                android:textSize="16sp" />
 
             <LinearLayout
                 android:id="@+id/linearLayoutAvailability"
@@ -147,12 +181,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:onClick="viewMatches"
-                    android:text="Matches Played: " />
+                    android:text="Matches Played: "
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/textViewMatches"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -163,12 +199,14 @@
                     android:id="@+id/textViewGoalsScored"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Goals Scored: " />
+                    android:text="Goals Scored: "
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/textViewGoals"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

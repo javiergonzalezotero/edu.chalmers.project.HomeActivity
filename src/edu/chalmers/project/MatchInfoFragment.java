@@ -53,7 +53,7 @@ public class MatchInfoFragment extends Fragment {
         timeMatch.setText(cursorMatch.getString(2));
         placeMatch.setText(cursorMatch.getString(5));
         fieldMatch.setText(cursorMatch.getString(4));
-        costMatch.setText(cursorMatch.getString(6));
+        costMatch.setText(cursorMatch.getString(6) + " €");
         limitePlayersMatch.setText(adapter.getNumberPlayersJoined(cursorMatch.getLong(0))+
         		"/"+cursorMatch.getString(7));
         
