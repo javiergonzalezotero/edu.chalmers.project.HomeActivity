@@ -118,14 +118,14 @@ public class ResultFragment extends Fragment {
 		matchPlayedAdapter.close();
 
 		ListIterator it = this.listPlayersNotPresent.listIterator();
-		
+
 		while(it.hasNext()){
 			this.listPlayersNotPresentString.add(it.next() + " was not present");
 		}
-		
+
 		listViewPlayersNotPresent.setAdapter(new ArrayAdapter<String>(container.getContext(), android.R.layout.simple_list_item_1, this.listPlayersNotPresentString));
-		
-		
+
+
 
 
 

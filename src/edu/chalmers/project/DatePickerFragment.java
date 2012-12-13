@@ -30,6 +30,21 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
 	}
 	
 	public void onDateSet(DatePicker view, int year, int month, int day) {
-		activity_edittext.setText( String.valueOf(year)+ "-" + String.valueOf(month + 1 ) + "-" + String.valueOf(day));
+		if(month <= 9){
+			if(day <= 9){
+				activity_edittext.setText( String.valueOf(year)+ "-0" + String.valueOf(month + 1 ) + "-0" + String.valueOf(day));
+			}
+			else{
+				activity_edittext.setText( String.valueOf(year)+ "-0" + String.valueOf(month + 1 ) + "-" + String.valueOf(day));
+			}
+		}
+		else{
+			if(day <= 9){
+				activity_edittext.setText( String.valueOf(year)+ "-" + String.valueOf(month + 1 ) + "-0" + String.valueOf(day));
+			}
+			else{
+				activity_edittext.setText( String.valueOf(year)+ "-" + String.valueOf(month + 1 ) + "-" + String.valueOf(day));
+			}
+		}
 	}
 }
