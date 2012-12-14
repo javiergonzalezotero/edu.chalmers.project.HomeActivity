@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.google.android.maps.MapActivity;
 
 import edu.chalmers.project.data.FriendDBAdapter;
+import edu.chalmers.project.data.Match;
 import edu.chalmers.project.data.MatchDBAdapter;
 import edu.chalmers.project.data.Player;
 import edu.chalmers.project.data.PlayerDBAdapter;
@@ -34,6 +35,7 @@ public class HomeActivity extends MapActivity {
 	private AutoCompleteTextView acTextView;
 	private ArrayList<Player> searchList;
 	Bundle bundle;
+	private static ArrayList<Match> matchList;
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -170,7 +172,7 @@ public class HomeActivity extends MapActivity {
     		return true;
     	case R.id.menu_logout:
     		Intent intent3 = new Intent(this,FirstScreenActivity.class);
-    		intent3.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
+            intent3.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
     		intent3.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     		startActivity(intent3);
     		return true;
@@ -187,6 +189,16 @@ public class HomeActivity extends MapActivity {
     protected boolean isRouteDisplayed() {
         return false;
     }
+
+
+	public static ArrayList<Match> getMatchList() {
+		return matchList;
+	}
+
+
+	public static void setMatchList(ArrayList<Match> matchList) {
+		HomeActivity.matchList = matchList;
+	}
     
     
     

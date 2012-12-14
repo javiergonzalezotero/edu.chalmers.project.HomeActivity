@@ -52,7 +52,7 @@ public class HomeFragment extends Fragment {
 		lvList = (ListView) view.findViewById(R.id.listViewHomeMatches);
 
 		this.registerForContextMenu(lvList);
-
+		
 		matchSelectionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
 			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 
@@ -67,7 +67,7 @@ public class HomeFragment extends Fragment {
 					matchList = matchAdapter.getPastEvents();
 				else if(i==4)
 					matchList = myAvailableMatches(username, view);
-
+				HomeActivity.setMatchList(matchList);
 				matchAdapter.close();
 		        
 				lvList.setAdapter(new MatchListAdapter(getActivity(), matchList, R.layout.match_list_item));
