@@ -73,8 +73,8 @@ public class MapFragment extends Fragment  {
         		locationCritera.setBearingRequired(false);
         		locationCritera.setCostAllowed(true);
         		locationCritera.setPowerRequirement(Criteria.NO_REQUIREMENT);
-
         		provider = locMgr.getBestProvider(locationCritera, true);
+        		String provider2 = locMgr.NETWORK_PROVIDER;
         		Location location  = locMgr.getLastKnownLocation(provider);
 
         		Log.i("--- Latitude",""+location.getLatitude());
