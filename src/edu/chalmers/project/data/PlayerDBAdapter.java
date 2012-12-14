@@ -191,13 +191,13 @@ public class PlayerDBAdapter {
 		int currentReliability = Integer.parseInt(cursorPlayer.getString(5));
 		ContentValues args = new ContentValues();
 		if(present == 0){
-			int newReliability = currentReliability - 18;
+			int newReliability = currentReliability - 5;
 			if(newReliability < 0)
 				newReliability = 0;
 			args.put(RELIABILITY, newReliability);
 		}
 		if(present == 1){
-			int newReliability = currentReliability + 18;
+			int newReliability = currentReliability + 2;
 			if(newReliability > 100)
 				newReliability = 100;
 			args.put(RELIABILITY, newReliability);
