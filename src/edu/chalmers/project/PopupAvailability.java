@@ -26,7 +26,6 @@ public class PopupAvailability extends Activity {
 	private ArrayList<Availability> timeAvailability;
 
 
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
