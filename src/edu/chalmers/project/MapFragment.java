@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.location.Criteria;
@@ -130,7 +132,24 @@ public class MapFragment extends Fragment  {
 	        // Build an alert dialog here that requests that the user enable
 	        // the location services, then when the user clicks the "OK" button,
 	        // call enableLocationSettings()
-	    	enableLocationSettings();
+	    	AlertDialog.Builder adb = new AlertDialog.Builder(this.getActivity());
+	    	adb.setTitle("Enable GPS");
+	    	adb.setMessage("Do you want to enable GPS?");
+	    	adb.setPositiveButton("Ok", new DialogInterface.OnClickListener()
+	    	{
+	    		public void onClick(DialogInterface dialog, int id)
+	    		{
+	    			enableLocationSettings();
+	    		}
+	    	});
+	    	adb.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
+	    	{
+	    		public void onClick(DialogInterface dialog, int id)
+	    		{
+	    			dialog.cancel();
+	    		}
+	    	});
+	    	adb.show();
 	    }
 	}
 

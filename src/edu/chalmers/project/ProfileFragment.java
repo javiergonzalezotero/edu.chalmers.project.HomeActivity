@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.ListIterator;
 
+import android.app.ActionBar;
 import android.app.Fragment;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -178,7 +179,7 @@ public class ProfileFragment extends Fragment {
 		cal.setTimeInMillis(ageInMillis);
 		int age = cal.get(Calendar.YEAR)-1970;
 		if(age==0)
-			return "N/D years";
+			return "Age unknown";
 		return Integer.toString(age) + " years";
 	}
 

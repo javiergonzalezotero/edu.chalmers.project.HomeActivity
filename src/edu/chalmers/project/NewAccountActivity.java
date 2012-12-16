@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -119,7 +120,7 @@ public class NewAccountActivity extends FragmentActivity {
 			onBackPressed();
 			return true;
     	case R.id.menu_create:
-    		if(checkMandatoryFields()){
+    		if(!checkMandatoryFields()){
 	    		PlayerDBAdapter playerAdapter = new PlayerDBAdapter(this);
 	            playerAdapter.open();
 	            if (!username.equals("")){
@@ -136,11 +137,15 @@ public class NewAccountActivity extends FragmentActivity {
 			            		50, spinnerFieldPosition.getSelectedItem().toString(), 
 			            		editTextCity.getText().toString(), editTextdateOfBirth.getText().toString(),
 			            		selectedImagePath);
-			    		intent = new Intent(this, FirstScreenActivity.class);
+			    		intent = new Intent(this, HomeActivity.class);
+			        	intent.putExtra("username", editTextUsername.getText().toString());
+			        	intent.putExtra("tab_position", 0);
 	            	}
 	            	else{
-	            		Toast.makeText(this, "Username already exists", Toast.LENGTH_LONG).show();
-	            		return true;
+	            		Toast toast = Toast.makeText(this, "Username already exists", Toast.LENGTH_SHORT);
+	    				toast.setGravity(Gravity.CENTER, 0, 0);
+	    				toast.show();
+	    				return true;
 	            	}
 	            }
 	            playerAdapter.close();
@@ -162,7 +167,9 @@ public class NewAccountActivity extends FragmentActivity {
 	            startActivity(intent);	    		
     		}
     		else {
-    			Toast.makeText(this, "Fill mandatory fields ", Toast.LENGTH_LONG).show();
+    			Toast toast = Toast.makeText(this, "Fill mandatory fields", Toast.LENGTH_SHORT);
+				toast.setGravity(Gravity.CENTER, 0, 0);
+				toast.show();
 			}
 
     		return true;    
@@ -173,9 +180,8 @@ public class NewAccountActivity extends FragmentActivity {
     }
     
     private boolean checkMandatoryFields(){
-    /*	return((editTextUsername.getText().toString().equals("Username*")) 
-    			|| (editTextPassword.getText().toString().equals("Password*")));*/
-    	return true;
+    	return((editTextUsername.getText().toString().equals("")) 
+    			|| (editTextPassword.getText().toString().equals("")));
     }
     
     /*
@@ -194,6 +200,7 @@ public class NewAccountActivity extends FragmentActivity {
     	editTextCity.setText(cursor.getString(7));
     	editTextdateOfBirth.setText(cursor.getString(8));
     	if(!cursor.getString(10).equals("")){
+    		selectedImagePath = cursor.getString(10);
     		profilePhoto.setImageBitmap(ImageLoader.decodeSampledBitmapFromResource(cursor.getString(10), 
     				profilePhoto.getLayoutParams().width,profilePhoto.getLayoutParams().height));
     	}
