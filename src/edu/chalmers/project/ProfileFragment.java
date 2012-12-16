@@ -74,7 +74,7 @@ public class ProfileFragment extends Fragment {
     	ageTextView = (TextView) view.findViewById(R.id.textViewAgeProfile);
     	reliabilityLevelTextView = (TextView) view.findViewById(R.id.textViewReliabilityLevelProfile);
     	MVPNumberTextView = (TextView) view.findViewById(R.id.textViewMVPNumberProfile);
-    	matchPlayedTextView = (TextView) view.findViewById(R.id.textViewMatches);
+    	matchPlayedTextView = (TextView) view.findViewById(R.id.textViewMatches1);
     	goalsScoredTextView = (TextView) view.findViewById(R.id.textViewGoals);
     	positionTextView = (TextView) view.findViewById(R.id.textViewPositionProfile);
     	arrowReliability = (ImageView) view.findViewById(R.id.imageViewReliability);

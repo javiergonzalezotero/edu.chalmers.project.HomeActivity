@@ -7,9 +7,10 @@
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" 
-		android:background="@drawable/background_color">
+        android:layout_height="match_parent"
+        android:background="@drawable/background_color"
+        android:orientation="vertical" >
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -162,7 +163,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/textViewMatches"
+                    android:id="@+id/textViewMatches1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="16sp" />

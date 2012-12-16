@@ -45,6 +45,7 @@ public class MatchInfoFragment extends Fragment {
 	LocationManager locMgr;
 	MyLocationListener locLstnr;
 	String provider;
+	Location currentLocation;
 	
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -98,23 +99,17 @@ public class MatchInfoFragment extends Fragment {
 		mc = mapView.getController();
 		mapView.setSatellite(true);
 		locLstnr = new MyLocationListener();
-		locMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 100, locLstnr);
+		locMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 0, locLstnr);
+		locMgr.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 0, locLstnr);
 
-		Criteria locationCritera = new Criteria();
-		locationCritera.setAccuracy(Criteria.ACCURACY_FINE);
-		locationCritera.setAltitudeRequired(false);
-		locationCritera.setBearingRequired(false);
-		locationCritera.setCostAllowed(true);
-		locationCritera.setPowerRequirement(Criteria.NO_REQUIREMENT);
-
-		provider = locMgr.getBestProvider(locationCritera, true);
-		Location location  = locMgr.getLastKnownLocation(provider);
+		String networkProvider = LocationManager.NETWORK_PROVIDER;
+		currentLocation = locMgr.getLastKnownLocation(networkProvider);
 		
 		List<Overlay> mapOverlays = mapView.getOverlays();
 		Drawable drawable = getResources().getDrawable(R.drawable.google_maps_marker);
 		MyItemizedOverlay itemizedoverlay = new MyItemizedOverlay(drawable, getActivity());
 		
-		String coordinates[] = {""+location.getLatitude(), ""+location.getLongitude()};
+		String coordinates[] = {""+currentLocation.getLatitude(), ""+currentLocation.getLongitude()};
 		double lat = Double.parseDouble(coordinates[0]);
 		double lng = Double.parseDouble(coordinates[1]);
 
@@ -177,18 +172,75 @@ public class MatchInfoFragment extends Fragment {
     
     
 	public class MyLocationListener implements LocationListener{
-		
+		private static final int TWO_MINUTES = 1000 * 60 * 2;
 		@Override
 		public void onLocationChanged(Location loc){
-			/*loc.getLatitude();
-			loc.getLongitude();
-			String Text = "My current location is: " +
-					"Latitud = " + loc.getLatitude() +
-					"Longitud = " + loc.getLongitude();
-			Toast.makeText( getActivity().getApplicationContext(), Text, Toast.LENGTH_SHORT).show();*/
+			Criteria locationCritera = new Criteria();
+    		locationCritera.setAccuracy(Criteria.ACCURACY_FINE);
+    		locationCritera.setAltitudeRequired(false);
+    		locationCritera.setBearingRequired(false);
+    		locationCritera.setCostAllowed(true);
+    		locationCritera.setPowerRequirement(Criteria.NO_REQUIREMENT);
+    		provider = locMgr.getBestProvider(locationCritera, true);
+    		currentLocation  = locMgr.getLastKnownLocation(provider);
+    		if(isBetterLocation(loc, currentLocation)){
+    			currentLocation = loc;
+    		}	
+			
+		}
+		
+		/** Determines whether one Location reading is better than the current Location fix
+		  * @param location  The new Location that you want to evaluate
+		  * @param currentBestLocation  The current Location fix, to which you want to compare the new one
+		  */
+		protected boolean isBetterLocation(Location location, Location currentBestLocation) {
+		    if (currentBestLocation == null) {
+		        // A new location is always better than no location
+		        return true;
+		    }
 
-			
-			
+		    // Check whether the new location fix is newer or older
+		    long timeDelta = location.getTime() - currentBestLocation.getTime();
+		    boolean isSignificantlyNewer = timeDelta > TWO_MINUTES;
+		    boolean isSignificantlyOlder = timeDelta < -TWO_MINUTES;
+		    boolean isNewer = timeDelta > 0;
+
+		    // If it's been more than two minutes since the current location, use the new location
+		    // because the user has likely moved
+		    if (isSignificantlyNewer) {
+		        return true;
+		    // If the new location is more than two minutes older, it must be worse
+		    } else if (isSignificantlyOlder) {
+		        return false;
+		    }
+
+		    // Check whether the new location fix is more or less accurate
+		    int accuracyDelta = (int) (location.getAccuracy() - currentBestLocation.getAccuracy());
+		    boolean isLessAccurate = accuracyDelta > 0;
+		    boolean isMoreAccurate = accuracyDelta < 0;
+		    boolean isSignificantlyLessAccurate = accuracyDelta > 200;
+
+		    // Check if the old and new location are from the same provider
+		    boolean isFromSameProvider = isSameProvider(location.getProvider(),
+		            currentBestLocation.getProvider());
+
+		    // Determine location quality using a combination of timeliness and accuracy
+		    if (isMoreAccurate) {
+		        return true;
+		    } else if (isNewer && !isLessAccurate) {
+		        return true;
+		    } else if (isNewer && !isSignificantlyLessAccurate && isFromSameProvider) {
+		        return true;
+		    }
+		    return false;
+		}
+
+		/** Checks whether two providers are the same */
+		private boolean isSameProvider(String provider1, String provider2) {
+		    if (provider1 == null) {
+		      return provider2 == null;
+		    }
+		    return provider1.equals(provider2);
 		}
 
 		@Override
