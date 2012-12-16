@@ -26,7 +26,6 @@ public class PopupAvailability extends Activity {
 	private ArrayList<Availability> timeAvailability;
 
 
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -43,6 +42,8 @@ public class PopupAvailability extends Activity {
 		Bundle b = getIntent().getExtras();
 		this.username = b.getString("username");
 
+		this.setTitle("Availability for " + this.username);
+		
 
 		AvailabilityDBAdapter availabilityAdapter = new AvailabilityDBAdapter(this);
 		availabilityAdapter.open();
