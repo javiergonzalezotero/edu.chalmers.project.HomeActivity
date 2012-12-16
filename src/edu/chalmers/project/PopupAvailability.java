@@ -44,6 +44,7 @@ public class PopupAvailability extends Activity {
 		this.username = b.getString("username");
 
 		this.setTitle("Availability for " + this.username);
+		
 
 		AvailabilityDBAdapter availabilityAdapter = new AvailabilityDBAdapter(this);
 		availabilityAdapter.open();

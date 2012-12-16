@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -81,30 +82,39 @@ public class CreateEventActivity extends FragmentActivity {
 			PlayerDBAdapter playerAdapter = new PlayerDBAdapter(this);
 			playerAdapter.open();
 			Cursor cursorPlayer = playerAdapter.getPlayer(this.username);
-
+			int cost;
+			if (editTextCost.getText().toString().compareTo("")==0)
+				cost = 0;
+			else {
+				cost = Integer.parseInt(editTextCost.getText().toString());
+			}
 			if((editTextNameEvent.getText().toString().compareTo("")!=0) && (editTextDate.getText().toString().compareTo("")!=0)
 					&& (editTextTime.getText().toString().compareTo("")!=0) && (editTextField.getText().toString().compareTo("")!=0) 
-					&& (editTextPlace.getText().toString().compareTo("")!=0) && (editTextCost.getText().toString().compareTo("")!=0)
+					&& (editTextPlace.getText().toString().compareTo("")!=0) 
 					&& (editTextPlayersLimit.getText().toString().compareTo("")!=0)){
 				if((Integer.parseInt(editTextPlayersLimit.getText().toString()) % 2) == 0){
 					if(idMatch==-1){
+
 						if(matchAdapter.matchNameExists(editTextNameEvent.getText().toString())){
+
 							long rowId= matchAdapter.createMatch(editTextDate.getText().toString(), editTextTime.getText().toString(), 
 									editTextNameEvent.getText().toString(), editTextField.getText().toString(),
-									editTextPlace.getText().toString(), Integer.parseInt(editTextCost.getText().toString()), 
+									editTextPlace.getText().toString(), cost, 
 									Integer.parseInt(editTextPlayersLimit.getText().toString()),
 									Integer.parseInt(cursorPlayer.getString(9)));
 							adapter.joinMatch(b.getString("username"), rowId, 1);//Join host team automatically
 						}
 						else{
-							Toast.makeText(this, "Name of the match already exists", Toast.LENGTH_LONG).show();
+							Toast toast = Toast.makeText(this, "The name of the match already exists", Toast.LENGTH_SHORT);
+							toast.setGravity(Gravity.CENTER, 0, 0);
+							toast.show();
 
 						}
 					}
 					else{
 						matchAdapter.updateMatch(idMatch, editTextDate.getText().toString(), editTextTime.getText().toString(), 
 								editTextNameEvent.getText().toString(), editTextField.getText().toString(),
-								editTextPlace.getText().toString(), Integer.parseInt(editTextCost.getText().toString()), 
+								editTextPlace.getText().toString(), cost, 
 								Integer.parseInt(editTextPlayersLimit.getText().toString()));
 					}
 
@@ -121,11 +131,15 @@ public class CreateEventActivity extends FragmentActivity {
 					startActivity(intent);
 				}
 				else{
-					Toast.makeText(this, "You have to enter an even number", Toast.LENGTH_SHORT).show();
+					Toast toast = Toast.makeText(this, "You have to enter an even number", Toast.LENGTH_SHORT);
+					toast.setGravity(Gravity.CENTER, 0, 0);
+					toast.show();
 				}
 			}
 			else{
-				Toast.makeText(this, "You have to enter all the fields", Toast.LENGTH_LONG).show();
+				Toast toast = Toast.makeText(this, "You have to enter all the fields", Toast.LENGTH_SHORT);
+				toast.setGravity(Gravity.CENTER, 0, 0);
+				toast.show();
 			}
 
 
