@@ -66,10 +66,10 @@
                 android:id="@+id/textViewUsernameProfile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingBottom="5dp"
+                android:padding="5dp"
                 android:text="USERNAME"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textSize="26sp" />
+                android:textSize="25sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -150,6 +150,29 @@
                     android:textSize="16sp" />
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/textViewTimetableProfile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Timetable:"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:id="@+id/linearLayoutAvailability"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <Button
+                    android:id="@+id/buttonShowAvailability"
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="3dp"
+                    android:text="Show Availability" />
+            </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
@@ -163,7 +186,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/textViewMatches1"
+                    android:id="@+id/textViewMatches"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="16sp" />
@@ -186,31 +209,6 @@
                     android:layout_height="wrap_content"
                     android:textSize="16sp" />
             </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/linearLayoutAvailability"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal" >
-
-                <TextView
-                    android:id="@+id/textViewTimetableProfile"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="Timetable:"
-                    android:textSize="16sp" />
-
-                <Button
-                    android:id="@+id/buttonShowAvailability"
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="3dp"
-                    android:text="Show " />
-            </LinearLayout>
-
         </LinearLayout>
     </LinearLayout>
 
