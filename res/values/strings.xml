@@ -10,7 +10,8 @@
     <string name="title_activity_home">App Name</string>
     <string name="CreateEventButton">Create Event</string>
     <string name="HomeTitle">Upcoming Events</string>
-    <string name="maps_api_key">0IQdaJYXKKRHJD96zKr9z2vvjwqveyHnr9tK3Iw</string>
+    <string name="maps_api_key">0UGsVPWua8WPfgJN5p1drDMHSJ9Y5qi8Yfqzi1w</string>
+   
 
     <string-array name="spinner_matches">
         <item>All Events</item><item>My Upcoming Events</item><item>My events</item>

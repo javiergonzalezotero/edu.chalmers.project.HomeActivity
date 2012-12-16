@@ -108,7 +108,8 @@ public class MatchInfoFragment extends Fragment {
 		locationCritera.setPowerRequirement(Criteria.NO_REQUIREMENT);
 
 		provider = locMgr.getBestProvider(locationCritera, true);
-		Location location  = locMgr.getLastKnownLocation(provider);
+		String provider2 = locMgr.NETWORK_PROVIDER;
+		Location location  = locMgr.getLastKnownLocation(provider2);
 		
 		List<Overlay> mapOverlays = mapView.getOverlays();
 		Drawable drawable = getResources().getDrawable(R.drawable.google_maps_marker);
