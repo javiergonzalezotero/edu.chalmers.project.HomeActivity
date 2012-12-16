@@ -42,7 +42,7 @@ public class MatchActivity extends MapActivity {
         Tab tab = actionBar.newTab()
                 .setText("INFO")
                 .setTabListener(new TabListener<MatchInfoFragment>(
-                        this, "home", MatchInfoFragment.class));
+                        this, "home", MatchInfoFragment.class ));
         actionBar.addTab(tab);
         
         tab = actionBar.newTab()
