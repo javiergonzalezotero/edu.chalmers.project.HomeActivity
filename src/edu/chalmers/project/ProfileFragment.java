@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.ListIterator;
 
-import android.app.ActionBar;
 import android.app.Fragment;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -61,29 +60,29 @@ public class ProfileFragment extends Fragment {
 
 	private ArrayList<Availability> timeAvailability;
 	private ImageView arrowReliability;
-	
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-    	View view = inflater.inflate(R.layout.profile_fragment, container, false);
-    	view.setClickable(true);
-    	this.setHasOptionsMenu(true);//for the split action bar
-    	
-    	usernameTextView = (TextView) view.findViewById(R.id.textViewUsernameProfile);
-    	firstNameTextView = (TextView) view.findViewById(R.id.textViewFirstName);
-    	familyNameTextView = (TextView) view.findViewById(R.id.textViewFamilyName);
-    	ageTextView = (TextView) view.findViewById(R.id.textViewAgeProfile);
-    	reliabilityLevelTextView = (TextView) view.findViewById(R.id.textViewReliabilityLevelProfile);
-    	MVPNumberTextView = (TextView) view.findViewById(R.id.textViewMVPNumberProfile);
-    	matchPlayedTextView = (TextView) view.findViewById(R.id.textViewMatches1);
-    	goalsScoredTextView = (TextView) view.findViewById(R.id.textViewGoals);
-    	positionTextView = (TextView) view.findViewById(R.id.textViewPositionProfile);
-    	arrowReliability = (ImageView) view.findViewById(R.id.imageViewReliability);
-    	profilePhoto = (ImageView) view.findViewById(R.id.imageViewProfile);
-    	linearLayoutAvailability = (LinearLayout) view.findViewById(R.id.linearLayoutAvailability1);
-    	buttonShowAvailability = (Button) view.findViewById(R.id.buttonShowAvailability);
-    	
-    	this.buttonPressed = 0;
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		// Inflate the layout for this fragment
+		View view = inflater.inflate(R.layout.profile_fragment, container, false);
+		view.setClickable(true);
+		this.setHasOptionsMenu(true);//for the split action bar
+
+		usernameTextView = (TextView) view.findViewById(R.id.textViewUsernameProfile);
+		firstNameTextView = (TextView) view.findViewById(R.id.textViewFirstName);
+		familyNameTextView = (TextView) view.findViewById(R.id.textViewFamilyName);
+		ageTextView = (TextView) view.findViewById(R.id.textViewAgeProfile);
+		reliabilityLevelTextView = (TextView) view.findViewById(R.id.textViewReliabilityLevelProfile);
+		MVPNumberTextView = (TextView) view.findViewById(R.id.textViewMVPNumberProfile);
+		matchPlayedTextView = (TextView) view.findViewById(R.id.textViewMatches1);
+		goalsScoredTextView = (TextView) view.findViewById(R.id.textViewGoals);
+		positionTextView = (TextView) view.findViewById(R.id.textViewPositionProfile);
+		arrowReliability = (ImageView) view.findViewById(R.id.imageViewReliability);
+		profilePhoto = (ImageView) view.findViewById(R.id.imageViewProfile);
+		linearLayoutAvailability = (LinearLayout) view.findViewById(R.id.linearLayoutAvailability1);
+		buttonShowAvailability = (Button) view.findViewById(R.id.buttonShowAvailability);
+
+		this.buttonPressed = 0;
 
 
 		Bundle b = getActivity().getIntent().getExtras();
@@ -120,40 +119,38 @@ public class ProfileFragment extends Fragment {
 			}
 		});
 
-
-
 		return view;
 
 	}
 
-    
-    /*
-     * Loads the information of the player from the db
-     */
-    private void inflatePlayer(String username){
-    	PlayerDBAdapter playerAdapter = new PlayerDBAdapter(this.getActivity());
-    	playerAdapter.open();
-    	MatchPlayedDBAdapter adapter = new MatchPlayedDBAdapter(this.getActivity());
-    	adapter.open();
-    	MatchDBAdapter matchAdapter = new MatchDBAdapter(this.getActivity());
-    	matchAdapter.open();
-    	GoalDBAdapter goalAdapter = new GoalDBAdapter(this.getActivity());
-    	goalAdapter.open();
-        Cursor cursor = playerAdapter.getPlayer(username);
-        usernameTextView.setText(cursor.getString(0));
-        firstNameTextView.setText(cursor.getString(2));
-        familyNameTextView.setText(cursor.getString(3));
-        matchPlayedTextView.setText(adapter.getMatchesPlayed(username));
-        MVPNumberTextView.setText(matchAdapter.getNumberMVPs(cursor.getInt(9)));
-        goalsScoredTextView.setText(goalAdapter.getGoalsScored(username));
-        ageTextView.setText(calculateAge(cursor.getString(8)));
-        reliabilityLevelTextView.setText(cursor.getString(5));
-        positionTextView.setText(cursor.getString(6));
-        arrowReliability.setImageResource(selectArrow(cursor.getString(5)));
-        if(!cursor.getString(10).equals("")){
-        	int height = profilePhoto.getLayoutParams().height;
-        	int width = profilePhoto.getLayoutParams().width;
-        	profilePhoto.setImageBitmap(ImageLoader.decodeSampledBitmapFromResource(cursor.getString(10), width, height));
+
+	/*
+	 * Loads the information of the player from the database
+	 */
+	private void inflatePlayer(String username){
+		PlayerDBAdapter playerAdapter = new PlayerDBAdapter(this.getActivity());
+		playerAdapter.open();
+		MatchPlayedDBAdapter adapter = new MatchPlayedDBAdapter(this.getActivity());
+		adapter.open();
+		MatchDBAdapter matchAdapter = new MatchDBAdapter(this.getActivity());
+		matchAdapter.open();
+		GoalDBAdapter goalAdapter = new GoalDBAdapter(this.getActivity());
+		goalAdapter.open();
+		Cursor cursor = playerAdapter.getPlayer(username);
+		usernameTextView.setText(cursor.getString(0));
+		firstNameTextView.setText(cursor.getString(2));
+		familyNameTextView.setText(cursor.getString(3));
+		matchPlayedTextView.setText(adapter.getMatchesPlayed(username));
+		MVPNumberTextView.setText(matchAdapter.getNumberMVPs(cursor.getInt(9)));
+		goalsScoredTextView.setText(goalAdapter.getGoalsScored(username));
+		ageTextView.setText(calculateAge(cursor.getString(8)));
+		reliabilityLevelTextView.setText(cursor.getString(5));
+		positionTextView.setText(cursor.getString(6));
+		arrowReliability.setImageResource(selectArrow(cursor.getString(5)));
+		if(!cursor.getString(10).equals("")){
+			int height = profilePhoto.getLayoutParams().height;
+			int width = profilePhoto.getLayoutParams().width;
+			profilePhoto.setImageBitmap(ImageLoader.decodeSampledBitmapFromResource(cursor.getString(10), width, height));
 
 		}
 		cursor.close();
@@ -163,14 +160,14 @@ public class ProfileFragment extends Fragment {
 		goalAdapter.close();
 	}
 
-    /*
-     * Calculate the age of the player from his birthdate
-     */
-    private String calculateAge(String birthdate){
-    	Calendar cal = Calendar.getInstance();
-    	Calendar current = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
-        try {
+	/*
+	 * Calculate the age of the player from his birthdate
+	 */
+	private String calculateAge(String birthdate){
+		Calendar cal = Calendar.getInstance();
+		Calendar current = Calendar.getInstance();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+		try {
 			cal.setTime(sdf.parse(birthdate));
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -200,6 +197,12 @@ public class ProfileFragment extends Fragment {
 
 	}
 
+	/**
+	 * Checks if a player is your friend or not
+	 * @param username The logged user
+	 * @param otherUsername Other player in the network
+	 * @return True if they are friends, false otherwise.
+	 */
 	public boolean isMyFriend(String username, String otherUsername){
 		FriendDBAdapter adapter = new FriendDBAdapter(this.getActivity());
 		adapter.open();
@@ -208,7 +211,11 @@ public class ProfileFragment extends Fragment {
 		return b;
 	}
 
-	
+	/**
+	 * Choose an arrow according  to the reliability level given
+	 * @param reliability
+	 * @return
+	 */
 	public int selectArrow(String reliability){
 		int level = Integer.parseInt(reliability);
 		if (level<21) {
@@ -227,8 +234,13 @@ public class ProfileFragment extends Fragment {
 			return getActivity().getResources().getIdentifier("red", "drawable", getActivity().getPackageName());
 		}
 	}
-	
 
+
+	/**
+	 * Method called when tapping the button of show availability in order to show the information 
+	 * of your availability
+	 * @param view
+	 */
 	public void showAvailability(View view){
 		this.timeAvailability = new ArrayList<Availability>();
 		AvailabilityDBAdapter availabilityAdapter = new AvailabilityDBAdapter(view.getContext());

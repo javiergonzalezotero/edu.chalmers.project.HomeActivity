@@ -2,7 +2,6 @@ package edu.chalmers.project.data;
 
 import java.util.ArrayList;
 
-import android.R;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -10,6 +9,12 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+/**
+ * Adapter for accessing the database, concretely the Player table.
+ * This table will have eleven rows: ROW_ID, USERNAME, PASSWORD, FIRSTNAME, FAMILYNAME, 
+ * MAIL, RELIABILITY, POSITION, CITY, BIRTDATE and IMGPATH
+ *
+ */
 public class PlayerDBAdapter {
 	public static final String ROW_ID = "_id";
 
@@ -88,6 +93,7 @@ public class PlayerDBAdapter {
      * @param position
      * @param city
      * @param birthdate
+     * @param imgPath
      * @return rowId or -1 if failed
      */
     public long createPlayer(String username, String password, String familyName, String firstName, 
@@ -128,7 +134,7 @@ public class PlayerDBAdapter {
 	/**
 	 * Return a Cursor positioned at the player that matches the given rowId
 	 * @param rowId
-	 * @return Cursor positioned to matching car, if found
+	 * @return Cursor positioned to matching player, if found
 	 * @throws SQLException if player could not be found/retrieved
 	 */
 	public Cursor getPlayer(long rowId) throws SQLException {
@@ -144,6 +150,12 @@ public class PlayerDBAdapter {
         return mCursor;
     }
     
+	/**
+	 * Return a Cursor positioned at the player that matches the given username
+	 * @param username
+	 * @return Cursor positioned to matching player, if found
+	 * @throws SQLException if player could not be found/retrieved
+	 */
     public Cursor getPlayer(String username)throws SQLException{
     	Cursor mCursor =
     	        this.mDb.query(true, DATABASE_TABLE, new String[] {USERNAME,PASSWORD,FIRSTNAME,FAMILYNAME,
@@ -166,6 +178,7 @@ public class PlayerDBAdapter {
      * @param position
      * @param city
      * @param birthdate
+     * @param imgPath
      * @return true if the note was successfully updated, false otherwise
      */
     public boolean updatePlayer( String username, String password, String firstname, String familyname,
@@ -185,6 +198,14 @@ public class PlayerDBAdapter {
     }
 
 
+    /**
+     * Updates the reliability following the next criteria:
+     * If the player was not present, reliability - 5
+     * If the player was present, reliability + 2
+     * @param username
+     * @param present
+     * @return
+     */
 	public boolean updateReliability(String username, int present){
 		Cursor cursorPlayer;
 		cursorPlayer = this.getPlayer(username);
@@ -229,6 +250,12 @@ public class PlayerDBAdapter {
 		return playerList;
 	}
 
+	/**
+	 * Returns a list of Players that match the specific search, or if the username starts
+	 * with this text
+	 * @param search Text we are going to search by
+	 * @return
+	 */
 	public ArrayList<Player> searchPlayer(String search){
 		int rowId = 1;
 		Cursor cursor;
@@ -250,7 +277,11 @@ public class PlayerDBAdapter {
 		return playerList;
 	}
 
-	
+	/**
+	 * Checks if a username already exists in the table
+	 * @param username
+	 * @return False if the given username exists, true otherwise
+	 */
 	public boolean usernameExists(String username){
 		Cursor mCursor =
     	        this.mDb.query(true, DATABASE_TABLE, new String[] {USERNAME,PASSWORD,FIRSTNAME,FAMILYNAME,

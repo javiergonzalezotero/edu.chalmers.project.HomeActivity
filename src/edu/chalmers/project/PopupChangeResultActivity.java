@@ -39,7 +39,7 @@ public class PopupChangeResultActivity extends Activity {
 		this.playerUsernameSelected= b.getString("playerUsernameSelected");
 		this.currentUsernameLogin= b.getString("currentUsernameLogin");
 		this.nextGoalOk = b.getInt("nextGoal");
-		
+
 		this.setTitle(this.playerUsernameSelected);
 
 		editTextMinuteGoal = (EditText)findViewById(R.id.editTextMinuteGoal);
@@ -54,7 +54,7 @@ public class PopupChangeResultActivity extends Activity {
 		MatchPlayedDBAdapter matchAdapter = new MatchPlayedDBAdapter(this);
 		matchAdapter.open();
 		Cursor cursorPresent = matchAdapter.getPresent(playerUsernameSelected, idMatch);
-		
+
 		if(this.nextGoalOk == 0){
 
 			enterGoal.setVisibility(View.INVISIBLE);
@@ -75,8 +75,7 @@ public class PopupChangeResultActivity extends Activity {
 			finishButton.setVisibility(View.VISIBLE);	
 
 		}
-		
-		//Toast.makeText(this, "present " + cursorPresent.getString(1), Toast.LENGTH_SHORT).show();
+
 		if(Integer.parseInt(cursorPresent.getString(1)) == 0){
 			presentYes.setVisibility(View.INVISIBLE);
 			presentNo.setClickable(false);
@@ -100,6 +99,12 @@ public class PopupChangeResultActivity extends Activity {
 
 	}
 
+	/**
+	 * Callback method used when the user taps in next goal button to add a goal.
+	 * This method check if the user has actually written some number and if it's not repeated.
+	 * If the conditions are OK, the goals are inserted in the database
+	 * @param view
+	 */
 	public void addGoal(View view){
 		GoalDBAdapter goalAdapter = new GoalDBAdapter(this);
 		goalAdapter.open();
@@ -132,16 +137,19 @@ public class PopupChangeResultActivity extends Activity {
 			goalAdapter.close();
 			Toast.makeText(this, "Enter the minute of the goal", Toast.LENGTH_SHORT).show();
 		}
-		
-		
+
+
 
 	}
 
+	/**
+	 * Callback method activated when tapping the Yes button in the "present" section. 
+	 * The database is updated as a result
+	 * @param view
+	 */
 	public void isPresent(View view){
 		MatchPlayedDBAdapter matchAdapter = new MatchPlayedDBAdapter(this);
 		matchAdapter.open();
-
-
 
 		presentNo.setVisibility(View.INVISIBLE);
 		presentYes.setClickable(false);
@@ -150,17 +158,21 @@ public class PopupChangeResultActivity extends Activity {
 		nextGoal.setVisibility(View.VISIBLE);
 		finishButton.setVisibility(View.VISIBLE);
 
-
 		matchAdapter.updatePresent(playerUsernameSelected, idMatch, 1);
 		Toast.makeText(this, "Present correctly updated", Toast.LENGTH_SHORT).show();
 		matchAdapter.close();
-		
+
 		PlayerDBAdapter playerAdapter = new PlayerDBAdapter(this);
 		playerAdapter.open();
 		playerAdapter.updateReliability(playerUsernameSelected, 1);
 		playerAdapter.close();
 	}
 
+	/**
+	 * Callback method activated when tapping the No button in the "present" section. 
+	 * The database is updated as a result
+	 * @param view
+	 */
 	public void isNotPresent(View view){
 		presentYes.setVisibility(View.INVISIBLE);
 		presentNo.setClickable(false);
@@ -172,13 +184,18 @@ public class PopupChangeResultActivity extends Activity {
 		matchAdapter.updatePresent(playerUsernameSelected, idMatch, 0);
 		Toast.makeText(this, "Present correctly updated", Toast.LENGTH_SHORT).show();
 		matchAdapter.close();
-		
+
 		PlayerDBAdapter playerAdapter = new PlayerDBAdapter(this);
 		playerAdapter.open();
 		playerAdapter.updateReliability(playerUsernameSelected, 0);
 		playerAdapter.close();
 	}
 
+	/**
+	 * Callback method activated when tapping the finish button in the popup. Insert the last
+	 * goal entered if there exists one in the text view of the minute of the goal
+	 * @param view
+	 */
 	public void finishPopup(View view){
 		GoalDBAdapter goalAdapter = new GoalDBAdapter(this);
 		goalAdapter.open();

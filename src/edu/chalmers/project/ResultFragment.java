@@ -15,7 +15,6 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import edu.chalmers.project.data.Goal;
 import edu.chalmers.project.data.GoalDBAdapter;
 import edu.chalmers.project.data.MatchDBAdapter;

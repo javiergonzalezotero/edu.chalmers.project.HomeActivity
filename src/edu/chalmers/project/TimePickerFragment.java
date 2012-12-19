@@ -33,6 +33,7 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
 	}
 
 	public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+		//The dates are going to be formatted according to: "HH:MM"
 		if(hourOfDay <= 9){
 			if(minute <= 9){
 				activity_edittext.setText("0" + String.valueOf(hourOfDay) + ":0" + String.valueOf(minute));

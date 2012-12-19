@@ -9,6 +9,11 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+/**
+ * Adapter for accesing the database, concretely the Availability table.
+ * This table will have four rows: ROW_ID, PLAYERUSERNAME, ID_MATCH and MINUTE
+ *
+ */
 public class GoalDBAdapter {
 	public static final String ROW_ID = "_id";
 	public static final String PLAYERUSERNAME = "playerUsername";
@@ -50,7 +55,7 @@ public class GoalDBAdapter {
 	}
 
 	/**
-	 * Open the cars database. If it cannot be opened, try to create a new
+	 * Open the goal database. If it cannot be opened, try to create a new
 	 * instance of the database. If it cannot be created, throw an exception to
 	 * signal the failure
 	 * 
@@ -73,11 +78,12 @@ public class GoalDBAdapter {
 	}
 
 	/**
-	 * Create a new matchPlayed entry. If the row is successfully created return the new
+	 * Create a new goal entry. If the row is successfully created return the new
 	 * rowId for that entry, otherwise return a -1 to indicate failure.
 	 * 
-	 * @param idPlayer
-	 * @param idFriend
+	 * @param playerUsername
+	 * @param idMatch
+	 * @param minute
 	 */
 	public long insertGoal(String playerUsername, long idMatch, int minute){
 		ContentValues initialValues = new ContentValues();
@@ -88,7 +94,12 @@ public class GoalDBAdapter {
 	}
 
 
-
+	/**
+	 * Get the list of all goals in a match
+	 * @param idMatch
+	 * @return The arrayList with the goals
+	 * @throws SQLException
+	 */
 	public ArrayList<Goal> getMatchListGoal(long idMatch) throws SQLException {
 
 		ArrayList<Goal> goalList = new ArrayList<Goal>();
@@ -109,6 +120,13 @@ public class GoalDBAdapter {
 		return goalList;
 	}
 
+	/**
+	 * Gets the list of goals of one specific team in one specific match
+	 * @param idMatch
+	 * @param numberTeam
+	 * @return
+	 * @throws SQLException
+	 */
 	public ArrayList<Goal> getGoalTeam(long idMatch, int numberTeam) throws SQLException {
 
 		ArrayList<Goal> goalList = new ArrayList<Goal>();
@@ -137,6 +155,12 @@ public class GoalDBAdapter {
 		return goalList;
 	}
 
+	/**
+	 * Get the number of goals scored by one player in all the history.
+	 * @param username
+	 * @return A string with the number of goals scored
+	 * @throws SQLException
+	 */
 	public String getGoalsScored(String username) throws SQLException {
 		String query = "SELECT COUNT(*) FROM "+ DATABASE_TABLE + 
 				" WHERE "+ PLAYERUSERNAME+ " = '"+ username + "'";
@@ -149,6 +173,14 @@ public class GoalDBAdapter {
 		return res.toString();
 	}
 
+	/**
+	 * Returns a cursor pointing to a goal entry defined by username, idMatch and minute.
+	 * Due to constraints in our model, it never will two goals in the same minute.
+	 * @param username
+	 * @param idMatch
+	 * @param minute
+	 * @return
+	 */
 	public Cursor getGoalMinuteUsername(String username, int idMatch, int minute){
 		Cursor mCursor =
 

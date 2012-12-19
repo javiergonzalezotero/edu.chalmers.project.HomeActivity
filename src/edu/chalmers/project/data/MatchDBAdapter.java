@@ -1,6 +1,5 @@
 package edu.chalmers.project.data;
 
-import java.math.MathContext;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -10,8 +9,13 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.widget.Toast;
 
+/**
+ * Adapter for accessing the database, concretely the Match table.
+ * This table will have ten rows: ROW_ID, DATE, TIME, NAME, FIELD, LOCATION, COST,
+ * NUMBER_PLAYERS, ID_ORGANIZER and ID_MVP
+ *
+ */
 public class MatchDBAdapter {
 
 	public static final String ROW_ID = "_id";
@@ -61,7 +65,7 @@ public class MatchDBAdapter {
 	}
 
 	/**
-	 * Open the cars database. If it cannot be opened, try to create a new
+	 * Open the match database. If it cannot be opened, try to create a new
 	 * instance of the database. If it cannot be created, throw an exception to
 	 * signal the failure
 	 * 
@@ -87,8 +91,8 @@ public class MatchDBAdapter {
 	 * Create a new match. If the match is successfully created return the new
 	 * rowId for that car, otherwise return a -1 to indicate failure.
 	 * 
-	 * @param id
 	 * @param date
+	 * @param time
 	 * @param name
 	 * @param field
 	 * @param location
@@ -109,7 +113,7 @@ public class MatchDBAdapter {
 		initialValues.put(ID_ORGANIZER, id_organizer);
 		return this.mDb.insert(DATABASE_TABLE, null, initialValues);
 	}
-	
+
 	/**
 	 * Delete the match with the given rowId
 	 * 
@@ -120,24 +124,41 @@ public class MatchDBAdapter {
 
 		return this.mDb.delete(DATABASE_TABLE, ROW_ID + "=" + rowId, null) > 0; 
 	}
-	
-	
+
+
+	/**
+	 * Updates the information of a match given his id
+	 * @param id
+	 * @param date
+	 * @param time
+	 * @param name
+	 * @param field
+	 * @param location
+	 * @param cost
+	 * @param numberPlayers
+	 * @return
+	 */
 	public boolean updateMatch( long id, String date, String time, String name, String field,
-            String location, int cost, int numberPlayers){
-        ContentValues args = new ContentValues();
-        args.put(DATE, date);
-        args.put(TIME, time);
-        args.put(NAME, name);
-        args.put(FIELD, field);
-        args.put(LOCATION, location);
-        args.put(COST, cost);
-        args.put(NUMBER_PLAYERS, numberPlayers);
-        
-        return this.mDb.update(DATABASE_TABLE, args, ROW_ID + "=" + id, null) >0; 
-    }
-	
-	public boolean updateMvp(long idMatch, int idMvp) 
-	{
+			String location, int cost, int numberPlayers){
+		ContentValues args = new ContentValues();
+		args.put(DATE, date);
+		args.put(TIME, time);
+		args.put(NAME, name);
+		args.put(FIELD, field);
+		args.put(LOCATION, location);
+		args.put(COST, cost);
+		args.put(NUMBER_PLAYERS, numberPlayers);
+
+		return this.mDb.update(DATABASE_TABLE, args, ROW_ID + "=" + id, null) >0; 
+	}
+
+	/**
+	 * Updates the MVP of one match
+	 * @param idMatch
+	 * @param idMvp
+	 * @return
+	 */
+	public boolean updateMvp(long idMatch, int idMvp){
 		ContentValues args = new ContentValues();
 		args.put(ID_MVP, idMvp);
 		return this.mDb.update(DATABASE_TABLE, args, ROW_ID + "=" + idMatch, null) > 0;
@@ -147,11 +168,10 @@ public class MatchDBAdapter {
 	/**
 	 * Return a Cursor positioned at the match that matches the given rowId
 	 * @param rowId
-	 * @return Cursor positioned to matching car, if found
-	 * @throws SQLException if player could not be found/retrieved
+	 * @return Cursor positioned to matching match, if found
+	 * @throws SQLException if match could not be found/retrieved
 	 */
 	public Cursor getMatch(long rowId) throws SQLException {
-
 		Cursor mCursor =
 
 				this.mDb.query(true, DATABASE_TABLE, new String[] { ROW_ID, DATE, TIME,
@@ -161,9 +181,14 @@ public class MatchDBAdapter {
 		}
 		return mCursor;
 	}
-	
-	public Cursor getMvp(long rowId) throws SQLException {
 
+	/**
+	 * Return a Cursor positioned at the MVP of the match given by its rowId.
+	 * @param rowId
+	 * @return
+	 * @throws SQLException
+	 */
+	public Cursor getMvp(long rowId) throws SQLException {
 		Cursor mCursor =
 
 				this.mDb.query(true, DATABASE_TABLE, new String[] { ID_MVP}, ROW_ID + "=" + rowId, null, null, null, null, null);
@@ -172,7 +197,13 @@ public class MatchDBAdapter {
 		}
 		return mCursor;
 	}
-	
+
+	/**
+	 * Auxiliary method that is going to execute a specific query and return a list of matches 
+	 * as a result of this query.
+	 * @param query
+	 * @return
+	 */
 	public ArrayList<Match> execQuery(String query){
 		matchList = new ArrayList<Match>();
 		Cursor cursor = this.mDb.rawQuery(query, null);
@@ -197,28 +228,36 @@ public class MatchDBAdapter {
 	 */
 	public ArrayList<Match> getMatchList() {
 
-		
+
 		String query = "SELECT distinct "+ DATABASE_TABLE +"."+ ROW_ID + ", "+DATABASE_TABLE +"."+ DATE  
 				+", "+DATABASE_TABLE +"."+ TIME + ", "+DATABASE_TABLE +"."+ NAME + ", "+
 				DATABASE_TABLE +"."+ FIELD +", "+DATABASE_TABLE +"."+ LOCATION +", "+ 
 				DATABASE_TABLE +"."+ COST +", "+DATABASE_TABLE +"."+ NUMBER_PLAYERS +", "+ 
 				DATABASE_TABLE +"."+ ID_ORGANIZER +" FROM "+ DATABASE_TABLE +
-			    " WHERE date('now') < " + DATABASE_TABLE + "." + DATE;
+				" WHERE date('now') < " + DATABASE_TABLE + "." + DATE;
 		return execQuery(query);
-		
+
 	}
-	
+
+	/**
+	 * Return the list of all past matches
+	 * @return
+	 */
 	public ArrayList<Match> getPastEvents(){
 		String query = "SELECT distinct "+ DATABASE_TABLE +"."+ ROW_ID + ", "+DATABASE_TABLE +"."+ DATE  
 				+", "+DATABASE_TABLE +"."+ TIME + ", "+DATABASE_TABLE +"."+ NAME + ", "+
 				DATABASE_TABLE +"."+ FIELD +", "+DATABASE_TABLE +"."+ LOCATION +", "+ 
 				DATABASE_TABLE +"."+ COST +", "+DATABASE_TABLE +"."+ NUMBER_PLAYERS +", "+ 
 				DATABASE_TABLE +"."+ ID_ORGANIZER +" FROM "+ DATABASE_TABLE +
-			    " WHERE date('now') > " + DATABASE_TABLE + "." + DATE;
+				" WHERE date('now') > " + DATABASE_TABLE + "." + DATE;
 		return execQuery(query);
 	}
 
-	
+	/**
+	 * Return the list of all the future matches that a user is joined to
+	 * @param username
+	 * @return
+	 */
 	public ArrayList<Match> getUpcomingEvents(String username){
 		String query = "SELECT distinct "+ DATABASE_TABLE +"."+ ROW_ID + ", "+DATABASE_TABLE +"."+ DATE  
 				+", "+DATABASE_TABLE +"."+ TIME + ", "+DATABASE_TABLE +"."+ NAME + ", "+
@@ -231,7 +270,12 @@ public class MatchDBAdapter {
 				"date('now') <= " + DATABASE_TABLE + "." + DATE;
 		return execQuery(query);
 	}
-	
+
+	/**
+	 * Returns the list of all matches that match with the availability of one user
+	 * @param username
+	 * @return
+	 */
 	public ArrayList<Match> getEventAvailability(String username){
 		String query = "SELECT distinct "+ DATABASE_TABLE +"."+ ROW_ID + ", "+DATABASE_TABLE +"."+ DATE  
 				+", "+DATABASE_TABLE +"."+ TIME + ", "+DATABASE_TABLE +"."+ NAME + ", "+
@@ -244,8 +288,12 @@ public class MatchDBAdapter {
 				"date('now') <= " + DATABASE_TABLE + "." + DATE;
 		return execQuery(query);
 	}
-	
-	
+
+	/**
+	 * Gets the number of MVP's of one player in all history.
+	 * @param idPlayer
+	 * @return A string with the number of MVP's
+	 */
 	public String getNumberMVPs(long idPlayer){
 		String query = "SELECT COUNT(*)"+ " FROM "+ DATABASE_TABLE + " WHERE "+ 
 				DATABASE_TABLE + "." + ID_MVP + " = "+ idPlayer;
@@ -259,6 +307,11 @@ public class MatchDBAdapter {
 
 	}
 
+	/**
+	 * Gets the list of all the matches created by one user (future and past)
+	 * @param username
+	 * @return
+	 */
 	public ArrayList<Match> getMyEvents(String username) {   	
 		String query = "SELECT distinct "+ DATABASE_TABLE +"."+ ROW_ID + ", "+DATABASE_TABLE +"."+ DATE  
 				+", "+DATABASE_TABLE +"."+ TIME + ", "+DATABASE_TABLE +"."+ NAME + ", "+
@@ -270,7 +323,14 @@ public class MatchDBAdapter {
 				" = '"+ username +"'";
 		return execQuery(query);
 	}
-	
+
+	/**
+	 * Return a cursor positioned at a selection of one row in match with ROW_ID and 
+	 * ID_ORGANIZER as the only columns.
+	 * @param idMatch
+	 * @return
+	 * @throws SQLException
+	 */
 	public Cursor getIdOrganizer(long idMatch) throws SQLException {
 
 		Cursor mCursor =
@@ -281,20 +341,30 @@ public class MatchDBAdapter {
 		}
 		return mCursor;
 	}
-	
-	
+
+	/**
+	 * Method that checks if a name for a match is already used in another row.
+	 * @param matchName
+	 * @return
+	 */
 	public boolean matchNameExists(String matchName){
 		Cursor mCursor =
-    	        this.mDb.query(true, DATABASE_TABLE, new String[] { ROW_ID}, 
-    	        		NAME + "= '" + matchName+ "'", null, null, null, null, null);
-    	        if (mCursor != null ) {
-    	            mCursor.moveToFirst();
-    	        }
-    	boolean res = mCursor.isAfterLast();
-    	mCursor.close();
-    	return res;
+				this.mDb.query(true, DATABASE_TABLE, new String[] { ROW_ID}, 
+						NAME + "= '" + matchName+ "'", null, null, null, null, null);
+		if (mCursor != null ) {
+			mCursor.moveToFirst();
+		}
+		boolean res = mCursor.isAfterLast();
+		mCursor.close();
+		return res;
 	}
-	
+
+	/**
+	 * Returns the day of the week for one date
+	 * @param date
+	 * @return
+	 * @throws SQLException
+	 */
 	public Cursor getDayDate(String date) throws SQLException {
 		String query = "SELECT strftime( '%w' , '" + date + "')";
 		Cursor cursor = this.mDb.rawQuery(query, null);
@@ -304,7 +374,7 @@ public class MatchDBAdapter {
 
 		return cursor;
 	}
-	
+
 
 
 }

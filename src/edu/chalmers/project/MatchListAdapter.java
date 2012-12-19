@@ -7,23 +7,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 import edu.chalmers.project.data.Match;
-import edu.chalmers.project.data.Player;
 
+/**
+ * Array Adapter used to show the lists of matches with detailed information
+ *
+ */
 public class MatchListAdapter extends ArrayAdapter<Match>{
 	private ArrayList<Match> matchList;
 	private Context context;
 	private int layout;
-	
+
 	MatchListAdapter(Context context, ArrayList<Match> matchList, int layout) {
 		super( context, R.layout.match_list_item, R.id.playerName, matchList);
 		this.matchList = matchList;
 		this.context = context;
 		this.layout = layout;
 	}
-	
+
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View row = convertView;

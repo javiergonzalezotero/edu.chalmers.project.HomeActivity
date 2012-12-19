@@ -1,12 +1,17 @@
 package edu.chalmers.project.data;
 
+/**
+ * Class that is going to represent one interval of availability in one day of the week
+ * for one user. It is used for modeling each row of the Availability table.
+ *
+ */
 public class Availability {
-	
+
 	private int id;
 	private String username;
 	private String day;
 	private String interval;
-	
+
 	public Availability(int id, String username, String day, String interval){
 		this.id = id;
 		this.username = username;
@@ -45,7 +50,7 @@ public class Availability {
 	public void setInterval(String interval) {
 		this.interval = interval;
 	}
-	
+
 	@Override
 	public String toString() {
 		return this.getInterval();

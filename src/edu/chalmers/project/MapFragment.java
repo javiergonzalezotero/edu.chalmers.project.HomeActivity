@@ -50,7 +50,7 @@ public class MapFragment extends Fragment  {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
-		if (view==null){
+		if (view==null){ //we can only inflate the map one time, if not crashes
 			view = inflater.inflate(R.layout.map_fragment, container, false);
 			view.setClickable(true);
 		}
@@ -65,44 +65,45 @@ public class MapFragment extends Fragment  {
 		locLstnr = new MyLocationListener();
 
 		// Set Click Listener
-        locateButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            	mapOverlays.clear();
-        		locMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 0, locLstnr);
-        		locMgr.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 0, locLstnr);
-        		
-        		String networkProvider = LocationManager.NETWORK_PROVIDER;
-        		currentLocation = locMgr.getLastKnownLocation(networkProvider);
+		locateButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mapOverlays.clear();
+				locMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 0, locLstnr);
+				locMgr.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 0, locLstnr);
 
-        		Log.i("--- Latitude",""+currentLocation.getLatitude());
-        		Log.i("--- Latitude",""+currentLocation.getLongitude());
-        		
-        		
-    			String coordinates[] = {""+currentLocation.getLatitude(), ""+currentLocation.getLongitude()};
-        		double lat = Double.parseDouble(coordinates[0]);
-        		double lng = Double.parseDouble(coordinates[1]);
-        		
-        		GeoPoint myPosition = new GeoPoint((int)(lat * 1E6),(int)(lng * 1E6));//Myposition
-        		OverlayItem overlayitem = new OverlayItem(myPosition, "My position", null);
-        		if(itemizedoverlay.size()==0){ //first time  			
-        			itemizedoverlay.addOverlay(overlayitem);
-        			drawMatches();
-        		}
-        		else{ //update our position
-	        		itemizedoverlay.editOverlay(0, overlayitem);
-        		}
-        		mapOverlays.add(itemizedoverlay);
-        		mc.animateTo(myPosition);
-        		mc.setZoom(15); //between 1 and 21
-        		mapView.invalidate();
-            }
-        });
-		
-		
+				String networkProvider = LocationManager.NETWORK_PROVIDER;
+				currentLocation = locMgr.getLastKnownLocation(networkProvider); //we uses the network for the first time
+
+				Log.i("--- Latitude",""+currentLocation.getLatitude());
+				Log.i("--- Latitude",""+currentLocation.getLongitude());       		
+
+				String coordinates[] = {""+currentLocation.getLatitude(), ""+currentLocation.getLongitude()};
+				double lat = Double.parseDouble(coordinates[0]);
+				double lng = Double.parseDouble(coordinates[1]);
+
+				GeoPoint myPosition = new GeoPoint((int)(lat * 1E6),(int)(lng * 1E6));//Myposition
+				OverlayItem overlayitem = new OverlayItem(myPosition, "My position", null);
+				if(itemizedoverlay.size()==0){ //first time  			
+					itemizedoverlay.addOverlay(overlayitem);
+					drawMatches(); // matches location does not change
+				}
+				else{ //update our position
+					itemizedoverlay.editOverlay(0, overlayitem);
+				}
+				mapOverlays.add(itemizedoverlay);
+				mc.animateTo(myPosition);
+				mc.setZoom(15); //between 1 and 21
+				mapView.invalidate();
+			}
+		});	
+
 		return view;
 	}
-	
+
+	/**
+	 * We add to the overlay the location of the matches that are in the current list of matches
+	 */
 	public void drawMatches(){
 		Drawable drawable = getResources().getDrawable(R.drawable.google_maps_marker);
 		MyItemizedOverlay matchesOverlay = new MyItemizedOverlay(drawable, getActivity());
@@ -112,53 +113,56 @@ public class MapFragment extends Fragment  {
 			if (fieldLocation!=null){
 				OverlayItem newOverlay = new OverlayItem(fieldLocation,m.getName(), m.getField() +
 						"\n" + m.getDate()+ " " + m.getTime() + "\n"  + m.getCost()+" € \n");
-    			matchesOverlay.addOverlay(newOverlay);
+				matchesOverlay.addOverlay(newOverlay);
 			}
-					
+
 		}
 		mapOverlays.add(matchesOverlay);
 	}
-	
+
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
-		// This verification should be done during onStart() because the system calls
-	    // this method when the user returns to the activity, which ensures the desired
-	    // location provider is enabled each time the activity resumes from the stopped state.
-	   locMgr = (LocationManager) activity.getSystemService(Context.LOCATION_SERVICE);
-	    final boolean gpsEnabled = locMgr.isProviderEnabled(LocationManager.GPS_PROVIDER);
+		// This verification should be done during onAttach() because the system calls
+		// this method when the user returns to the activity, which ensures the desired
+		// location provider is enabled each time the activity resumes from the stopped state.
+		locMgr = (LocationManager) activity.getSystemService(Context.LOCATION_SERVICE);
+		final boolean gpsEnabled = locMgr.isProviderEnabled(LocationManager.GPS_PROVIDER);
 
-	    if (!gpsEnabled) {
-	        // Build an alert dialog here that requests that the user enable
-	        // the location services, then when the user clicks the "OK" button,
-	        // call enableLocationSettings()
-	    	AlertDialog.Builder adb = new AlertDialog.Builder(this.getActivity());
-	    	adb.setTitle("Enable GPS");
-	    	adb.setMessage("Do you want to enable GPS?");
-	    	adb.setPositiveButton("Ok", new DialogInterface.OnClickListener()
-	    	{
-	    		public void onClick(DialogInterface dialog, int id)
-	    		{
-	    			enableLocationSettings();
-	    		}
-	    	});
-	    	adb.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
-	    	{
-	    		public void onClick(DialogInterface dialog, int id)
-	    		{
-	    			dialog.cancel();
-	    		}
-	    	});
-	    	adb.show();
-	    }
+		if (!gpsEnabled) {
+			// Build an alert dialog here that requests that the user enable
+			// the location services, then when the user clicks the "OK" button,
+			// call enableLocationSettings()
+			AlertDialog.Builder adb = new AlertDialog.Builder(this.getActivity());
+			adb.setTitle("Enable GPS");
+			adb.setMessage("Do you want to enable GPS?");
+			adb.setPositiveButton("Ok", new DialogInterface.OnClickListener()
+			{
+				public void onClick(DialogInterface dialog, int id)
+				{
+					enableLocationSettings();
+				}
+			});
+			adb.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
+			{
+				public void onClick(DialogInterface dialog, int id)
+				{
+					dialog.cancel();
+				}
+			});
+			adb.show();
+		}
 	}
 
 
+	/**
+	 * We start the activity of location settings
+	 */
 	private void enableLocationSettings() {
-	    Intent settingsIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-	    startActivity(settingsIntent);
+		Intent settingsIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+		startActivity(settingsIntent);
 	}	
-	
+
 	@Override
 	public void onDetach() {
 		super.onDetach();
@@ -166,83 +170,80 @@ public class MapFragment extends Fragment  {
 	}
 
 
+	/**
+	 * Location listener that is going to check the best possible location
+	 *
+	 */
 	public class MyLocationListener implements LocationListener{
 		private static final int TWO_MINUTES = 1000 * 60 * 2;
 		@Override
 		public void onLocationChanged(Location loc){		
 			Criteria locationCritera = new Criteria();
-    		locationCritera.setAccuracy(Criteria.ACCURACY_FINE);
-    		locationCritera.setAltitudeRequired(false);
-    		locationCritera.setBearingRequired(false);
-    		locationCritera.setCostAllowed(true);
-    		locationCritera.setPowerRequirement(Criteria.NO_REQUIREMENT);
-    		provider = locMgr.getBestProvider(locationCritera, true);
-    		currentLocation  = locMgr.getLastKnownLocation(provider);
-    		if(isBetterLocation(loc, currentLocation)){
-    			currentLocation = loc;
-    		}
-		/*	currentLocation.getLatitude();
-			currentLocation.getLongitude();
-			String Text = "My current location is: " +
-					"Latitud = " + currentLocation.getLatitude() +
-					"Longitud = " + currentLocation.getLongitude();
-			Toast.makeText( getActivity().getApplicationContext(), Text, Toast.LENGTH_SHORT).show();
-*/
-			
+			locationCritera.setAccuracy(Criteria.ACCURACY_FINE);
+			locationCritera.setAltitudeRequired(false);
+			locationCritera.setBearingRequired(false);
+			locationCritera.setCostAllowed(true);
+			locationCritera.setPowerRequirement(Criteria.NO_REQUIREMENT);
+			provider = locMgr.getBestProvider(locationCritera, true);
+			currentLocation  = locMgr.getLastKnownLocation(provider);
+			if(isBetterLocation(loc, currentLocation)){
+				currentLocation = loc;
+			}
+
 		}
-		
+
 		/** Determines whether one Location reading is better than the current Location fix
-		  * @param location  The new Location that you want to evaluate
-		  * @param currentBestLocation  The current Location fix, to which you want to compare the new one
-		  */
+		 * @param location  The new Location that you want to evaluate
+		 * @param currentBestLocation  The current Location fix, to which you want to compare the new one
+		 */
 		protected boolean isBetterLocation(Location location, Location currentBestLocation) {
-		    if (currentBestLocation == null) {
-		        // A new location is always better than no location
-		        return true;
-		    }
+			if (currentBestLocation == null) {
+				// A new location is always better than no location
+				return true;
+			}
 
-		    // Check whether the new location fix is newer or older
-		    long timeDelta = location.getTime() - currentBestLocation.getTime();
-		    boolean isSignificantlyNewer = timeDelta > TWO_MINUTES;
-		    boolean isSignificantlyOlder = timeDelta < -TWO_MINUTES;
-		    boolean isNewer = timeDelta > 0;
+			// Check whether the new location fix is newer or older
+			long timeDelta = location.getTime() - currentBestLocation.getTime();
+			boolean isSignificantlyNewer = timeDelta > TWO_MINUTES;
+			boolean isSignificantlyOlder = timeDelta < -TWO_MINUTES;
+			boolean isNewer = timeDelta > 0;
 
-		    // If it's been more than two minutes since the current location, use the new location
-		    // because the user has likely moved
-		    if (isSignificantlyNewer) {
-		        return true;
-		    // If the new location is more than two minutes older, it must be worse
-		    } else if (isSignificantlyOlder) {
-		        return false;
-		    }
+			// If it's been more than two minutes since the current location, use the new location
+			// because the user has likely moved
+			if (isSignificantlyNewer) {
+				return true;
+				// If the new location is more than two minutes older, it must be worse
+			} else if (isSignificantlyOlder) {
+				return false;
+			}
 
-		    // Check whether the new location fix is more or less accurate
-		    int accuracyDelta = (int) (location.getAccuracy() - currentBestLocation.getAccuracy());
-		    boolean isLessAccurate = accuracyDelta > 0;
-		    boolean isMoreAccurate = accuracyDelta < 0;
-		    boolean isSignificantlyLessAccurate = accuracyDelta > 200;
+			// Check whether the new location fix is more or less accurate
+			int accuracyDelta = (int) (location.getAccuracy() - currentBestLocation.getAccuracy());
+			boolean isLessAccurate = accuracyDelta > 0;
+			boolean isMoreAccurate = accuracyDelta < 0;
+			boolean isSignificantlyLessAccurate = accuracyDelta > 200;
 
-		    // Check if the old and new location are from the same provider
-		    boolean isFromSameProvider = isSameProvider(location.getProvider(),
-		            currentBestLocation.getProvider());
+			// Check if the old and new location are from the same provider
+			boolean isFromSameProvider = isSameProvider(location.getProvider(),
+					currentBestLocation.getProvider());
 
-		    // Determine location quality using a combination of timeliness and accuracy
-		    if (isMoreAccurate) {
-		        return true;
-		    } else if (isNewer && !isLessAccurate) {
-		        return true;
-		    } else if (isNewer && !isSignificantlyLessAccurate && isFromSameProvider) {
-		        return true;
-		    }
-		    return false;
+			// Determine location quality using a combination of timeliness and accuracy
+			if (isMoreAccurate) {
+				return true;
+			} else if (isNewer && !isLessAccurate) {
+				return true;
+			} else if (isNewer && !isSignificantlyLessAccurate && isFromSameProvider) {
+				return true;
+			}
+			return false;
 		}
 
 		/** Checks whether two providers are the same */
 		private boolean isSameProvider(String provider1, String provider2) {
-		    if (provider1 == null) {
-		      return provider2 == null;
-		    }
-		    return provider1.equals(provider2);
+			if (provider1 == null) {
+				return provider2 == null;
+			}
+			return provider1.equals(provider2);
 		}
 
 		@Override

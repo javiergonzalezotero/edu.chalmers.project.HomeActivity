@@ -25,7 +25,6 @@ public class CreateEventActivity extends FragmentActivity {
 	private EditText editTextCost;
 	private EditText editTextPlayersLimit;
 	private EditText editTextField;
-	private EditText editTextOrganizer;
 	private EditText editTextTime;
 	private EditText editTextDate;
 	private Bundle b;
@@ -49,11 +48,12 @@ public class CreateEventActivity extends FragmentActivity {
 		editTextDate = (EditText)findViewById(R.id.editTextDate);
 		editTextTime = (EditText)findViewById(R.id.editTextTime);
 		editTextNameEvent.requestFocus();
-		if (idMatch!=-1) {
+		if (idMatch!=-1) { //Editing match
 			showEventInfo(idMatch);
 			this.setTitle("Edit Match");
 		}
 	}
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -74,7 +74,7 @@ public class CreateEventActivity extends FragmentActivity {
 			return true;
 
 		case R.id.menu_create:
-
+			//Confirm changes
 			MatchDBAdapter matchAdapter = new MatchDBAdapter(this);
 			matchAdapter.open();
 			MatchPlayedDBAdapter adapter = new MatchPlayedDBAdapter(this);
@@ -83,7 +83,7 @@ public class CreateEventActivity extends FragmentActivity {
 			playerAdapter.open();
 			Cursor cursorPlayer = playerAdapter.getPlayer(this.username);
 			int cost;
-			if (editTextCost.getText().toString().compareTo("")==0)
+			if (editTextCost.getText().toString().compareTo("")==0) //cost not explicited
 				cost = 0;
 			else {
 				cost = Integer.parseInt(editTextCost.getText().toString());
@@ -91,9 +91,9 @@ public class CreateEventActivity extends FragmentActivity {
 			if((editTextNameEvent.getText().toString().compareTo("")!=0) && (editTextDate.getText().toString().compareTo("")!=0)
 					&& (editTextTime.getText().toString().compareTo("")!=0) && (editTextField.getText().toString().compareTo("")!=0) 
 					&& (editTextPlace.getText().toString().compareTo("")!=0) 
-					&& (editTextPlayersLimit.getText().toString().compareTo("")!=0)){
-				if((Integer.parseInt(editTextPlayersLimit.getText().toString()) % 2) == 0){
-					if(idMatch==-1){
+					&& (editTextPlayersLimit.getText().toString().compareTo("")!=0)){ //All fields completed
+				if((Integer.parseInt(editTextPlayersLimit.getText().toString()) % 2) == 0){ //Even number of players
+					if(idMatch==-1){ //New match
 
 						if(matchAdapter.matchNameExists(editTextNameEvent.getText().toString())){
 
@@ -111,7 +111,7 @@ public class CreateEventActivity extends FragmentActivity {
 
 						}
 					}
-					else{
+					else{ //Edit match
 						matchAdapter.updateMatch(idMatch, editTextDate.getText().toString(), editTextTime.getText().toString(), 
 								editTextNameEvent.getText().toString(), editTextField.getText().toString(),
 								editTextPlace.getText().toString(), cost, 
@@ -141,9 +141,6 @@ public class CreateEventActivity extends FragmentActivity {
 				toast.setGravity(Gravity.CENTER, 0, 0);
 				toast.show();
 			}
-
-
-
 			return true;    
 		default:
 			return super.onOptionsItemSelected(item);
@@ -151,6 +148,12 @@ public class CreateEventActivity extends FragmentActivity {
 	}
 
 
+
+	/*
+	 * Retrieve the information of a match from the database and show it through the 
+	 * different view.
+	 * @param idMatch The id of the match wanted
+	 */
 	public void showEventInfo(long idMatch){
 		MatchDBAdapter adapter = new MatchDBAdapter(this);
 		adapter.open();
@@ -166,11 +169,17 @@ public class CreateEventActivity extends FragmentActivity {
 		adapter.close();
 	}
 
+	/*
+	 * Creates a dialog to pick one date
+	 */
 	public void showDatePickerDialog(View v) {
 		DialogFragment newFragment = new DatePickerFragment(this.editTextDate);
 		newFragment.show(getSupportFragmentManager(), "datePicker");  
 	}
 
+	/*
+	 * Creates a dialog to pick one time
+	 */
 	public void showTimePickerDialog(View v) {
 		DialogFragment newFragment = new TimePickerFragment(this.editTextTime);
 		newFragment.show(getSupportFragmentManager(), "timePicker");  

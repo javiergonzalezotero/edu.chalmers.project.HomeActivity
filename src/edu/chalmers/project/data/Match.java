@@ -1,11 +1,12 @@
 package edu.chalmers.project.data;
 
-import java.util.Comparator;
-
-import android.R.integer;
-
+/**
+ * Class that is going to represent the matches.
+ * It is used for modeling each row of the Match table.
+ *
+ */
 public class Match {
-	
+
 	private int id;
 	private String name;
 	private String date;
@@ -15,7 +16,7 @@ public class Match {
 	private int cost;
 	private int numberPlayers;
 	private int id_organizer;
-	
+
 	public Match(int id, String name, String date, String time, String location, String field, 
 			int cost, int numberPlayers, int id_organizer) {
 		this.id = id;
@@ -100,12 +101,12 @@ public class Match {
 	public void setNumberPlayers(int numberPlayers) {
 		this.numberPlayers = numberPlayers;
 	}
-	
+
 	public String toString(){
 		return this.name;
 	}
-	
+
 }
 
-	
+
 

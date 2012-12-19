@@ -43,7 +43,7 @@ public class PopupAvailability extends Activity {
 		this.username = b.getString("username");
 
 		this.setTitle("Availability for " + this.username);
-		
+
 
 		AvailabilityDBAdapter availabilityAdapter = new AvailabilityDBAdapter(this);
 		availabilityAdapter.open();
@@ -165,7 +165,7 @@ public class PopupAvailability extends Activity {
 			}
 			this.editTextSunday.setText(stringToShow);
 		}
-		
+
 		availabilityAdapter.deleteAvailability(username, "monday");
 		availabilityAdapter.deleteAvailability(username, "tuesday");
 		availabilityAdapter.deleteAvailability(username, "wednesday");
@@ -173,9 +173,9 @@ public class PopupAvailability extends Activity {
 		availabilityAdapter.deleteAvailability(username, "friday");
 		availabilityAdapter.deleteAvailability(username, "saturday");
 		availabilityAdapter.deleteAvailability(username, "sunday");
-		
+
 		availabilityAdapter.close();
-		
+
 
 
 
@@ -201,6 +201,14 @@ public class PopupAvailability extends Activity {
 
 		finish();
 	}
+
+	/**
+	 * Checks if the availability introduced by the user is correct according the format we 
+	 * indicate to him.
+	 * @param daySelected
+	 * @param day
+	 * @return
+	 */
 	public String verifyAndStoreAvailability(String daySelected, String day){
 		StringTokenizer st = new StringTokenizer(daySelected,",");
 		int numberTested;
@@ -245,9 +253,9 @@ public class PopupAvailability extends Activity {
 				String stringToSave = stringTested;
 				AvailabilityDBAdapter availabilityAdapter = new AvailabilityDBAdapter(this);
 				availabilityAdapter.open();
-				
+
 				if(stringToSave != ""){
-				availabilityAdapter.createAvailability(username, day, stringToSave);
+					availabilityAdapter.createAvailability(username, day, stringToSave);
 				}
 				availabilityAdapter.close();
 			}

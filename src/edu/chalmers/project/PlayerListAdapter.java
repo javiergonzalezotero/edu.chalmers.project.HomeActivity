@@ -2,9 +2,7 @@ package edu.chalmers.project;
 
 import java.util.ArrayList;
 
-import android.R.integer;
 import android.content.Context;
-import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +11,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import edu.chalmers.project.data.Player;
 
+/**
+ * Class that acts like an array adapter for lists of player in order to show the profile
+ * photo in the list
+ *
+ */
 public class PlayerListAdapter extends ArrayAdapter<Player> {
 
 	private ArrayList<Player> playerList;
@@ -24,10 +27,9 @@ public class PlayerListAdapter extends ArrayAdapter<Player> {
 		this.context = context;
 		this.layout = layout;
 	}
-	
+
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		//View row= super.getView(position, convertView, parent);
 		View row = convertView;
 		if (row==null){
 			LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );

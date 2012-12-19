@@ -5,6 +5,11 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+/**
+ * This class will function as the main adapter of the database, and will be the one responsible
+ * for creating all the tables and update the database.
+ *
+ */
 public class DBAdapter {
 
 	public static final String DATABASE_NAME = "SocialFootball"; 

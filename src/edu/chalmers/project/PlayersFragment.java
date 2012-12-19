@@ -16,7 +16,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 import edu.chalmers.project.data.MatchDBAdapter;
 import edu.chalmers.project.data.MatchPlayedDBAdapter;
 import edu.chalmers.project.data.Player;
@@ -29,64 +28,64 @@ public class PlayersFragment extends Fragment {
 	private ArrayList<Player> hostTeam;
 	private ArrayList<Player> guestTeam;
 	Bundle b;
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    	
-    	hostTeam = new ArrayList<Player>();
-    	guestTeam = new ArrayList<Player>();
-        // Inflate the layout for this fragment
-    	View view = inflater.inflate(R.layout.players_fragment, container, false);
-    	view.setClickable(true);
-            
-    	b = getActivity().getIntent().getExtras();
-    	int idMatch = b.getInt("position_id_match");
-    	String playerUsername = b.getString("username");
-    	
-    	MatchDBAdapter matchAdapter = new MatchDBAdapter(container.getContext());
-    	matchAdapter.open();
-    	MatchPlayedDBAdapter matchPlayedAdapter = new MatchPlayedDBAdapter(container.getContext());
-        matchPlayedAdapter.open();
-        Cursor cursor = matchAdapter.getMatch(idMatch);
-        int nPlayersTeam = cursor.getInt(7)/2; //Number of players of each team
-        
-        hostTeam = matchPlayedAdapter.getTeam(HOST, idMatch);
-        guestTeam = matchPlayedAdapter.getTeam(GUEST, idMatch);
-        matchPlayedAdapter.close();
-        
-        Button joinHostButton = (Button) view.findViewById(R.id.buttonJoinHost);
-        Button joinGuestButton = (Button) view.findViewById(R.id.buttonJoinGuest);
-        Button quitHostButton = (Button) view.findViewById(R.id.buttonQuitHost);
-        Button quitGuestButton = (Button) view.findViewById(R.id.buttonQuitGuest);
-        
-        if(isFuture(cursor.getString(1))>=1){
-	        if (isJoined(playerUsername, hostTeam)){
-	        	joinHostButton.setVisibility(View.INVISIBLE);
-	        	joinGuestButton.setVisibility(View.INVISIBLE);
-	        	quitHostButton.setVisibility(View.VISIBLE);
-	        }
-	        if (isJoined(playerUsername, guestTeam)){
-	        	joinHostButton.setVisibility(View.INVISIBLE);
-	        	joinGuestButton.setVisibility(View.INVISIBLE);
-	        	quitGuestButton.setVisibility(View.VISIBLE);
-	        }
-	        
-	        if (isFull(hostTeam, nPlayersTeam))
-	        	joinHostButton.setVisibility(View.INVISIBLE);
-	        
-	        if (isFull(guestTeam, nPlayersTeam))
-	        	joinGuestButton.setVisibility(View.INVISIBLE);
-        }
-        else{
-        	joinHostButton.setVisibility(View.INVISIBLE);
-        	joinGuestButton.setVisibility(View.INVISIBLE);
-        }
-        cursor.close();
-        matchAdapter.close();
-        
-    	ListView lvListHost = (ListView) view.findViewById(R.id.listViewHostTeam);
-    	ListView lvListGuest = (ListView) view.findViewById(R.id.listViewGuestTeam);
-        lvListHost.setAdapter(new PlayerListAdapter(this.getActivity(), hostTeam, R.layout.player_list_item));
-        lvListGuest.setAdapter(new PlayerListAdapter(this.getActivity(), guestTeam, R.layout.player_list_item));
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+		hostTeam = new ArrayList<Player>();
+		guestTeam = new ArrayList<Player>();
+		// Inflate the layout for this fragment
+		View view = inflater.inflate(R.layout.players_fragment, container, false);
+		view.setClickable(true);
+
+		b = getActivity().getIntent().getExtras();
+		int idMatch = b.getInt("position_id_match");
+		String playerUsername = b.getString("username");
+
+		MatchDBAdapter matchAdapter = new MatchDBAdapter(container.getContext());
+		matchAdapter.open();
+		MatchPlayedDBAdapter matchPlayedAdapter = new MatchPlayedDBAdapter(container.getContext());
+		matchPlayedAdapter.open();
+		Cursor cursor = matchAdapter.getMatch(idMatch);
+		int nPlayersTeam = cursor.getInt(7)/2; //Number of players of each team
+
+		hostTeam = matchPlayedAdapter.getTeam(HOST, idMatch);
+		guestTeam = matchPlayedAdapter.getTeam(GUEST, idMatch);
+		matchPlayedAdapter.close();
+
+		Button joinHostButton = (Button) view.findViewById(R.id.buttonJoinHost);
+		Button joinGuestButton = (Button) view.findViewById(R.id.buttonJoinGuest);
+		Button quitHostButton = (Button) view.findViewById(R.id.buttonQuitHost);
+		Button quitGuestButton = (Button) view.findViewById(R.id.buttonQuitGuest);
+
+		if(isFuture(cursor.getString(1))>=1){
+			if (isJoined(playerUsername, hostTeam)){
+				joinHostButton.setVisibility(View.INVISIBLE);
+				joinGuestButton.setVisibility(View.INVISIBLE);
+				quitHostButton.setVisibility(View.VISIBLE);
+			}
+			if (isJoined(playerUsername, guestTeam)){
+				joinHostButton.setVisibility(View.INVISIBLE);
+				joinGuestButton.setVisibility(View.INVISIBLE);
+				quitGuestButton.setVisibility(View.VISIBLE);
+			}
+
+			if (isFull(hostTeam, nPlayersTeam))
+				joinHostButton.setVisibility(View.INVISIBLE);
+
+			if (isFull(guestTeam, nPlayersTeam))
+				joinGuestButton.setVisibility(View.INVISIBLE);
+		}
+		else{
+			joinHostButton.setVisibility(View.INVISIBLE);
+			joinGuestButton.setVisibility(View.INVISIBLE);
+		}
+		cursor.close();
+		matchAdapter.close();
+
+		ListView lvListHost = (ListView) view.findViewById(R.id.listViewHostTeam);
+		ListView lvListGuest = (ListView) view.findViewById(R.id.listViewGuestTeam);
+		lvListHost.setAdapter(new PlayerListAdapter(this.getActivity(), hostTeam, R.layout.player_list_item));
+		lvListGuest.setAdapter(new PlayerListAdapter(this.getActivity(), guestTeam, R.layout.player_list_item));
 
 		lvListGuest.setOnItemClickListener(new OnItemClickListener(){
 			@Override
@@ -107,6 +106,11 @@ public class PlayersFragment extends Fragment {
 	}
 
 
+	/**
+	 * Check if a date is future or not comparing it to the current date.
+	 * @param date The date we want to evaluate
+	 * @return Positive value if is future, negative if is past or zero if is exactly present
+	 */
 	public static int isFuture(String date){
 		final String DATE_FORMAT_NOW = "yyyy-MM-dd";
 		Calendar cal = Calendar.getInstance();
@@ -115,11 +119,23 @@ public class PlayersFragment extends Fragment {
 		return (date.compareTo(now));
 	}
 
+	/**
+	 * Check if a player is already joined to a team
+	 * @param username
+	 * @param team
+	 * @return True if the player is joined, false otherwise.
+	 */
 	public boolean isJoined(String username, ArrayList<Player> team){
 		Player player = new Player(username, null);
 		return (team.contains(player) );
 	}
 
+	/**
+	 * Check if a team is already full, and no one else can join it
+	 * @param team
+	 * @param nPlayers
+	 * @return True if the team is full, false otherwise.
+	 */
 	public boolean isFull(ArrayList<Player> team, int nPlayers){
 		return team.size()==nPlayers;
 	}

@@ -31,7 +31,7 @@ import edu.chalmers.project.data.PlayerDBAdapter;
 
 public class HomeFragment extends Fragment {
 
-	private ArrayList<Match> matchList = new ArrayList();
+	private ArrayList<Match> matchList = new ArrayList<Match>();
 	Bundle bundle;
 	MatchDBAdapter matchAdapter;
 	String username;
@@ -44,15 +44,13 @@ public class HomeFragment extends Fragment {
 		this.setHasOptionsMenu(true);
 
 		Spinner matchSelectionSpinner =(Spinner) view.findViewById(R.id.spinnerMatchSelection);
-		String matchSelection = matchSelectionSpinner.getSelectedItem().toString();
-		String[] spinnerSelections = getResources().getStringArray(R.array.spinner_matches);
 		bundle = getActivity().getIntent().getExtras();
 		username = bundle.getString("username");
 		matchAdapter = new MatchDBAdapter(container.getContext());
 		lvList = (ListView) view.findViewById(R.id.listViewHomeMatches);
 
-		this.registerForContextMenu(lvList);
-		
+		this.registerForContextMenu(lvList);//list with contextual menu
+
 		matchSelectionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
 			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 
@@ -69,13 +67,13 @@ public class HomeFragment extends Fragment {
 					matchList = myAvailableMatches(username, view);
 				HomeActivity.setMatchList(matchList);
 				matchAdapter.close();
-		        
+
 				lvList.setAdapter(new MatchListAdapter(getActivity(), matchList, R.layout.match_list_item));
 
 				lvList.setOnItemClickListener(new OnItemClickListener(){
 					@Override
 					public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-
+						// We start the match activity
 						int idMatch = matchList.get(position).getId();
 						String username = bundle.getString("username");
 						Intent intent = new Intent(getActivity(), MatchActivity.class);
@@ -92,72 +90,77 @@ public class HomeFragment extends Fragment {
 			} 
 		}); 
 
-
-
 		return view;
 
 	}
-	
-	 @Override
-	 public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-	     AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
-	     int idMatch = matchList.get(info.position).getId();
-	     MatchDBAdapter adapter = new MatchDBAdapter(this.getActivity());
-	     PlayerDBAdapter playerAdapter = new PlayerDBAdapter(this.getActivity());
-	     playerAdapter.open();
-	     adapter.open();
-	     Cursor cursor = adapter.getIdOrganizer(idMatch);
-	     Cursor playerCursor = playerAdapter.getPlayer(username);
-	     if(cursor.getLong(1)==playerCursor.getLong(9)){
-		     String[] menuItems = getResources().getStringArray(R.array.ContextMenu);
-		     for (int i = 0; i<menuItems.length; i++) {
-		       menu.add(Menu.NONE, i, i, menuItems[i]);
-		     }
-	     }
-	     else{
-	    	 Toast.makeText(getActivity(),"You are not the organizer", Toast.LENGTH_LONG).show();
-	     }
-	     cursor.close();
-	     playerCursor.close();
-	     adapter.close();
-	     playerAdapter.close();
-	 }
-	 
-	 @Override
-	 public boolean onContextItemSelected(MenuItem item) {
-	   AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
-	   int idMatch = matchList.get(info.position).getId();
-	   MatchDBAdapter adapter = new MatchDBAdapter(this.getActivity());
-	   adapter.open();
-	   if (item.getItemId()==0){ //Edit match
-		    Intent intent = new Intent(this.getActivity(),CreateEventActivity.class);
+
+
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
+		int idMatch = matchList.get(info.position).getId();
+		MatchDBAdapter adapter = new MatchDBAdapter(this.getActivity());
+		PlayerDBAdapter playerAdapter = new PlayerDBAdapter(this.getActivity());
+		playerAdapter.open();
+		adapter.open();
+		Cursor cursor = adapter.getIdOrganizer(idMatch);
+		Cursor playerCursor = playerAdapter.getPlayer(username);
+		if(cursor.getLong(1)==playerCursor.getLong(9)){ // if the logged user is the organizer
+			String[] menuItems = getResources().getStringArray(R.array.ContextMenu);
+			for (int i = 0; i<menuItems.length; i++) {
+				menu.add(Menu.NONE, i, i, menuItems[i]);
+			}
+		}
+		else{
+			Toast.makeText(getActivity(),"You are not the organizer", Toast.LENGTH_LONG).show();
+		}
+		cursor.close();
+		playerCursor.close();
+		adapter.close();
+		playerAdapter.close();
+	}
+
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+		int idMatch = matchList.get(info.position).getId();
+		MatchDBAdapter adapter = new MatchDBAdapter(this.getActivity());
+		adapter.open();
+		if (item.getItemId()==0){ //Edit match
+			Intent intent = new Intent(this.getActivity(),CreateEventActivity.class);
 			intent.putExtras(bundle);
 			intent.putExtra("idMatch", idMatch);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
-	    	intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			startActivity(intent);
-	   }
-	   else if(item.getItemId()==1){ //Delete match
-		    adapter.deleteMatch(idMatch);
-		    Intent intent = new Intent(this.getActivity(),HomeActivity.class);
+		}
+		else if(item.getItemId()==1){ //Delete match
+			adapter.deleteMatch(idMatch);
+			Intent intent = new Intent(this.getActivity(),HomeActivity.class);
 			intent.putExtras(bundle);
-			 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
-	    	intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
+			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			startActivity(intent);
-	   }
-	   adapter.close();
-	   return true;
-	 }
+		}
+		adapter.close();
+		return true;
+	}
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
 		inflater.inflate(R.menu.activity_home, menu);
-
 	}
 
+	/**
+	 * Get the list of future matches that match our availability
+	 * @param username 
+	 * @param view
+	 * @return The list of matches
+	 */
 	public ArrayList<Match> myAvailableMatches(String username, View view){
-		ArrayList<Match> upcomingMatchList = new ArrayList();
-		ArrayList<Match> availableMatchList = new ArrayList();
+		ArrayList<Match> upcomingMatchList = new ArrayList<Match>();
+		ArrayList<Match> availableMatchList = new ArrayList<Match>();
 		ArrayList<Availability> timeAvailability = new ArrayList<Availability>();
 
 		matchAdapter.open();
@@ -176,7 +179,6 @@ public class HomeFragment extends Fragment {
 			timeAvailability = availabilityAdapter.getAvailabilityBis(username, dayDate);
 			int conditionOk = 0;
 			if(!(timeAvailability.isEmpty())){
-
 				ListIterator it = timeAvailability.listIterator();
 				while(it.hasNext()){
 					String currentString = "" + it.next();
@@ -208,7 +210,6 @@ public class HomeFragment extends Fragment {
 			}
 
 			if(conditionOk == 1){
-				//Toast.makeText(view.getContext(), "okkkk", Toast.LENGTH_SHORT).show();
 				Match m = new Match(upcomingMatchList.get(i).getId(), upcomingMatchList.get(i).getName(), 
 						upcomingMatchList.get(i).getDate(), upcomingMatchList.get(i).getTime(), upcomingMatchList.get(i).getLocation(), 
 						upcomingMatchList.get(i).getField(), upcomingMatchList.get(i).getCost(), 
@@ -222,6 +223,11 @@ public class HomeFragment extends Fragment {
 		return availableMatchList;
 	}
 
+	/**
+	 * Returns the name of the day of the week of the string given
+	 * @param dayDate
+	 * @return
+	 */
 	public String getDayDate(String dayDate){
 		matchAdapter.open();
 		Cursor cursorDate = matchAdapter.getDayDate(dayDate);
